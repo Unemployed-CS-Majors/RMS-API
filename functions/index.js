@@ -10,8 +10,8 @@
 const functions = require("firebase-functions");
 const logger = require("firebase-functions/logger");
 const testRouter = require('./app/routes/test.router');
-
 const express = require('express')
+const admin = require('firebase-admin')
 const app = express()
 
 app.use("/test", testRouter)
