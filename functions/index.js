@@ -18,23 +18,22 @@
 
 const functions = require("firebase-functions");
 const logger = require("firebase-functions/logger");
+const express = require('express');
+const swaggerUi = require("swagger-ui-express");
+
 const testRouter = require('./app/routes/test.router');
 const registerRouter = require('./app/routes/register.router');
-const express = require('express')
-const admin = require('firebase-admin')
+const authenticate = require('./app/middlewares/auth.middleware');
+const admin = require("./app/config/firebase.admin.config");
+
 const app = express()
 
-admin.initializeApp()
-
-app.use("/test", testRouter)
+app.use("/test",authenticate.verifyIdToken, testRouter)
 app.use("/auth", registerRouter)
-
 app.use((req, res) => {
     res.status(404).json({ error: 'Endpoint not found' });
-    res.status(404).json({ error: 'Endpoint not found' });
 });
-const port = 3005;
-
+const port = 3001;
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });

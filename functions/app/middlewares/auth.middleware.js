@@ -1,15 +1,20 @@
-function authenticate(req, res, next) {
-    // Implement your authentication logic here
-  
-    // If authentication fails
-    if (!authenticated) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-  
-    // If authentication succeeds, call next() to proceed to the next middleware or route handler
-    next();
+const admin = require('firebase-admin');
+const { createResponse } = require("../utils/responseUtil");
+
+const verifyIdToken = async (req, res, next) => {
+  const idToken = req.headers.authorization?.split('Bearer ')[1];
+  if (!idToken) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
-  
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    req.user = decodedToken;
+    next();
+  } catch (error) {
+    return res.status(401).json(createResponse("error", error.message, null));
+  }
+};
   module.exports = {
-    authenticate,
+    verifyIdToken,
   };
