@@ -25,15 +25,15 @@ const testRouter = require('./app/routes/test.router');
 const registerRouter = require('./app/routes/register.router');
 const authenticate = require('./app/middlewares/auth.middleware');
 const admin = require("./app/config/firebase.admin.config");
-
+const { isOwner } = require("./app/middlewares/privilages.middleware");
 const app = express()
 
-app.use("/test",authenticate.verifyIdToken, testRouter)
+app.use("/test",authenticate.verifyIdToken, isOwner, testRouter)
 app.use("/auth", registerRouter)
 app.use((req, res) => {
     res.status(404).json({ error: 'Endpoint not found' });
 });
-const port = 3001;
+const port = 3003;
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });
