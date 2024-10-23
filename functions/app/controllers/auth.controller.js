@@ -15,7 +15,7 @@ const {
   FIREBASE_SIGNIN_ENDPOINT,
 } = require("../config/auth.config");
 
-class RegisterController {
+class AuthController {
   static register(req, res) {
     const validationError = validateRegister(req);
     if (validationError) {
@@ -142,4 +142,4 @@ class RegisterController {
   }
 }
 
-module.exports = RegisterController;
+module.exports = AuthController;
