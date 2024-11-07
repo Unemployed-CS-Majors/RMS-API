@@ -6,13 +6,10 @@ on:
   push:
     branches:
       - main
-      - master
       - develop
-      - reservations
   pull_request:
     branches:
       - main
-      - master
       - develop
 jobs:
   deploy-doc:
@@ -66,7 +63,6 @@ jobs:
         with:
           doc: olszewski
           token: ${{ secrets.BUMP_SH_TOKEN }}
-          branch: develop
           file: doc/api-documentation.yml
           command: diff
         env:
