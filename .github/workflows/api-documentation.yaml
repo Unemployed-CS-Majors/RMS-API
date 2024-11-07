@@ -62,7 +62,7 @@ jobs:
       - name: Comment pull request with API diff
         uses: bump-sh/github-action@v1
         with:
-          doc: olszewski
+          doc: 49ff646b-a2ae-46b6-91d6-235db15f32ba
           token: ${{ secrets.BUMP_TOKEN }}
           file: ./functions/swagger.yaml
           command: diff
