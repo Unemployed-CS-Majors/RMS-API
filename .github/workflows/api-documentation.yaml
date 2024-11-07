@@ -31,7 +31,7 @@ jobs:
         run: npm install
 
       - name: Generate API documentation (YAML)
-        run: node ./swagger/generate-swagger.js
+        run: node ./functions/generate-swagger.js
 
       - name: Deploy API documentation
         uses: bump-sh/github-action@v1
