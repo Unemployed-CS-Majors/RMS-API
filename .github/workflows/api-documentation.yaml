@@ -7,12 +7,13 @@ on:
     branches:
       - main
       - master
-      - reservations
+      - develop
+      - reservation
   pull_request:
     branches:
       - main
       - master
-      - reservations
+      - develop
 jobs:
   deploy-doc:
     if: ${{ github.event_name == 'push' }}
@@ -65,6 +66,7 @@ jobs:
         with:
           doc: olszewski
           token: ${{ secrets.BUMP_SH_TOKEN }}
+          branch: branch: ${{ github.ref == 'refs/heads/reservation' && 'develop' || github.ref == 'refs/heads/main' && 'main' || 'develop' }}
           file: doc/api-documentation.yml
           command: diff
         env:
