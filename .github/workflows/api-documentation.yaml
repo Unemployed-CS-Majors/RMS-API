@@ -8,7 +8,7 @@ on:
       - main
       - master
       - develop
-      - reservation
+      - reservations
   pull_request:
     branches:
       - main
@@ -66,7 +66,7 @@ jobs:
         with:
           doc: olszewski
           token: ${{ secrets.BUMP_SH_TOKEN }}
-          branch: ${{ github.ref == 'refs/heads/reservation' && 'develop' || github.ref == 'refs/heads/main' && 'main' || 'develop' }}
+          branch: ${{ github.ref == 'refs/heads/reservations' && 'develop' || github.ref == 'refs/heads/main' && 'main' || 'develop' }}
           file: doc/api-documentation.yml
           command: diff
         env:
