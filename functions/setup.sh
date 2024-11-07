@@ -3,8 +3,8 @@
 # Variables
 API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/register"
 LOGIN_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/login"
-TABLE_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/table/add"
-OPENING_HOURS_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/openingHours/add"
+TABLE_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/table/"
+OPENING_HOURS_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/openingHours/"
 PROJECT_ID="restaurant-management-sy-1a0cd"
 COLLECTION_NAME="users" # Firestore collection name
 FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"
