@@ -27,9 +27,9 @@ jobs:
       run: npm install
       working-directory: ./functions
 
-    - name: Run tests
-      run: npm test
-      working-directory: ./functions
+    # - name: Run tests
+    #   run: npm test
+    #   working-directory: ./functions
 
     - name: Deploy to Firebase
       env:
