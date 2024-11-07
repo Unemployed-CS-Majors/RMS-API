@@ -1,25 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const TableController = require("../controllers/table.controller");
-// Import middlewares
-const { verifyIdToken } = require("../middlewares/auth.middleware");
+const express = require('express');
+const TableController = require('../controllers/table.controller');
 const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
 
-router.post("/add", verifyIdToken, isOwner, TableController.createTable);
-router.get("/getAll", TableController.getAllTables);
-router.get("/getById", TableController.getTableById);
-router.delete("/delete", verifyIdToken, isOwner, TableController.deleteTable);
-router.patch(
-  "/deactivate",
-  verifyIdToken,
-  isOwner,
-  TableController.deactivateTable
-);
-router.patch(
-  "/activate",
-  verifyIdToken,
-  isOwner,
-  TableController.activateTable
-);
+const router = express.Router();
+
+router.get('/', TableController.getAllTables);
+router.get('/:tableId', TableController.getTable);
+router.post('/', TableController.createTable);
+router.put('/:tableId', TableController.updateTable);
+router.delete('/:tableId', TableController.deleteTable);
+router.patch("/deactivate/:tableId", verifyIdToken, isOwner, TableController.deactivateTable);
+router.patch("/activate/:tableId", verifyIdToken, isOwner, TableController.activateTable);
 
 module.exports = router;

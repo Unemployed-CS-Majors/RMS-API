@@ -6,19 +6,24 @@ const OpeningHoursController = require("../controllers/openingHours.controller")
 const { verifyIdToken } = require("../middlewares/auth.middleware");
 const { isOwner } = require("../middlewares/privilages.middleware");
 
+router.get("/:id", OpeningHoursController.getOpeningHoursById);
+router.get("/", OpeningHoursController.getAllOpeningHours);
 router.post(
-  "/add",
+  "/",
   verifyIdToken,
   isOwner,
   OpeningHoursController.createOpeningHours
 );
-router.get("/getAll", OpeningHoursController.getAllOpeningHours);
-router.get("/getById", OpeningHoursController.getOpeningHoursById);
-router.patch(
-  "/update",
+router.put(
+  "/:id",
   verifyIdToken,
   isOwner,
   OpeningHoursController.updateOpeningHours
 );
-
+router.delete(
+  "/:id",
+  verifyIdToken,
+  isOwner,
+  OpeningHoursController.deleteOpeningHours
+);
 module.exports = router;

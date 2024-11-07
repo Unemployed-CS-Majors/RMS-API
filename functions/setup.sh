@@ -10,10 +10,10 @@ COLLECTION_NAME="users" # Firestore collection name
 FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"
 
 # User details for registration
-FIRST_NAME="John"
-LAST_NAME="Doe"
-EMAIL="john.doe@example.com"
-PASSWORD="StrongPassword123" # Ensure this meets API's password policy
+FIRST_NAME="Jakub"
+LAST_NAME="Olszewski"
+EMAIL="j.olszewski05@gmail.com"
+PASSWORD="qwerty123" # Ensure this meets API's password policy
 PHONE_NUMBER="+1234567890"   # Example phone number
 PRIVILEGES="owner"
 ID_TOKEN=""
