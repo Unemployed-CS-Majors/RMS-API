@@ -47,8 +47,19 @@ This project is a Firebase Cloud Functions project using Express.js to handle HT
     ```
 
     Follow the prompts to set up your Firebase project.
+5. **Get env varibles**
+    Go to function directory and run 
+    ```sh
+    firebase functions:config:get > .runtimeconfig.json 
+    ```
 
-5. **Start the Firebase emulators:**
+    on widows poershell run 
+    ```sh
+    firebase functions:config:get | ac .runtimeconfig.json
+    ```
+
+
+6. **Start the Firebase emulators:**
 
     ```sh
     firebase emulators:start --only functions,firestore
