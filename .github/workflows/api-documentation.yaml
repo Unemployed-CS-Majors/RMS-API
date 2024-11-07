@@ -30,18 +30,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Change directory
-        run: cd functions
-
       - name: Generate API documentation (YAML)
         run: node generate-swagger.js
+        working-directory: ./functions
 
       - name: Deploy API documentation
         uses: bump-sh/github-action@v1
         with:
           doc: 49ff646b-a2ae-46b6-91d6-235db15f32ba
           token: ${{ secrets.BUMP_TOKEN }}
-          file: swagger.yaml
+          file: ./functions/swagger.yaml
 
   api-diff:
     if: ${{ github.event_name == 'pull_request' }}
