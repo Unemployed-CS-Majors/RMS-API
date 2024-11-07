@@ -1,11 +1,12 @@
-ame: Deploy Firebase Functions
-
+name: Deploy Firebase Functions
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
     branches:
       - main  # Branch where github action gets triggered
       - develop  # Branch where github action gets triggered
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
