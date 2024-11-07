@@ -22,7 +22,9 @@ const { initializeCounter } = require("./app/utils/counterUtil");
 
 // Initialize Express app
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 app.use("/test", authenticate.verifyIdToken, isOwner, testRouter);
 app.use("/auth", authRouter);
 app.use("/table", tableRouter);
