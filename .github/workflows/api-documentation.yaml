@@ -57,6 +57,7 @@ jobs:
 
       - name: Generate API documentation (YAML)
         run: node generate-swagger.js
+        working-directory: ./functions
 
       - name: Comment pull request with API diff
         uses: bump-sh/github-action@v1
