@@ -19,6 +19,10 @@ function validateCreateReservation(req) {
         return "People must be an integer";
     }
 
+    if(!Number.isInteger(tableId)) {
+        return "Table ID must be an integer";
+    }
+
     if(people <= 0) {
         return "People must be greater than 0";
     }
@@ -26,6 +30,19 @@ function validateCreateReservation(req) {
     return null;
 }
 
+function validateTimeFormat(time) {
+    if(!time){
+        return "Time is required";
+    }
+
+    if(!isValidISODateTime(time)){
+        return "Time must be a valid ISO 8601 date-time string";
+    }
+
+    return null;
+}
+
 module.exports = {
-    validateCreateReservation
+    validateCreateReservation,
+    validateTimeFormat
 };

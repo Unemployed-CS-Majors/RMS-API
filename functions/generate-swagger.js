@@ -17,6 +17,15 @@ const swaggerDefinition = {
       url: 'https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app', 
     },
   ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
 };
 
 // Options for the swagger docs
