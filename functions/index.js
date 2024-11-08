@@ -40,7 +40,7 @@ const openingHoursRef = db.collection("counters").doc("dayCounter");
 initializeCounter(tableCounterRef);
 initializeCounter(openingHoursRef);
 
-const port = 3005;
+const port = 3004;
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
