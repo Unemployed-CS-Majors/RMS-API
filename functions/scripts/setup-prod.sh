@@ -1,86 +1,20 @@
 #!/bin/bash
 
 # Variables
-API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/register"
-LOGIN_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/login"
-TABLE_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/table/"
-OPENING_HOURS_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/openingHours/"
+API_URL="https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app/auth/register"
+LOGIN_URL="https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app/auth/login"
+TABLE_API_URL="https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app/table"
+OPENING_HOURS_API_URL="https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app/openingHours"
 PROJECT_ID="restaurant-management-sy-1a0cd"
 COLLECTION_NAME="users" # Firestore collection name
 FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"
 
 # User details for registration
-FIRST_NAME="Jakub"
-LAST_NAME="Olszewski"
-EMAIL="j.olszewski05@gmail.com"
-PASSWORD="qwerty123" # Ensure this meets API's password policy
-PHONE_NUMBER="+1234567890"   # Example phone number
-PRIVILEGES="owner"
+EMAIL=""
+PASSWORD="" 
 ID_TOKEN=""
 REFRESH_TOKEN=""
 
-# Function to register user via API
-register_user() {
-  echo "Registering user with the API..."
-
-  # Call the API and store the response
-  RESPONSE=$(curl -s -X POST "$API_URL" \
-    -H "Content-Type: application/json" \
-    -d '{
-      "firstName": "'"$FIRST_NAME"'",
-      "lastName": "'"$LAST_NAME"'",
-      "email": "'"$EMAIL"'",
-      "password": "'"$PASSWORD"'",
-      "phoneNumber": "'"$PHONE_NUMBER"'"
-    }')
-
-  # Check if the response is successful
-  STATUS=$(echo "$RESPONSE" | jq -r '.status')
-  if [[ "$STATUS" != "success" ]]; then
-    if [[ "$STATUS" == "error" && "$(echo "$RESPONSE" | jq -r '.message')" == "The user with the provided phone number already exists." ]]; then
-      echo "User already exists, proceeding to update privileges."
-      USER_UID=$(echo "$RESPONSE" | jq -r '.data.uid')
-    else
-      echo "Error: Registration failed."
-      echo "Response: $RESPONSE"
-      exit 1
-    fi
-  else
-    # Extract the UID from the response
-    USER_UID=$(echo "$RESPONSE" | jq -r '.data.uid')
-    echo "User registered successfully. UID: $USER_UID"
-  fi
-}
-
-# Function to update user privileges in the Firestore Emulator
-update_privileges_in_firestore_emulator() {
-  echo "Updating privileges for user with UID: $USER_UID in Firestore Emulator..."
-
-  # Prepare Firestore data with updated privileges
-  FIRESTORE_DATA=$(jq -n \
-    --arg privileges "$PRIVILEGES" \
-    '{
-      fields: {
-        privileges: { stringValue: $privileges }
-      }
-    }')
-
-  # Send PATCH request to Firestore Emulator to update privileges
-  RESPONSE=$(curl -s -X PATCH \
-    "http://$FIRESTORE_EMULATOR_HOST/v1/projects/$PROJECT_ID/databases/(default)/documents/$COLLECTION_NAME/$USER_UID?updateMask.fieldPaths=privileges" \
-    -H "Content-Type: application/json" \
-    --data "$FIRESTORE_DATA")
-
-  # Check for error in the response
-  ERROR_CODE=$(echo "$RESPONSE" | jq -r '.error.code')
-
-  if [[ "$ERROR_CODE" != "null" ]]; then
-    echo "Error updating Firestore in emulator. Response: $RESPONSE"
-    exit 1
-  else
-    echo "User privileges updated to '$PRIVILEGES' in Firestore Emulator."
-  fi
-}
 
 # Function to log in and save tokens
 login_and_save_tokens() {
@@ -174,8 +108,10 @@ add_opening_hours() {
 }
 
 # Main execution
-register_user
-update_privileges_in_firestore_emulator
+
+read -p "Enter your email: " EMAIL
+read -sp "Enter your password: " PASSWORD
+echo
 login_and_save_tokens
 add_tables
 add_opening_hours

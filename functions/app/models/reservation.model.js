@@ -27,8 +27,8 @@ class Reservation {
    */
   constructor(id, startTime, endTime, userId, tableId, people, status) {
     this.id = id;
-    this.startTime = startTime; 
-    this.endTime = endTime;     
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.userId = userId;
     this.tableId = tableId;
     this.people = people;
@@ -42,7 +42,7 @@ class Reservation {
   toFirestore() {
     return {
       startTime: dateToUnixEpoch(this.startTime),
-      endTime: dateToUnixEpoch(this.endTime),    
+      endTime: dateToUnixEpoch(this.endTime),
       userId: this.userId,
       tableId: this.tableId,
       people: this.people,
@@ -58,13 +58,13 @@ class Reservation {
   static fromFirestore(snapshot) {
     const data = snapshot.data();
     return new Reservation(
-      snapshot.id,
-      new Date(data.startTime * 1000), 
-      new Date(data.endTime * 1000),   
-      data.userId,
-      data.tableId,
-      data.people,
-      data.status
+        snapshot.id,
+        new Date(data.startTime * 1000),
+        new Date(data.endTime * 1000),
+        data.userId,
+        data.tableId,
+        data.people,
+        data.status
     );
   }
 }

@@ -5,7 +5,7 @@ const { verifyIdToken } = require("../middlewares/auth.middleware");
 const { isOwner } = require("../middlewares/privilages.middleware");
 /**
  * @swagger
- * /reservations/create:
+ * /reservation/create:
  *   post:
  *     summary: Create a new reservation
  *     description: Create a new reservation.
@@ -18,13 +18,15 @@ const { isOwner } = require("../middlewares/privilages.middleware");
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               tableId:
  *                 type: string
- *               date:
+ *               startTime:
  *                 type: string
- *               time:
+ *                 description: ISO 8601 date-time string
+ *               endTime:
  *                 type: string
- *               partySize:
+ *                 description: ISO 8601 date-time string
+ *               people:
  *                 type: integer
  *     responses:
  *       201:
@@ -38,7 +40,7 @@ router.post('/create', verifyIdToken, ReservationController.createReservation);
 
 /**
  * @swagger
- * /reservations/cancel/{reservationId}:
+ * /reservation/cancel/{reservationId}:
  *   post:
  *     summary: Cancel a reservation
  *     description: Cancel an existing reservation.
@@ -65,7 +67,7 @@ router.post('/cancel/:reservationId', verifyIdToken, ReservationController.cance
 
 /**
  * @swagger
- * /reservations/confirm/{reservationId}:
+ * /reservation/confirm/{reservationId}:
  *   post:
  *     summary: Confirm a reservation
  *     description: Confirm an existing reservation.
@@ -92,7 +94,7 @@ router.post('/confirm/:reservationId', verifyIdToken, ReservationController.conf
 
 /**
  * @swagger
- * /reservations/complete/{reservationId}:
+ * /reservation/complete/{reservationId}:
  *   post:
  *     summary: Complete a reservation
  *     description: Complete an existing reservation.
@@ -119,7 +121,7 @@ router.post('/complete/:reservationId', verifyIdToken, ReservationController.com
 
 /**
  * @swagger
- * /reservations/reschedule/{reservationId}:
+ * /reservation/reschedule/{reservationId}:
  *   post:
  *     summary: Reschedule a reservation
  *     description: Reschedule an existing reservation.
@@ -157,7 +159,7 @@ router.post('/reschedule/:reservationId', verifyIdToken, ReservationController.r
 
 /**
  * @swagger
- * /reservations/get/{reservationId}:
+ * /reservation/get/{reservationId}:
  *   get:
  *     summary: Get reservation details
  *     description: Get details of a specific reservation.
@@ -184,7 +186,7 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
 
 /**
  * @swagger
- * /reservations/user
+ * /reservation/user
  *   get:
  *     summary: Get reservations for a user
  *     description: Get all reservations for the authenticated user.
@@ -201,7 +203,7 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
 
 /**
  * @swagger
- * /reservations/free-tables:
+ * /reservation/free-tables:
  *   post:
  *     summary: Get free tables for a given time
  *     description: Get available tables for a specified time period.
@@ -214,10 +216,12 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
  *           schema:
  *             type: object
  *             properties:
- *               date:
+ *               startTime:
  *                 type: string
- *               time:
+ *                 description: ISO 8601 date-time string
+ *               endTime:
  *                 type: string
+ *                 description: ISO 8601 date-time string
  *     responses:
  *       200:
  *         description: Free tables retrieved successfully

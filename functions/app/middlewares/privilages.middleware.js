@@ -1,12 +1,20 @@
-const { createResponse } = require("../utils/responseUtil");
+const {createResponse} = require("../utils/response.utils");
 const admin = require("firebase-admin");
-const { Privileges } = require("../models/user.model");
+const {Privileges} = require("../models/user.model");
+
+/**
+ * Middleware to check if the user is an owner.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>} The result of the owner check process.
+ */
 const isOwner = (req, res, next) => {
     const idToken = req.headers.authorization?.split("Bearer ")[1];
     if (!idToken) {
-        return res.status(401).json({ error: "Unauthorized" });
+        return res.status(401).json({error: "Unauthorized"});
     }
-    
+
     admin
         .auth()
         .verifyIdToken(idToken)
@@ -34,12 +42,19 @@ const isOwner = (req, res, next) => {
         });
 }
 
+/**
+ * Middleware to check if the user is an employee.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>} The result of the employee check process.
+ */
 const isEmployee = (req, res, next) => {
     const idToken = req.headers.authorization?.split("Bearer ")[1];
     if (!idToken) {
-        return res.status(401).json({ error: "Unauthorized" });
+        return res.status(401).json({error: "Unauthorized"});
     }
-    
+
     admin
         .auth()
         .verifyIdToken(idToken)
@@ -68,5 +83,14 @@ const isEmployee = (req, res, next) => {
 }
 
 module.exports = {
-    isOwner, isEmployee
+    /**
+     * Middleware to check if the user is an owner.
+     * @type {Function}
+     */
+    isOwner,
+    /**
+     * Middleware to check if the user is an employee.
+     * @type {Function}
+     */
+    isEmployee
 };

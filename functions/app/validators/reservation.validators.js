@@ -1,9 +1,24 @@
 const { isISO8601 } = require('validator');
 
+/**
+ * Checks if the given date-time string is a valid ISO 8601 format.
+ * @param {string} dateTime - The date-time string to validate.
+ * @returns {boolean} True if the date-time string is valid ISO 8601, otherwise false.
+ */
 function isValidISODateTime(dateTime) {
     return isISO8601(dateTime);
-  }
-  
+}
+
+/**
+ * Validates the create reservation request.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The body of the request.
+ * @param {string} req.body.startTime - The start time of the reservation.
+ * @param {string} req.body.endTime - The end time of the reservation.
+ * @param {number} req.body.tableId - The ID of the table.
+ * @param {number} req.body.people - The number of people for the reservation.
+ * @returns {string|null} An error message if validation fails, otherwise null.
+ */
 function validateCreateReservation(req) {
     const { startTime, endTime, tableId, people } = req.body;
 
@@ -30,6 +45,11 @@ function validateCreateReservation(req) {
     return null;
 }
 
+/**
+ * Validates the time format.
+ * @param {string} time - The time string to validate.
+ * @returns {string|null} An error message if validation fails, otherwise null.
+ */
 function validateTimeFormat(time) {
     if(!time){
         return "Time is required";
