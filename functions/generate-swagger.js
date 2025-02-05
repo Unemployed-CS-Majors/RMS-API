@@ -8,13 +8,13 @@ const yaml = require('js-yaml');
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'RMS-API',
+    title: 'RMS API', 
     version: '1.0.0', 
-    description: 'API documentation',
+    description: 'Restaurant Management System API', 
   },
   servers: [
     {
-      url: 'http://localhost:3000', // Replace with your server URL
+      url: 'https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app', 
     },
   ],
   components: {
@@ -31,7 +31,7 @@ const swaggerDefinition = {
 // Options for the swagger docs
 const options = {
   swaggerDefinition,
-  apis: ['./app/routes/*.js'], // Adjust the path to your route files
+  apis: ['./app/routes/*.js'], 
 };
 
 // Initialize swagger-jsdoc
