@@ -22,7 +22,7 @@ module.exports = {
      * The endpoint for Firebase sign-in.
      * @type {string}
      */
-    FIREBASE_SIGNIN_ENDPOINT: signInUrl,
+    FIREBASE_SIGN_IN_ENDPOINT: signInUrl,
 
     /**
      * The endpoint for Firebase refresh token.
