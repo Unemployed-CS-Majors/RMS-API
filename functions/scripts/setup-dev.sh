@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Variables
-API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/register"
-LOGIN_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/auth/login"
-TABLE_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/table/"
-OPENING_HOURS_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/app/openingHours/"
+API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/auth/register"
+LOGIN_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/auth/login"
+TABLE_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/table/"
+OPENING_HOURS_API_URL="http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/openingHours/"
 PROJECT_ID="restaurant-management-sy-1a0cd"
 COLLECTION_NAME="users" # Firestore collection name
 FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"

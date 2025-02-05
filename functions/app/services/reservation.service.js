@@ -1,4 +1,3 @@
-const admin = require("firebase-admin");
 const {Reservation, ReservationStatus} = require("../models/reservation.model");
 const {db} = require("../config/firebase.config");
 

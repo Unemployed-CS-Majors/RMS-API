@@ -1,4 +1,3 @@
-const admin = require("firebase-admin");
 const {createResponse} = require("../utils/response.utils");
 const {validateCreateTable} = require("../validators/table.validators");
 const TableService = require("../services/table.service");
