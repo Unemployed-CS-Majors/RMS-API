@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 
 const authRouter = require("./app/routes/auth.router");
 const tableRouter = require("./app/routes/table.router");
@@ -8,7 +9,7 @@ const reservationRouter = require("./app/routes/reservation.router");
 const { setupCounters } = require("./app/utils/counter.utils");
 
 const app = express();
-
+app.use(cors());
 /**
  * Use the authentication router for handling authentication-related routes.
  */
