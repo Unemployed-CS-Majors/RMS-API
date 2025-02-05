@@ -8,7 +8,7 @@ const yaml = require('js-yaml');
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Your API Name', 
+    title: 'RMS-API',
     version: '1.0.0', 
     description: 'API documentation',
   },

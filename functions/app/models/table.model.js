@@ -17,6 +17,7 @@ class Table {
         this.seats = seats;
         /** @type {boolean} */
         this.nextToWindow = nextToWindow;
+        /** @type {boolean} */
         this.isActive = isActive;
     }
 
@@ -29,7 +30,7 @@ class Table {
             id: this.id,
             seats: this.seats,
             nextToWindow: this.nextToWindow,
-            isActive: true
+            isActive: this.isActive
         };
     }
 

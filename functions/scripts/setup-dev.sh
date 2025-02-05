@@ -14,7 +14,7 @@ FIRST_NAME="Jakub"
 LAST_NAME="Olszewski"
 EMAIL="j.olszewski05@gmail.com"
 PASSWORD="qwerty123" # Ensure this meets API's password policy
-PHONE_NUMBER="+1234567890"   # Example phone number
+PHONE_NUMBER="+48504207910"   # Example phone number
 PRIVILEGES="owner"
 ID_TOKEN=""
 REFRESH_TOKEN=""
@@ -175,7 +175,7 @@ add_opening_hours() {
 
 # Main execution
 register_user
-update_privileges_in_firestore_emulator
+#update_privileges_in_firestore_emulator
 login_and_save_tokens
 add_tables
 add_opening_hours
