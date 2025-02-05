@@ -1,4 +1,4 @@
-const admin = require('firebase-admin');
+const { getAuth } = require("firebase-admin/auth");
 const { createResponse } = require("../utils/response.utils");
 
 /**
@@ -9,13 +9,13 @@ const { createResponse } = require("../utils/response.utils");
  * @returns {Promise<void>} The result of the token verification process.
  */
 const verifyIdToken = async (req, res, next) => {
-  const idToken = req.headers.authorization?.split('Bearer ')[1];
+  const idToken = req.headers.authorization?.split("Bearer ")[1];
   if (!idToken) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await getAuth().verifyIdToken(idToken);
     req.user = decodedToken;
     next();
   } catch (error) {

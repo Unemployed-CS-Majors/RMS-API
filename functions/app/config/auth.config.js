@@ -1,13 +1,12 @@
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB ? true : false;
-const functions = require('firebase-functions');
-
+const { config } = require("firebase-functions");
 /**
  * Determines the sign-in URL based on whether the Firebase emulator is being used.
  * @type {string}
  */
 let signInUrl = isEmulator
     ? "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=test"
-    : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + functions.config().rms.client_auth_api_key_auth;
+    : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + process.env.CLIENT_AUTH_API_KEY;
 
 /**
  * Determines the refresh token URL based on whether the Firebase emulator is being used.
@@ -15,7 +14,7 @@ let signInUrl = isEmulator
  */
 let refreshTokenUrl = isEmulator
     ? "http://localhost:9099/securetoken.googleapis.com/v1/token?key=test"
-    : "https://securetoken.googleapis.com/v1/token?key=" + functions.config().rms.client_auth_api_key_auth;
+    : "https://securetoken.googleapis.com/v1/token?key=" + process.env.CLIENT_AUTH_API_KEY;
 
 module.exports = {
     /**
@@ -29,4 +28,5 @@ module.exports = {
      * @type {string}
      */
     FIREBASE_REFRESH_TOKEN_URL: refreshTokenUrl,
+    isEmulator
 };

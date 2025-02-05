@@ -7,7 +7,6 @@ const functions = require('firebase-functions');
 const TEMPLATE_ID_PENDING = "351ndgwooon4zqx8";
 const TEMPLATE_ID_CONFIRMED = "z3m5jgr111d4dpyo";
 const TEMPLATE_ID_CANCELLED = "neqvygm555j40p7w";
-const TOKEN = 'mlsn.a809d7368a92a172bbf27ebba27780b74207ae48468dd34e30d3745a0f7a8329'
 class EmailService {
     /**
      * Sends a reservation confirmation email with status pending.
@@ -61,7 +60,7 @@ class EmailService {
                     headers: {
                         "Content-Type": "application/json",
                         "X-Requested-With": "XMLHttpRequest",
-                        "Authorization": `Bearer ${TOKEN}`
+                        "Authorization": `Bearer ${process.env.MAILER_SEND_API_KEY}`
                     }
                 }
             );
@@ -125,7 +124,7 @@ class EmailService {
                     headers: {
                         "Content-Type": "application/json",
                         "X-Requested-With": "XMLHttpRequest",
-                        "Authorization": `Bearer ${TOKEN}`
+                        "Authorization": `Bearer ${process.env.MAILER_SEND_API_KEY}`
                     }
                 }
             );
@@ -189,7 +188,7 @@ class EmailService {
                     headers: {
                         "Content-Type": "application/json",
                         "X-Requested-With": "XMLHttpRequest",
-                        "Authorization": `Bearer ${TOKEN}`
+                        "Authorization": `Bearer ${process.env.MAILER_SEND_API_KEY}`
                     }
                 }
             );

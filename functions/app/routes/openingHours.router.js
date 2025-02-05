@@ -3,8 +3,8 @@ const router = express.Router();
 const OpeningHoursController = require("../controllers/openingHours.controller");
 
 // Import middlewares
-const { verifyIdToken } = require("../middlewares/auth.middleware");
-const { isOwner } = require("../middlewares/privilages.middleware");
+const {verifyIdToken} = require("../middlewares/auth.middleware");
+const {isOwner} = require("../middlewares/privilages.middleware");
 
 /**
  * @swagger
@@ -91,10 +91,10 @@ router.get("/", OpeningHoursController.getAllOpeningHours);
  *         description: Forbidden
  */
 router.post(
-  "/",
-  verifyIdToken,
-  isOwner,
-  OpeningHoursController.createOpeningHours
+    "/",
+    verifyIdToken,
+    isOwner,
+    OpeningHoursController.createOpeningHours
 );
 
 /**
@@ -138,10 +138,10 @@ router.post(
  *         description: Opening hours not found
  */
 router.put(
-  "/:id",
-  verifyIdToken,
-  isOwner,
-  OpeningHoursController.updateOpeningHours
+    "/:id",
+    verifyIdToken,
+    isOwner,
+    OpeningHoursController.updateOpeningHours
 );
 
 /**
@@ -170,10 +170,10 @@ router.put(
  *         description: Opening hours not found
  */
 router.delete(
-  "/:id",
-  verifyIdToken,
-  isOwner,
-  OpeningHoursController.deleteOpeningHours
+    "/:id",
+    verifyIdToken,
+    isOwner,
+    OpeningHoursController.deleteOpeningHours
 );
 
 module.exports = router;

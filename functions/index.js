@@ -4,4 +4,4 @@ const app = require("./app");
 /**
  * Cloud Function to handle HTTP requests and route them to the Express app.
  */
-exports.app = onRequest(app);
+exports.api = onRequest(app);

@@ -1,10 +1,8 @@
-const admin = require("firebase-admin");
+const { initializeApp } = require("firebase-admin/app");
+const { getFirestore } = require("firebase-admin/firestore");
 
-if (admin.apps.length === 0) {
-    admin.initializeApp();
-}
+// Initialize Firebase Admin
+const app = initializeApp();
+const db = getFirestore(app);
 
-/** @type {import('firebase-admin').firestore.Firestore} */
-const db = admin.firestore();
-
-module.exports = { admin, db };
+module.exports = { app, db };
