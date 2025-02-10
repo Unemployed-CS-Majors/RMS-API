@@ -7,6 +7,7 @@ const UserService = require("../services/user.service");
 const TableService = require("../services/table.service");
 const ReservationService = require("../services/reservation.service");
 const {ReservationStatus} = require("../models/reservation.model");
+const {log} = require("firebase-functions/logger");
 
 /**
  * Controller for handling reservation-related operations.
