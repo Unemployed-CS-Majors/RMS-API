@@ -5,6 +5,7 @@ const authRouter = require("./app/routes/auth.router");
 const tableRouter = require("./app/routes/table.router");
 const openingHoursRouter = require("./app/routes/openingHours.router");
 const reservationRouter = require("./app/routes/reservation.router");
+const userRouter = require("./app/routes/user.router");
 
 const { setupCounters } = require("./app/utils/counter.utils");
 
@@ -29,6 +30,11 @@ app.use("/openingHours", openingHoursRouter);
  * Use the reservation router for handling reservation-related routes.
  */
 app.use("/reservation", reservationRouter);
+
+/**
+ * Use the user router for handling user-related routes.
+ */
+app.use("/user", userRouter);
 
 /**
  * Middleware to handle 404 errors for undefined routes.
