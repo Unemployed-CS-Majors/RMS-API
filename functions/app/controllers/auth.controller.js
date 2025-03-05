@@ -57,6 +57,14 @@ class AuthController {
             res.status(500).json(createResponse("error", result.error, null));
         }
     }
+
+    static async createEmployee(req, res) {
+
+    }
+
+    static async deleteEmployee(req, res) {
+
+    }
 }
 
 module.exports = AuthController;

@@ -8,6 +8,7 @@ const TableService = require("../services/table.service");
 const ReservationService = require("../services/reservation.service");
 const {ReservationStatus} = require("../models/reservation.model");
 const {log} = require("firebase-functions/logger");
+const userService = require("../services/user.service");
 
 /**
  * Controller for handling reservation-related operations.
@@ -235,8 +236,6 @@ class ReservationController {
         }
 
         try {
-
-
             const updateReservationStatus = await ReservationService.rescheduleReservation(reservationId, tableId, startTime, endTime);
             if (updateReservationStatus) {
                 return res
@@ -345,9 +344,44 @@ class ReservationController {
     static async getAllReservations(req, res) {
         try {
             const reservations = await ReservationService.getAllReservations();
-            return res.status(200).json(createResponse("success", null, reservations));
+            const reservationsWithUser = [];
+            for (const reservation of reservations) {
+                const user = await userService.getUser(reservation.userId);
+                reservation.fullName = user.firstName + ' ' + user.lastName;
+                reservation.email = user.email;
+                reservation.phoneNumber = user.phoneNumber;
+                reservationsWithUser.push(reservation);
+            }
+
+            return res.status(200).json(createResponse("success", null, reservationsWithUser));
         } catch (error) {
             console.error("Error getting all reservations", error);
+            return res.status(500).json(createResponse("error", error.message));
+        }
+    }
+
+    static async getReservationByStatus(req, res) {
+        const {status} = req.params;
+        if (!status) {
+            return res
+                .status(400)
+                .json(createResponse("error", "Status is required", null));
+        }
+
+        try {
+            const reservations = await ReservationService.getReservationByStatus(status);
+            const reservationsWithUser = [];
+            for (const reservation of reservations) {
+                const user = await userService.getUser(reservation.userId);
+                reservation.fullName = user.firstName + ' ' + user.lastName;
+                reservation.email = user.email;
+                reservation.phoneNumber = user.phoneNumber;
+                reservationsWithUser.push(reservation);
+            }
+
+            return res.status(200).json(createResponse("success", null, reservationsWithUser));
+        } catch (error) {
+            console.error("Error getting reservations by status", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }

@@ -6,8 +6,13 @@ const tableRouter = require("./app/routes/table.router");
 const openingHoursRouter = require("./app/routes/openingHours.router");
 const reservationRouter = require("./app/routes/reservation.router");
 const userRouter = require("./app/routes/user.router");
+const windowRouter = require("./app/routes/window.router");
+const wallRouter = require("./app/routes/wall.router");
+const doorRouter = require("./app/routes/door.router");
+const floorPlanRouter = require("./app/routes/floorPlan.router");
 
-const { setupCounters } = require("./app/utils/counter.utils");
+
+const {setupCounters} = require("./app/utils/counter.utils");
 
 const app = express();
 app.use(cors());
@@ -36,13 +41,18 @@ app.use("/reservation", reservationRouter);
  */
 app.use("/user", userRouter);
 
+app.use("/windows", windowRouter);
+app.use("/walls", wallRouter);
+app.use("/doors", doorRouter);
+app.use("/floorPlan", floorPlanRouter);
+
 /**
  * Middleware to handle 404 errors for undefined routes.
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  */
 app.use((req, res) => {
-    res.status(404).json({ error: "Endpoint not found" });
+    res.status(404).json({error: "Endpoint not found"});
 });
 
 /**

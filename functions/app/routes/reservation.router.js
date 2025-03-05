@@ -234,5 +234,6 @@ router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableFor
 
 router.get('/all', verifyIdToken, isOwner, ReservationController.getAllReservations);
 
+router.get('/:status', verifyIdToken, isOwner, ReservationController.getReservationByStatus);
 
 module.exports = router;
