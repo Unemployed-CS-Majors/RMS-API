@@ -2,62 +2,6 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/auth.controller');
 const {isOwner} = require("../middlewares/privilages.middleware");
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
-
-// Initialize Passport middleware
-router.use(passport.initialize());
-
-// Configure Passport to use the Google strategy.
-passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,            // Set in your environment
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,    // Set in your environment
-        callbackURL: "/auth/google/callback"               // Google will redirect to this URL after consent
-    },
-    async (accessToken, refreshToken, profile, done) => {
-        try {
-            let userRecord;
-            try {
-                // Try to fetch the user by their Google email
-                userRecord = await getAuth().getUserByEmail(profile.emails[0].value);
-            } catch (error) {
-                // If the user doesn't exist, create a new Firebase user.
-                userRecord = await getAuth().createUser({
-                    email: profile.emails[0].value,
-                    displayName: profile.displayName,
-                    emailVerified: true,
-                });
-                // Create a corresponding Firestore document.
-                const user = new User(
-                    userRecord.uid,
-                    profile.name.givenName,
-                    profile.name.familyName,
-                    profile.emails[0].value,
-                    null, // No phone number available from Google profile.
-                    Privileges.CUSTOMER  // Or set a default role as needed.
-                );
-                await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
-            }
-            return done(null, userRecord);
-        } catch (err) {
-            return done(err);
-        }
-    }
-));
-
-// Serialize and deserialize user (for session management if needed)
-passport.serializeUser((user, done) => {
-    done(null, user.uid);
-});
-passport.deserializeUser(async (uid, done) => {
-    try {
-        const userRecord = await getAuth().getUser(uid);
-        done(null, userRecord);
-    } catch (err) {
-        done(err);
-    }
-});
 
 /**
  * @swagger
@@ -238,5 +182,30 @@ router.post('/createOwner', isOwner, AuthController.createOwner);
  *         description: Internal server error
  */
 router.delete('/deleteEmployee/:uid', isOwner, AuthController.deleteEmployee);
+
+/**
+ * @swagger
+ * /auth/google:
+ *   post:
+ *     summary: Sign in with Google
+ *     description: Accepts an ID token from the client after Google sign-in via Firebase Auth.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Google sign-in successful
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/google', AuthController.googleAuth);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const { validateRegister, validateLogin, validateRefreshToken } = require("../va
 const { createResponse } = require("../utils/response.utils");
 const {Privileges} = require("../models/user.model");
 const {changePrivilege} = require("../services/user.service");
+const {log} = require("firebase-functions/logger");
 
 class AuthController {
     static async register(req, res) {
@@ -101,6 +102,30 @@ class AuthController {
         } catch (error) {
             console.error("Error deleting employee", error);
             return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+    /**
+     * Handles Google sign-in.
+     * Expects a JSON body with the Firebase ID token obtained from the client.
+     * Verifies the token, creates the user record if necessary, exchanges the custom token for tokens,
+     * and returns the access (ID) token and refresh token.
+     */
+    static async googleAuth(req, res) {
+        const { idToken } = req.body;
+        if (!idToken) {
+            return res.status(400).json(createResponse("error", "ID token is required", null));
+        }
+        log("Google ID token:", idToken);
+        const result = await AuthService.signInWithGoogle(idToken);
+        if (result.success) {
+            res.status(200).json(createResponse("success", "Google sign-in successful", {
+                uid: result.uid,
+                idToken: result.idToken,
+                refreshToken: result.refreshToken,
+            }));
+        } else {
+            res.status(500).json(createResponse("error", result.error, null));
         }
     }
 }

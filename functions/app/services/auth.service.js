@@ -1,8 +1,15 @@
 const axios = require("axios");
-const { getAuth } = require("firebase-admin/auth");
-const { User, Privileges } = require("../models/user.model");
-const { db } = require("../config/firebase.config");
-const { FIREBASE_REFRESH_TOKEN_URL, FIREBASE_SIGN_IN_ENDPOINT, isEmulator } = require("../config/auth.config");
+const {getAuth} = require("firebase-admin/auth");
+const {User, Privileges} = require("../models/user.model");
+const {db} = require("../config/firebase.config");
+const {
+    FIREBASE_REFRESH_TOKEN_URL,
+    FIREBASE_SIGN_IN_WITH_CUSTOM_TOKEN,
+    FIREBASE_SIGN_IN_ENDPOINT,
+    isEmulator
+} = require("../config/auth.config");
+const {log} = require("firebase-functions/logger");
+
 
 /**
  * AuthService class provides methods for user authentication and management.
@@ -18,7 +25,7 @@ class AuthService {
      * @param {string} userDetails.phoneNumber - The phone number of the user.
      * @returns {Promise<Object>} The result of the user creation.
      */
-    static async createUser({ firstName, lastName, email, password, phoneNumber }) {
+    static async createUser({firstName, lastName, email, password, phoneNumber}) {
         try {
             const userRecord = await getAuth().createUser({
                 email,
@@ -32,9 +39,9 @@ class AuthService {
             const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, isEmulator ? Privileges.OWNER : Privileges.CUSTOMER);
             await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
-            return { success: true, uid: userRecord.uid };
+            return {success: true, uid: userRecord.uid};
         } catch (error) {
-            return { success: false, error: error.message };
+            return {success: false, error: error.message};
         }
     }
 
@@ -45,7 +52,7 @@ class AuthService {
      * @param {string} credentials.password - The password of the user.
      * @returns {Promise<Object>} The result of the login attempt.
      */
-    static async loginUser({ email, password }) {
+    static async loginUser({email, password}) {
         try {
             const response = await axios.post(FIREBASE_SIGN_IN_ENDPOINT, {
                 email,
@@ -60,7 +67,7 @@ class AuthService {
                 refreshToken: response.data.refreshToken,
             };
         } catch (error) {
-            return { success: false, error: error.response ? error.response.data : error.message };
+            return {success: false, error: error.response ? error.response.data : error.message};
         }
     }
 
@@ -82,7 +89,7 @@ class AuthService {
                 refreshToken: response.data.refresh_token,
             };
         } catch (error) {
-            return { success: false, error: error.response ? error.response.data : error.message };
+            return {success: false, error: error.response ? error.response.data : error.message};
         }
     }
 
@@ -96,7 +103,7 @@ class AuthService {
      * @param {string} userDetails.phoneNumber - The phone number of the employee.
      * @returns {Promise<Object>} The reszult of the employee creation.
      */
-    static async createEmployee({ firstName, lastName, email, password, phoneNumber }) {
+    static async createEmployee({firstName, lastName, email, password, phoneNumber}) {
         try {
             const userRecord = await getAuth().createUser({
                 email,
@@ -110,9 +117,9 @@ class AuthService {
             const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, Privileges.EMPLOYEE);
             await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
-            return { success: true, uid: userRecord.uid };
+            return {success: true, uid: userRecord.uid};
         } catch (error) {
-            return { success: false, error: error.message };
+            return {success: false, error: error.message};
         }
     }
 
@@ -126,7 +133,7 @@ class AuthService {
      * @param {string} userDetails.phoneNumber - The phone number of the owner.
      * @returns {Promise<Object>} The result of the owner creation.
      */
-    static async createOwner({ firstName, lastName, email, password, phoneNumber }) {
+    static async createOwner({firstName, lastName, email, password, phoneNumber}) {
         try {
             const userRecord = await getAuth().createUser({
                 email,
@@ -140,9 +147,64 @@ class AuthService {
             const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, Privileges.OWNER);
             await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
-            return { success: true, uid: userRecord.uid };
+            return {success: true, uid: userRecord.uid};
         } catch (error) {
-            return { success: false, error: error.message };
+            return {success: false, error: error.message};
+        }
+    }
+
+    /**
+     * Signs in a user using a Google ID token from the client.
+     * If the user does not exist, creates a new account.
+     * Exchanges the custom token for an access (ID) token and refresh token.
+     * @param {string} idToken - The ID token from Firebase Authentication (Google sign-in).
+     * @returns {Promise<Object>} The result including uid, idToken, and refreshToken.
+     */
+    static async signInWithGoogle(idToken) {
+        try {
+            // Verify the client ID token received from the frontend.
+            const decodedToken = await getAuth().verifyIdToken(idToken);
+            const uid = decodedToken.uid;
+            // Check if a Firestore user document exists.
+            const userDoc = await db.collection("users").doc(uid).get();
+            if (!userDoc.exists) {
+                // Extract details from the decoded token.
+                const fullName = decodedToken.name || "";
+                const names = fullName.split(" ");
+                const firstName = names[0] || "";
+                const lastName = names.slice(1).join(" ") || "";
+                const email = decodedToken.email;
+                const phoneNumber = decodedToken.phone_number || null;
+
+                // Create a new user record in Firebase Auth and Firestore.
+                const user = new User(
+                    uid,
+                    firstName,
+                    lastName,
+                    email,
+                    phoneNumber,
+                    isEmulator ? Privileges.OWNER : Privileges.CUSTOMER
+                );
+                await db.collection("users").doc(uid).set(user.toFirestore());
+            }
+
+            // Generate a custom token using Firebase Admin SDK.
+            const customToken = await getAuth().createCustomToken(uid);
+
+            // Exchange the custom token for an ID token and refresh token using Firebase REST API.
+            const signInResponse = await axios.post(FIREBASE_SIGN_IN_WITH_CUSTOM_TOKEN, {
+                token: customToken,
+                returnSecureToken: true,
+            });
+
+            return {
+                success: true,
+                uid,
+                idToken: signInResponse.data.idToken,
+                refreshToken: signInResponse.data.refreshToken,
+            };
+        } catch (error) {
+            return {success: false, error: error.message};
         }
     }
 }
