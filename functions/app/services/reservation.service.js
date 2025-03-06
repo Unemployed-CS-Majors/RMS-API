@@ -168,6 +168,18 @@ class ReservationService {
 
         return reservations;
     }
+
+    static async getReservationByStatus(status) {
+        const reservationsRef = db.collection("reservations");
+        const query = await reservationsRef.where("status", "==", status).get();
+        const reservations = [];
+
+        query.forEach((doc) => {
+            reservations.push(Reservation.fromFirestore(doc));
+        });
+
+        return reservations;
+    }
 }
 
 module.exports = ReservationService;

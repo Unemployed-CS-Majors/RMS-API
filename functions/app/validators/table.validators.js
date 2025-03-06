@@ -7,9 +7,9 @@
  * @returns {string|null} An error message if validation fails, otherwise null.
  */
 function validateCreateTable(req) {
-    const { seats, nextToWindow } = req.body;
+    const {seats, nextToWindow, x, y, rotation, type} = req.body;
 
-    if (seats === undefined || nextToWindow === undefined) {
+    if (seats === undefined || nextToWindow === undefined || x === undefined || y === undefined || rotation === undefined || type === undefined) {
         return "All fields are required";
     }
 
@@ -18,7 +18,23 @@ function validateCreateTable(req) {
     }
 
     if (typeof nextToWindow !== 'boolean') {
-        return "Next to window must be a boolean";
+        return "z to window must be a boolean";
+    }
+
+    if (!Number.isInteger(x)) {
+        return "x must be an integer";
+    }
+
+    if (!Number.isInteger(y)) {
+        return "y must be an integer";
+    }
+
+    if (!Number.isInteger(rotation)) {
+        return "rotation must be an integer";
+    }
+
+    if (typeof type !== 'string') {
+        return "type must be a string";
     }
 
     return null;

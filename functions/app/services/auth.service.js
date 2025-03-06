@@ -60,6 +60,46 @@ class AuthService {
             return { success: false, error: error.response ? error.response.data : error.message };
         }
     }
+
+    static async createEmployee({ firstName, lastName, email, password, phoneNumber }) {
+        try {
+            const userRecord = await getAuth().createUser({
+                email,
+                emailVerified: false,
+                phoneNumber,
+                password,
+                displayName: `${firstName} ${lastName}`,
+                disabled: false,
+            });
+
+            const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, Privileges.EMPLOYEE);
+            await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
+
+            return { success: true, uid: userRecord.uid };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    static async createOwner({ firstName, lastName, email, password, phoneNumber }) {
+        try {
+            const userRecord = await getAuth().createUser({
+                email,
+                emailVerified: false,
+                phoneNumber,
+                password,
+                displayName: `${firstName} ${lastName}`,
+                disabled: false,
+            });
+
+            const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, Privileges.OWNER);
+            await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
+
+            return { success: true, uid: userRecord.uid };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
 }
 
 module.exports = AuthService;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/auth.controller');
+const {isOwner} = require("../middlewares/privilages.middleware");
 
 /**
  * @swagger
@@ -86,5 +87,9 @@ router.post('/login', AuthController.login);
  *         description: Internal server error
  */
 router.post('/refreshToken', AuthController.refreshToken);
+
+router.post('/createEmployee',isOwner, AuthController.createEmployee);
+router.post('/createOwner',isOwner, AuthController.createOwner);
+router.delete('/deleteEmployee/:uid',isOwner, AuthController.deleteEmployee);
 
 module.exports = router;

@@ -9,8 +9,10 @@ class Table {
      * @param {number} seats - The number of seats at the table.
      * @param {boolean} nextToWindow - Indicates if the table is next to a window.
      * @param {boolean} isActive - Indicates if the table is active.
+     * @param x
+     * @param y
      */
-    constructor(id, seats, nextToWindow, isActive) {
+    constructor(id, seats, nextToWindow, isActive, x, y, rotation,type) {
         /** @type {number} */
         this.id = id;
         /** @type {number} */
@@ -19,6 +21,14 @@ class Table {
         this.nextToWindow = nextToWindow;
         /** @type {boolean} */
         this.isActive = isActive;
+        /** @type {number} */
+        this.x = x;
+        /** @type {number} */
+        this.y = y;
+        /** @type {number} */
+        this.rotation = rotation;
+        /** @type {string} */
+        this.type = type
     }
 
     /**
@@ -30,7 +40,11 @@ class Table {
             id: this.id,
             seats: this.seats,
             nextToWindow: this.nextToWindow,
-            isActive: this.isActive
+            isActive: this.isActive,
+            x: this.x,
+            y: this.y,
+            rotation: this.rotation,
+            type: this.type
         };
     }
 
@@ -45,9 +59,13 @@ class Table {
             data.id,
             data.seats,
             data.nextToWindow,
-            data.isActive
+            data.isActive,
+            data.x,
+            data.y,
+            data.rotation,
+            data.type
         );
     }
 }
 
-module.exports = { Table };
+module.exports = {Table};

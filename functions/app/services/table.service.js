@@ -40,7 +40,7 @@ class TableService {
      * @throws Will throw an error if the counter document does not exist.
      */
     static async createTable(tableData) {
-        const {seats, nextToWindow} = tableData;
+        const {seats, nextToWindow, x,y,rotation,type} = tableData;
         const tableRef = db.collection("tables");
         const counterRef = db.collection('counters').doc('tableCounter');
 
@@ -51,7 +51,7 @@ class TableService {
             }
 
             const newId = counterDoc.data().count + 1;
-            const table = new Table(newId, seats, nextToWindow, true);
+            const table = new Table(newId, seats, nextToWindow, true,x,y,rotation,type);
 
             transaction.update(counterRef, {count: newId});
             transaction.set(tableRef.doc(newId.toString()), table.toFirestore());

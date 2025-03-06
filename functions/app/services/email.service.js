@@ -26,7 +26,7 @@ class EmailService {
 
         const data = {
             from: {
-                email: "MS_s542EN@trial-neqvygmp3k5g0p7w.mlsender.net"
+                email: "MS_LIbjGl@bushive.app"
             },
             to: [
                 {
@@ -90,7 +90,7 @@ class EmailService {
 
         const data = {
             from: {
-                email: "MS_s542EN@trial-neqvygmp3k5g0p7w.mlsender.net"
+                email: "MS_LIbjGl@bushive.app"
             },
             to: [
                 {
@@ -154,7 +154,7 @@ class EmailService {
 
         const data = {
             from: {
-                email: "MS_s542EN@trial-neqvygmp3k5g0p7w.mlsender.net"
+                email: "MS_LIbjGl@bushive.app"
             },
             to: [
                 {
