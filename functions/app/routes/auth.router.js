@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/auth.controller');
 const {isOwner} = require("../middlewares/privilages.middleware");
+const {verifyIdToken} = require("../middlewares/auth.middleware");
 
 /**
  * @swagger
@@ -207,5 +208,46 @@ router.delete('/deleteEmployee/:uid', isOwner, AuthController.deleteEmployee);
  *         description: Internal server error
  */
 router.post('/google', AuthController.googleAuth);
+
+/**
+ * @swagger
+ * /auth/forgotPassword:
+ *   post:
+ *     summary: Send a password reset email
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Password reset email sent
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/forgotPassword', AuthController.forgotPassword);
+
+/**
+ * @swagger
+ * /auth/deleteAccount:
+ *   delete:
+ *     summary: Delete the authenticated user's account
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Account deleted successfully
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/deleteAccount',verifyIdToken, AuthController.deleteAccount);
 
 module.exports = router;

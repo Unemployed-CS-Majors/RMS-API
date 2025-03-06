@@ -9,7 +9,7 @@ const {
     isEmulator
 } = require("../config/auth.config");
 const {log} = require("firebase-functions/logger");
-
+const {isValidEmail} = require("../validators/auth.validators");
 
 /**
  * AuthService class provides methods for user authentication and management.
@@ -205,6 +205,39 @@ class AuthService {
             };
         } catch (error) {
             return {success: false, error: error.message};
+        }
+    }
+
+    /**
+     * Sends a password reset email to the user.
+     * @param {string} email - The email of the user requesting password reset.
+     * @returns {Promise<Object>} The result of the password reset attempt.
+     */
+    static async forgotPassword(email) {
+        try {
+            const validationError = isValidEmail(email);
+            if (validationError) {
+                return { success: false, error: validationError };
+            }
+            await getAuth().sendPasswordResetEmail(email);
+            return { success: true, message: "Password reset email sent." };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    /**
+     * Deletes a user account from Firebase Authentication and Firestore.
+     * @param {string} uid - The UID of the user to delete.
+     * @returns {Promise<Object>} The result of the delete attempt.
+     */
+    static async deleteAccount(uid) {
+        try {
+            await getAuth().deleteUser(uid);
+            await db.collection("users").doc(uid).delete();
+            return { success: true, message: "User account deleted successfully." };
+        } catch (error) {
+            return { success: false, error: error.message };
         }
     }
 }

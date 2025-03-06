@@ -4,6 +4,7 @@ const { createResponse } = require("../utils/response.utils");
 const {Privileges} = require("../models/user.model");
 const {changePrivilege} = require("../services/user.service");
 const {log} = require("firebase-functions/logger");
+const UserService = require("../services/user.service");
 
 class AuthController {
     static async register(req, res) {
@@ -126,6 +127,30 @@ class AuthController {
             }));
         } else {
             res.status(500).json(createResponse("error", result.error, null));
+        }
+    }
+
+    static async forgotPassword(req, res) {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json(createResponse("error", "Email is required", null));
+        }
+        const result = await AuthService.forgotPassword(email);
+        if (result.success) {
+            res.status(200).json(createResponse("success", "Password reset email sent", null));
+        } else {
+            res.status(500).json(createResponse("error", result.error, null));
+        }
+    }
+
+    static async deleteAccount(req, res) {
+        try {
+            const userId = await UserService.verifyUser(req);
+            await AuthService.deleteAccount(userId);
+            return res.status(200).json(createResponse("success", "Account deleted successfully", null));
+        } catch (error) {
+            console.error("Error deleting account", error);
+            return res.status(500).json(createResponse("error", error.message, null));
         }
     }
 }
