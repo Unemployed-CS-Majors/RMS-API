@@ -7,119 +7,161 @@ const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: Walls
- *   description: Wall management
- */
-
-/**
- * @swagger
- * /walls:
+ * /windows:
  *   get:
- *     summary: Retrieve a list of walls
- *     tags: [Walls]
+ *     summary: Retrieve a list of all windows
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Windows
  *     responses:
  *       200:
- *         description: A list of walls
+ *         description: A list of windows
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Wall'
+ *                 $ref: '#/components/schemas/Window'
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
 router.get('/', verifyIdToken, isOwner, WindowController.getAllWindows);
 
 /**
  * @swagger
- * /walls/{windowId}:
+ * /windows/{windowId}:
  *   get:
- *     summary: Retrieve a single wall
- *     tags: [Walls]
+ *     summary: Retrieve a window by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Windows
  *     parameters:
  *       - in: path
  *         name: windowId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The wall ID
+ *         description: The ID of the window to retrieve
  *     responses:
  *       200:
- *         description: A single wall
+ *         description: The window details
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Wall'
+ *               $ref: '#/components/schemas/Window'
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Window not found
  */
 router.get('/:windowId', verifyIdToken, isOwner, WindowController.getWindow);
 
 /**
  * @swagger
- * /walls:
+ * /windows:
  *   post:
- *     summary: Create a new wall
- *     tags: [Walls]
+ *     summary: Create a new window
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Windows
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Wall'
+ *             $ref: '#/components/schemas/Window'
  *     responses:
  *       201:
- *         description: The created wall
+ *         description: Window created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Wall'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the newly created window
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
 router.post('/', verifyIdToken, isOwner, WindowController.createWindow);
 
 /**
  * @swagger
- * /walls/{windowId}:
+ * /windows/{windowId}:
  *   put:
- *     summary: Update an existing wall
- *     tags: [Walls]
+ *     summary: Update a window by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Windows
  *     parameters:
  *       - in: path
  *         name: windowId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The wall ID
+ *         description: The ID of the window to update
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Wall'
+ *             $ref: '#/components/schemas/Window'
  *     responses:
  *       200:
- *         description: The updated wall
+ *         description: Window updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Wall'
+ *               $ref: '#/components/schemas/Window'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Window not found
  */
 router.put('/:windowId', verifyIdToken, isOwner, WindowController.updateWindow);
 
 /**
  * @swagger
- * /walls/{windowId}:
+ * /windows/{windowId}:
  *   delete:
- *     summary: Delete a wall
- *     tags: [Walls]
+ *     summary: Delete a window by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Windows
  *     parameters:
  *       - in: path
  *         name: windowId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The wall ID
+ *         description: The ID of the window to delete
  *     responses:
- *       204:
- *         description: No content
+ *       200:
+ *         description: Window deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Window not found
  */
 router.delete('/:windowId', verifyIdToken, isOwner, WindowController.deleteWindow);
 

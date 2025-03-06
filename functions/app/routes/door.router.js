@@ -7,17 +7,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: Doors
- *   description: Door management
- */
-
-/**
- * @swagger
  * /doors:
  *   get:
- *     summary: Retrieve a list of doors
- *     tags: [Doors]
+ *     summary: Retrieve a list of all doors
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doors
  *     responses:
  *       200:
  *         description: A list of doors
@@ -27,6 +23,10 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Door'
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
 router.get('/', verifyIdToken, isOwner, DoorController.getAllDoors);
 
@@ -34,22 +34,31 @@ router.get('/', verifyIdToken, isOwner, DoorController.getAllDoors);
  * @swagger
  * /doors/{doorId}:
  *   get:
- *     summary: Retrieve a single door
- *     tags: [Doors]
+ *     summary: Retrieve a door by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doors
  *     parameters:
  *       - in: path
  *         name: doorId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The door ID
+ *         description: The ID of the door to retrieve
  *     responses:
  *       200:
- *         description: A single door
+ *         description: The door details
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Door'
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Door not found
  */
 router.get('/:doorId', verifyIdToken, isOwner, DoorController.getDoor);
 
@@ -58,7 +67,10 @@ router.get('/:doorId', verifyIdToken, isOwner, DoorController.getDoor);
  * /doors:
  *   post:
  *     summary: Create a new door
- *     tags: [Doors]
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doors
  *     requestBody:
  *       required: true
  *       content:
@@ -67,11 +79,21 @@ router.get('/:doorId', verifyIdToken, isOwner, DoorController.getDoor);
  *             $ref: '#/components/schemas/Door'
  *     responses:
  *       201:
- *         description: The created door
+ *         description: Door created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Door'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the newly created door
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
 router.post('/', verifyIdToken, isOwner, DoorController.createDoor);
 
@@ -79,15 +101,18 @@ router.post('/', verifyIdToken, isOwner, DoorController.createDoor);
  * @swagger
  * /doors/{doorId}:
  *   put:
- *     summary: Update an existing door
- *     tags: [Doors]
+ *     summary: Update a door by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doors
  *     parameters:
  *       - in: path
  *         name: doorId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The door ID
+ *         description: The ID of the door to update
  *     requestBody:
  *       required: true
  *       content:
@@ -96,11 +121,19 @@ router.post('/', verifyIdToken, isOwner, DoorController.createDoor);
  *             $ref: '#/components/schemas/Door'
  *     responses:
  *       200:
- *         description: The updated door
+ *         description: Door updated successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Door'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Door not found
  */
 router.put('/:doorId', verifyIdToken, isOwner, DoorController.updateDoor);
 
@@ -108,18 +141,27 @@ router.put('/:doorId', verifyIdToken, isOwner, DoorController.updateDoor);
  * @swagger
  * /doors/{doorId}:
  *   delete:
- *     summary: Delete a door
- *     tags: [Doors]
+ *     summary: Delete a door by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doors
  *     parameters:
  *       - in: path
  *         name: doorId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The door ID
+ *         description: The ID of the door to delete
  *     responses:
- *       204:
- *         description: No content
+ *       200:
+ *         description: Door deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Door not found
  */
 router.delete('/:doorId', verifyIdToken, isOwner, DoorController.deleteDoor);
 

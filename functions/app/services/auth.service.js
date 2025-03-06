@@ -4,7 +4,20 @@ const { User, Privileges } = require("../models/user.model");
 const { db } = require("../config/firebase.config");
 const { FIREBASE_REFRESH_TOKEN_URL, FIREBASE_SIGN_IN_ENDPOINT, isEmulator } = require("../config/auth.config");
 
+/**
+ * AuthService class provides methods for user authentication and management.
+ */
 class AuthService {
+    /**
+     * Creates a new user in Firebase Authentication and Firestore.
+     * @param {Object} userDetails - The details of the user to create.
+     * @param {string} userDetails.firstName - The first name of the user.
+     * @param {string} userDetails.lastName - The last name of the user.
+     * @param {string} userDetails.email - The email of the user.
+     * @param {string} userDetails.password - The password of the user.
+     * @param {string} userDetails.phoneNumber - The phone number of the user.
+     * @returns {Promise<Object>} The result of the user creation.
+     */
     static async createUser({ firstName, lastName, email, password, phoneNumber }) {
         try {
             const userRecord = await getAuth().createUser({
@@ -25,6 +38,13 @@ class AuthService {
         }
     }
 
+    /**
+     * Logs in a user using Firebase Authentication.
+     * @param {Object} credentials - The login credentials of the user.
+     * @param {string} credentials.email - The email of the user.
+     * @param {string} credentials.password - The password of the user.
+     * @returns {Promise<Object>} The result of the login attempt.
+     */
     static async loginUser({ email, password }) {
         try {
             const response = await axios.post(FIREBASE_SIGN_IN_ENDPOINT, {
@@ -44,6 +64,11 @@ class AuthService {
         }
     }
 
+    /**
+     * Refreshes a user's Firebase Authentication token.
+     * @param {string} refreshToken - The refresh token of the user.
+     * @returns {Promise<Object>} The result of the token refresh attempt.
+     */
     static async refreshUserToken(refreshToken) {
         try {
             const response = await axios.post(FIREBASE_REFRESH_TOKEN_URL, {
@@ -61,6 +86,16 @@ class AuthService {
         }
     }
 
+    /**
+     * Creates a new employee user in Firebase Authentication and Firestore.
+     * @param {Object} userDetails - The details of the employee to create.
+     * @param {string} userDetails.firstName - The first name of the employee.
+     * @param {string} userDetails.lastName - The last name of the employee.
+     * @param {string} userDetails.email - The email of the employee.
+     * @param {string} userDetails.password - The password of the employee.
+     * @param {string} userDetails.phoneNumber - The phone number of the employee.
+     * @returns {Promise<Object>} The reszult of the employee creation.
+     */
     static async createEmployee({ firstName, lastName, email, password, phoneNumber }) {
         try {
             const userRecord = await getAuth().createUser({
@@ -81,6 +116,16 @@ class AuthService {
         }
     }
 
+    /**
+     * Creates a new owner user in Firebase Authentication and Firestore.
+     * @param {Object} userDetails - The details of the owner to create.
+     * @param {string} userDetails.firstName - The first name of the owner.
+     * @param {string} userDetails.lastName - The last name of the owner.
+     * @param {string} userDetails.email - The email of the owner.
+     * @param {string} userDetails.password - The password of the owner.
+     * @param {string} userDetails.phoneNumber - The phone number of the owner.
+     * @returns {Promise<Object>} The result of the owner creation.
+     */
     static async createOwner({ firstName, lastName, email, password, phoneNumber }) {
         try {
             const userRecord = await getAuth().createUser({
