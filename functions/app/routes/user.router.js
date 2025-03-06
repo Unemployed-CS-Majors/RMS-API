@@ -1,6 +1,7 @@
 const express = require('express');
 const UserController = require('../controllers/user.controller');
-const { verifyIdToken } = require("../middlewares/auth.middleware");
+const {verifyIdToken} = require("../middlewares/auth.middleware");
+const {isOwner} = require("../middlewares/privilages.middleware");
 
 const router = express.Router();
 
@@ -30,5 +31,11 @@ const router = express.Router();
  *         description: Unauthorized
  */
 router.get('/', verifyIdToken, UserController.getUser);
+
+router.get('/all', verifyIdToken, isOwner, UserController.getAllUsers);
+
+router.get('/privileged', verifyIdToken, isOwner, UserController.getAllPrivilegedUsers);
+
+router.put('/:userId/privilege', verifyIdToken, isOwner, UserController.changePrivilege);
 
 module.exports = router;

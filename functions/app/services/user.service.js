@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const {db} = require("../config/firebase.config");
+
 class UserService {
   /**
    * Verifies the user by checking the authorization token in the request headers.
@@ -29,6 +30,31 @@ class UserService {
       return null;
     }
     return user.data();
+  }
+
+  static async changePrivilege(userId, privilege) {
+    const userRef = db.collection("users").doc(userId);
+    await userRef.update({privileges: privilege});
+  }
+
+  static async getAllUsers() {
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.get();
+    const users = [];
+    snapshot.forEach(doc => {
+      users.push(doc.data());
+    });
+    return users;
+  }
+
+  static async getAllPrivilegedUsers() {
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.where("privileges", "!=", "customer").get();
+    const users = [];
+    snapshot.forEach(doc => {
+      users.push({ uid: doc.id, ...doc.data() });
+    });
+    return users;
   }
 }
 
