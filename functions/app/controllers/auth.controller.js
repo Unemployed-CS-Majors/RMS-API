@@ -5,7 +5,7 @@ const {Privileges} = require("../models/user.model");
 const {changePrivilege} = require("../services/user.service");
 const {log} = require("firebase-functions/logger");
 const UserService = require("../services/user.service");
-
+const emailService = require("../services/email.service");
 class AuthController {
     static async register(req, res) {
         const validationError = validateRegister(req);

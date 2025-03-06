@@ -215,14 +215,17 @@ class AuthService {
      */
     static async forgotPassword(email) {
         try {
-            const validationError = isValidEmail(email);
-            if (validationError) {
-                return { success: false, error: validationError };
-            }
-            await getAuth().sendPasswordResetEmail(email);
-            return { success: true, message: "Password reset email sent." };
+            // const validationError = isValidEmail(email);
+            // if (validationError) {
+            //     return { success: false, error: validationError };
+            // }
+           const url =  await getAuth()
+                .generatePasswordResetLink(email)
+
+            return {success: true, message: "Password reset email sent.", url: url};
         } catch (error) {
-            return { success: false, error: error.message };
+            log("Error sending password reset email:", error);
+            return {success: false, error: error.message};
         }
     }
 
@@ -235,9 +238,9 @@ class AuthService {
         try {
             await getAuth().deleteUser(uid);
             await db.collection("users").doc(uid).delete();
-            return { success: true, message: "User account deleted successfully." };
+            return {success: true, message: "User account deleted successfully."};
         } catch (error) {
-            return { success: false, error: error.message };
+            return {success: false, error: error.message};
         }
     }
 }

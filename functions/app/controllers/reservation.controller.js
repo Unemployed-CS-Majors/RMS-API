@@ -1,6 +1,6 @@
 const {createResponse} = require("../utils/response.utils");
 const {
-    validateCreateReservation, validateTimeFormat,
+    validateCreateReservation, validateTimeFormat, validateSeats,
 } = require("../validators/reservation.validators");
 const EmailService = require("../services/email.service");
 const UserService = require("../services/user.service");
@@ -9,7 +9,6 @@ const ReservationService = require("../services/reservation.service");
 const {ReservationStatus} = require("../models/reservation.model");
 const {log} = require("firebase-functions/logger");
 const userService = require("../services/user.service");
-
 /**
  * Controller for handling reservation-related operations.
  */
@@ -307,8 +306,8 @@ class ReservationController {
      * @returns {Promise<Object>} The free tables or an error response.
      */
     static async getFreeTableForGivenTime(req, res) {
-        const {startTime, endTime} = req.body;
-        if (!startTime || !endTime) {
+        const {startTime, endTime,seats} = req.body;
+        if (!startTime || !endTime || !seats) {
             return res
                 .status(400)
                 .json(createResponse("error", "Start and end time are required", null));
@@ -320,8 +319,14 @@ class ReservationController {
                 .json(createResponse("error", "Invalid time format", null));
         }
 
+        if (validateSeats(seats)) {
+            return res
+                .status(400)
+                .json(createResponse("error", "Invalid seats", null));
+        }
+
         try {
-            const allTables = await TableService.getAllTables();
+            const allTables = await TableService.getTablesWithMinSeats(seats);
             const reservations = await ReservationService.getReservationsForTime(startTime, endTime);
             log('All tables: ' + allTables);
             log('Reservations: ' + reservations);
