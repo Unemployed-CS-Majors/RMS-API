@@ -7,9 +7,9 @@
  * @returns {string|null} An error message if validation fails, otherwise null.
  */
 function validateCreateTable(req) {
-    const {seats, nextToWindow, x, y, rotation, type} = req.body;
+    const {seats, nextToWindow, x, y, rotation, type, tableNum} = req.body;
 
-    if (seats === undefined || nextToWindow === undefined || x === undefined || y === undefined || rotation === undefined || type === undefined) {
+    if (seats === undefined || nextToWindow === undefined || x === undefined || y === undefined || rotation === undefined || type === undefined || tableNum === undefined) {
         return "All fields are required";
     }
 
@@ -35,6 +35,10 @@ function validateCreateTable(req) {
 
     if (typeof type !== 'string') {
         return "type must be a string";
+    }
+
+    if (!Number.isInteger(tableNum)) {
+        return "tableNum must be an integer";
     }
 
     return null;
