@@ -11,6 +11,7 @@ const wallRouter = require("./app/routes/wall.router");
 const doorRouter = require("./app/routes/door.router");
 const floorPlanRouter = require("./app/routes/floorPlan.router");
 const {logger, LogLevel} = require("./app/logger/FirebaseLogger");
+const {metricsMiddleware} = require("./app/config/prometheus.config");
 const {setupCounters} = require("./app/utils/counter.utils");
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB;
 
@@ -23,6 +24,9 @@ if (isEmulator) {
 }
 
 app.use(cors());
+
+app.use(metricsMiddleware);
+
 /**
  * Use the authentication router for handling authentication-related routes.
  */
