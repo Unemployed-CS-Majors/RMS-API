@@ -10,12 +10,15 @@ const windowRouter = require("./app/routes/window.router");
 const wallRouter = require("./app/routes/wall.router");
 const doorRouter = require("./app/routes/door.router");
 const floorPlanRouter = require("./app/routes/floorPlan.router");
-
-
+const {metricsMiddleware} = require("./app/config/prometheus.config");
 const {setupCounters} = require("./app/utils/counter.utils");
 
 const app = express();
+
 app.use(cors());
+
+app.use(metricsMiddleware);
+
 /**
  * Use the authentication router for handling authentication-related routes.
  */
