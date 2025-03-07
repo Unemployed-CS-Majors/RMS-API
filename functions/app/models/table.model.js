@@ -12,7 +12,7 @@ class Table {
      * @param x
      * @param y
      */
-    constructor(id, seats, nextToWindow, isActive, x, y, rotation,type) {
+    constructor(id, seats, nextToWindow, isActive, x, y, rotation,type, tabeleNum) {
         /** @type {number} */
         this.id = id;
         /** @type {number} */
@@ -29,6 +29,8 @@ class Table {
         this.rotation = rotation;
         /** @type {string} */
         this.type = type
+        /** @type {number} */
+        this.tabeleNum = tabeleNum
     }
 
     /**
@@ -44,7 +46,8 @@ class Table {
             x: this.x,
             y: this.y,
             rotation: this.rotation,
-            type: this.type
+            type: this.type,
+            tableNum: this.tabeleNum
         };
     }
 
@@ -63,7 +66,8 @@ class Table {
             data.x,
             data.y,
             data.rotation,
-            data.type
+            data.type,
+            data.tableNum
         );
     }
 }

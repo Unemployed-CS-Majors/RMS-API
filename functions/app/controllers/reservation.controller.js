@@ -64,8 +64,11 @@ class ReservationController {
                     .status(404)
                     .json(createResponse("error", "User not found", null));
             }
-
-            await EmailService.sendReservationConfirmationEmailStatusPending(newReservation, user);
+            try {
+                await EmailService.sendReservationConfirmationEmailStatusPending(newReservation, user);
+            }catch (e) {
+                log('Error sending email: ' + e);
+            }
 
             return res.status(201).json(newReservation);
         } catch (error) {
@@ -115,7 +118,11 @@ class ReservationController {
 
             reservation.status = ReservationStatus.CANCELLED;
 
-            await EmailService.sendReservationConfirmationEmailStatusCancelled(reservation, user);
+            try {
+                await EmailService.sendReservationConfirmationEmailStatusCancelled(reservation, user);
+            }   catch (e) {
+                log('Error sending email: ' + e);
+            }
 
             return res
                 .status(200)
@@ -165,7 +172,11 @@ class ReservationController {
             }
             reservation.status = ReservationStatus.CONFIRMED;
 
-            await EmailService.sendReservationConfirmationEmailStatusConfirmed(reservation, user);
+            try {
+                await EmailService.sendReservationConfirmationEmailStatusConfirmed(reservation, user);
+            }  catch (e) {
+                log('Error sending email: ' + e);
+            }
 
             return res
                 .status(200)

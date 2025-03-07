@@ -54,7 +54,6 @@ class TableController {
         }
 
         try {
-            
             const tableData = req.body;
             const newTable = await TableService.createTable(tableData);
             return res.status(201).json(createResponse("success", "Table created successfully", {id: newTable}));
