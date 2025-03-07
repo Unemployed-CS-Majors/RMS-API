@@ -1,6 +1,7 @@
 const {createResponse} = require("../utils/response.utils");
 const WallService = require("../services/wall.service");
 const {validateCreateWall,validateUpdateWall} = require("../validators/wall.validators");
+const {logger} = require("../logger/FirebaseLogger");
 class WallController {
 
     /**
@@ -19,7 +20,7 @@ class WallController {
             }
             return res.status(200).json(createResponse("success", "Wall fetched successfully", wall));
         } catch (error) {
-            console.error("Error getting wall", error);
+            logger.error("Error getting wall", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -36,7 +37,7 @@ class WallController {
             const walls = await WallService.getAllWalls();
             return res.status(200).json(createResponse("success", "Walls fetched successfully", walls));
         } catch (error) {
-            console.error("Error getting all walls", error);
+            logger.error("Error getting all walls", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -57,7 +58,7 @@ class WallController {
             const newWallId = await WallService.createWall(req.body);
             return res.status(201).json(createResponse("success", "Wall created successfully", {id: newWallId}));
         } catch (error) {
-            console.error("Error creating wall", error);
+            logger.error("Error creating wall", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -80,7 +81,7 @@ class WallController {
             const updatedWall = await WallService.updateWall(wallId, req.body);
             return res.status(200).json(createResponse("success", "Wall updated successfully", updatedWall));
         } catch (error) {
-            console.error("Error updating wall", error);
+            logger.error("Error updating wall", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -98,7 +99,7 @@ class WallController {
             await WallService.deleteWall(wallId);
             return res.status(200).json(createResponse("success", "Wall deleted successfully", null));
         } catch (error) {
-            console.error("Error deleting wall", error);
+            logger.error("Error deleting wall", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }

@@ -2,6 +2,7 @@ const { createResponse } = require("../utils/response.utils");
 const { validateOpeningHours } = require("../validators/openingHours.validators");
 const OpeningHoursService = require("../services/openingHours.service");
 const { OpeningHours } = require("../models/openingHours.model");
+const {logger} = require("../logger/FirebaseLogger");
 
 class OpeningHoursController {
   /**
@@ -18,7 +19,7 @@ class OpeningHoursController {
           .status(200)
           .json(createResponse("success", "Opening hours fetched successfully", openingHours));
     } catch (error) {
-      console.error("Error fetching opening hours:", error);
+      logger.error("Error fetching opening hours:", error);
       return res
           .status(500)
           .json(createResponse("error", "Internal Server Error", null));
@@ -38,7 +39,7 @@ class OpeningHoursController {
           .status(200)
           .json(createResponse("success", "Opening hours fetched successfully", openingHoursList));
     } catch (error) {
-      console.error("Error fetching opening hours:", error);
+      logger.error("Error fetching opening hours:", error);
       return res
           .status(500)
           .json(createResponse("error", "Internal Server Error", null));
@@ -65,7 +66,7 @@ class OpeningHoursController {
           .status(201)
           .json(createResponse("success", "Opening hours created successfully", newOpeningHours));
     } catch (error) {
-      console.error("Error creating opening hours:", error);
+      logger.error("Error creating opening hours:", error);
       return res
           .status(500)
           .json(createResponse("error", "Internal Server Error", null));
@@ -94,7 +95,7 @@ class OpeningHoursController {
           .status(200)
           .json(createResponse("success", "Opening hours updated successfully", updatedOpeningHours));
     } catch (error) {
-      console.error("Error updating opening hours:", error);
+      logger.error("Error updating opening hours:", error);
       return res
           .status(500)
           .json(createResponse("error", "Internal Server Error", null));
@@ -115,7 +116,7 @@ class OpeningHoursController {
           .status(200)
           .json(createResponse("success", "Opening hours deleted successfully", null));
     } catch (error) {
-      console.error("Error deleting opening hours:", error);
+      logger.error("Error deleting opening hours:", error);
       return res
           .status(500)
           .json(createResponse("error", "Internal Server Error", null));

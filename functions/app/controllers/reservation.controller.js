@@ -7,8 +7,8 @@ const UserService = require("../services/user.service");
 const TableService = require("../services/table.service");
 const ReservationService = require("../services/reservation.service");
 const {ReservationStatus} = require("../models/reservation.model");
-const {log} = require("firebase-functions/logger");
 const userService = require("../services/user.service");
+const {logger} = require("../logger/FirebaseLogger");
 /**
  * Controller for handling reservation-related operations.
  */
@@ -67,12 +67,12 @@ class ReservationController {
             try {
                 await EmailService.sendReservationConfirmationEmailStatusPending(newReservation, user);
             }catch (e) {
-                log('Error sending email: ' + e);
+                logger.error("Error sending email", e);
             }
 
             return res.status(201).json(newReservation);
         } catch (error) {
-            console.error("Error creating reservation", error);
+            logger.error("Error creating reservation", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -121,14 +121,14 @@ class ReservationController {
             try {
                 await EmailService.sendReservationConfirmationEmailStatusCancelled(reservation, user);
             }   catch (e) {
-                log('Error sending email: ' + e);
+                logger.error("Error sending email", e);
             }
 
             return res
                 .status(200)
                 .json(createResponse("success", "Reservation cancelled successfully", null));
         } catch (error) {
-            console.error("Error cancelling reservation", error);
+            logger.error("Error cancelling reservation", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -175,14 +175,14 @@ class ReservationController {
             try {
                 await EmailService.sendReservationConfirmationEmailStatusConfirmed(reservation, user);
             }  catch (e) {
-                log('Error sending email: ' + e);
+                logger.error('Error sending email: ',e);
             }
 
             return res
                 .status(200)
                 .json(createResponse("success", "Reservation confirmed successfully", null));
         } catch (error) {
-            console.error("Error confirming reservation", error);
+            logger.error("Error confirming reservation", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -213,7 +213,7 @@ class ReservationController {
                 .status(200)
                 .json(createResponse("success", "Reservation completed successfully", null));
         } catch (error) {
-            console.error("Error completing reservation", error);
+            logger.error("Error completing reservation", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -239,7 +239,7 @@ class ReservationController {
         }
 
         if (validateTimeFormat(startTime) || validateTimeFormat(endTime)) {
-            console.log('Invalid time format' + startTime + ' ' + endTime);
+            logger.error('Invalid time format' + startTime + ' ' + endTime, null);
             return res
                 .status(400)
                 .json(createResponse("error", "Invalid time format", null));
@@ -257,7 +257,7 @@ class ReservationController {
                 .status(200)
                 .json(createResponse("success", "Reservation rescheduled successfully", null));
         } catch (error) {
-            console.error("Error rescheduling reservation", error);
+            logger.error("Error rescheduling reservation", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -287,7 +287,7 @@ class ReservationController {
 
             return res.status(200).json(createResponse("success", null, reservation));
         } catch (error) {
-            console.error("Error getting reservation details", error);
+            logger.error("Error getting reservation details", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -305,7 +305,7 @@ class ReservationController {
             const reservations = await ReservationService.getReservationsForUser(userId);
             return res.status(200).json(createResponse("success", null, reservations));
         } catch (error) {
-            console.error("Error getting reservations for user", error);
+            logger.error("Error getting reservations for user", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -339,14 +339,11 @@ class ReservationController {
         try {
             const allTables = await TableService.getTablesWithMinSeats(seats);
             const reservations = await ReservationService.getReservationsForTime(startTime, endTime);
-            log('All tables: ' + allTables);
-            log('Reservations: ' + reservations);
             const reservedTablesIds = reservations.map((reservation) => reservation.tableId);
-            log('Reserved tables: ' + reservedTablesIds);
             const tables = allTables.filter((table) => !reservedTablesIds.includes(table.id));
             return res.status(200).json(createResponse("success", null, tables));
         } catch (error) {
-            console.error("Error getting free tables for given time", error);
+            logger.error("Error getting free tables for given time", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -371,7 +368,7 @@ class ReservationController {
 
             return res.status(200).json(createResponse("success", null, reservationsWithUser));
         } catch (error) {
-            console.error("Error getting all reservations", error);
+            logger.error("Error getting all reservations", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -397,7 +394,7 @@ class ReservationController {
 
             return res.status(200).json(createResponse("success", null, reservationsWithUser));
         } catch (error) {
-            console.error("Error getting reservations by status", error);
+            logger.error("Error getting reservations by status", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }

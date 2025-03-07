@@ -10,11 +10,18 @@ const windowRouter = require("./app/routes/window.router");
 const wallRouter = require("./app/routes/wall.router");
 const doorRouter = require("./app/routes/door.router");
 const floorPlanRouter = require("./app/routes/floorPlan.router");
-
-
+const {logger, LogLevel} = require("./app/logger/FirebaseLogger");
 const {setupCounters} = require("./app/utils/counter.utils");
+const isEmulator = process.env.FIREBASE_EMULATOR_HUB;
 
 const app = express();
+
+app.use(logger.httpMiddleware());
+if (isEmulator) {
+    logger.info("Running in emulator mode. Setting log level to DEBUG.");
+    logger.setLogLevel(LogLevel.DEBUG);
+}
+
 app.use(cors());
 /**
  * Use the authentication router for handling authentication-related routes.

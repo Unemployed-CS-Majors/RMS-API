@@ -10,6 +10,7 @@ const {
 } = require("../config/auth.config");
 const {log} = require("firebase-functions/logger");
 const {isValidEmail} = require("../validators/auth.validators");
+const {logger} = require("../logger/FirebaseLogger");
 
 /**
  * AuthService class provides methods for user authentication and management.
@@ -41,6 +42,7 @@ class AuthService {
 
             return {success: true, uid: userRecord.uid};
         } catch (error) {
+            logger.error("Error creating user:", error);
             return {success: false, error: error.message};
         }
     }
@@ -67,6 +69,7 @@ class AuthService {
                 refreshToken: response.data.refreshToken,
             };
         } catch (error) {
+            logger.error("Error logging in user:", error);
             return {success: false, error: error.response ? error.response.data : error.message};
         }
     }
@@ -89,6 +92,7 @@ class AuthService {
                 refreshToken: response.data.refresh_token,
             };
         } catch (error) {
+            logger.error("Error refreshing user token:", error);
             return {success: false, error: error.response ? error.response.data : error.message};
         }
     }
@@ -119,6 +123,7 @@ class AuthService {
 
             return {success: true, uid: userRecord.uid};
         } catch (error) {
+            logger.error("Error creating employee:", error);
             return {success: false, error: error.message};
         }
     }
@@ -149,6 +154,7 @@ class AuthService {
 
             return {success: true, uid: userRecord.uid};
         } catch (error) {
+            logger.error("Error creating owner:", error);
             return {success: false, error: error.message};
         }
     }
@@ -204,6 +210,7 @@ class AuthService {
                 refreshToken: signInResponse.data.refreshToken,
             };
         } catch (error) {
+            logger.error("Error signing in with Google:", error);
             return {success: false, error: error.message};
         }
     }
@@ -215,10 +222,11 @@ class AuthService {
      */
     static async forgotPassword(email) {
         try {
-            // const validationError = isValidEmail(email);
-            // if (validationError) {
-            //     return { success: false, error: validationError };
-            // }
+            const validationError = isValidEmail(email);
+            if (validationError) {
+                logger.error("Invalid email for password reset:", validationError);
+                return { success: false, error: validationError };
+            }
            const url =  await getAuth()
                 .generatePasswordResetLink(email)
 

@@ -1,7 +1,7 @@
 const {createResponse} = require("../utils/response.utils");
 const WindowService = require("../services/window.service");
 const {validateCreateWindow, validateUpdateWall} = require("../validators/window.validators");
-const {log} = require("firebase-functions/logger");
+const {logger} = require("../logger/FirebaseLogger");
 
 class WindowController {
     /**
@@ -20,7 +20,7 @@ class WindowController {
             }
             return res.status(200).json(createResponse("success", "Window fetched successfully", window));
         } catch (error) {
-            console.error("Error getting window", error);
+            logger.error("Error getting window", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -36,7 +36,7 @@ class WindowController {
             const windows = await WindowService.getAllWindows();
             return res.status(200).json(createResponse("success", "Windows fetched successfully", windows));
         } catch (error) {
-            console.error("Error getting all windows", error);
+            logger.error("Error getting all windows", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -48,7 +48,6 @@ class WindowController {
      * @returns {Promise<Object>} The created window ID or an error response.
      */
     static async createWindow(req, res) {
-        log("Validating create window request");
         const validationError = validateCreateWindow(req);
 
         if (validationError) {
@@ -59,7 +58,7 @@ class WindowController {
             const newWindowId = await WindowService.createWindow(req.body);
             return res.status(201).json(createResponse("success", "Window created successfully", {id: newWindowId}));
         } catch (error) {
-            console.error("Error creating window", error);
+            logger.error("Error creating window", error);
         }
     }
 
@@ -71,7 +70,6 @@ class WindowController {
      */
     static async updateWindow(req, res) {
         const {windowId} = req.params;
-        log(windowId);
         const validationError = validateUpdateWall(req);
 
         if (validationError) {
@@ -82,7 +80,7 @@ class WindowController {
             const updatedWindow = await WindowService.updateWindow(windowId, req.body);
             return res.status(200).json(createResponse("success", "Window updated successfully", updatedWindow));
         } catch (error) {
-            console.error("Error updating window", error);
+            logger.error("Error updating window", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -103,7 +101,7 @@ class WindowController {
             }
             return res.status(200).json(createResponse("success", "Window deleted successfully", null));
         } catch (error) {
-            console.error("Error deleting window", error);
+            logger.error("Error deleting window", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
