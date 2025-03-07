@@ -1,7 +1,6 @@
 const {createResponse} = require("../utils/response.utils");
 const UserService = require("../services/user.service");
-const {log} = require("firebase-functions/logger");
-const ReservationService = require("../services/reservation.service");
+const {logger} = require("../logger/FirebaseLogger");
 
 class UserController {
     static async getUser(req, res) {
@@ -12,7 +11,7 @@ class UserController {
 
             return res.status(200).json(createResponse("success", null, user));
         } catch (error) {
-            console.error("Error getting user details", error);
+            logger.error("Error getting user details", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -22,7 +21,7 @@ class UserController {
             const users = await UserService.getAllUsers();
             return res.status(200).json(createResponse("success", null, users));
         } catch (error) {
-            console.error("Error getting all users", error);
+            logger.error("Error getting all users", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -32,7 +31,7 @@ class UserController {
             const users = await UserService.getAllPrivilegedUsers();
             return res.status(200).json(createResponse("success", null, users));
         } catch (error) {
-            console.error("Error getting all privileged users", error);
+            logger.error("Error getting all privileged users", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }
@@ -46,7 +45,7 @@ class UserController {
 
             return res.status(200).json(createResponse("success", "Privilege updated successfully"));
         } catch (error) {
-            console.error("Error changing user privilege", error);
+            logger.error("Error changing user privilege", error);
             return res.status(500).json(createResponse("error", error.message));
         }
     }

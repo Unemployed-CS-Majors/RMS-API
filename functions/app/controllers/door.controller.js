@@ -1,6 +1,7 @@
 const {createResponse} = require("../utils/response.utils");
 const DoorService = require("../services/door.service");
 const {validateCreateDoor,validateUpdateDoor} = require("../validators/door.validators");
+const {logger} = require("../logger/FirebaseLogger");
 
 class DoorController {
     /**
@@ -15,11 +16,12 @@ class DoorController {
 
             const door = await DoorService.getDoor(doorId);
             if (!door) {
+                logger.error("Door not found", {doorId});
                 return res.status(404).json(createResponse("error", "Door not found", null));
             }
             return res.status(200).json(createResponse("success", "Door fetched successfully", door));
         } catch (error) {
-            console.error("Error getting door", error);
+            logger.error("Error getting door", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -35,7 +37,7 @@ class DoorController {
             const doors = await DoorService.getAllDoors();
             return res.status(200).json(createResponse("success", "Doors fetched successfully", doors));
         } catch (error) {
-            console.error("Error getting all doors", error);
+            logger.error("Error getting doors", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -50,6 +52,7 @@ class DoorController {
         const validationError = validateCreateDoor(req);
 
         if (validationError) {
+            logger.error("Error creating door", {error: validationError});
             return res.status(400).json(createResponse("error", validationError, null));
         }
 
@@ -57,7 +60,7 @@ class DoorController {
             const newDoorId = await DoorService.createDoor(req.body);
             return res.status(201).json(createResponse("success", "Door created successfully", {id: newDoorId}));
         } catch (error) {
-            console.error("Error creating door", error);
+            logger.error("Error creating door", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -73,17 +76,19 @@ class DoorController {
         const validationError = validateUpdateDoor(req);
 
         if (validationError) {
+            logger.error("Error updating door", {error: validationError});
             return res.status(400).json(createResponse("error", validationError, null));
         }
 
         try {
             const updatedDoor = await DoorService.updateDoor(doorId, req.body);
             if (!updatedDoor) {
+                logger.error("Door not found", {doorId});
                 return res.status(404).json(createResponse("error", "Door not found", null));
             }
             return res.status(200).json(createResponse("success", "Door updated successfully", updatedDoor));
         } catch (error) {
-            console.error("Error updating door", error);
+            logger.error("Error updating door", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -101,7 +106,7 @@ class DoorController {
             await DoorService.deleteDoor(doorId);
             return res.status(200).json(createResponse("success", "Door deleted successfully", null));
         } catch (error) {
-            console.error("Error deleting door", error);
+            logger.error("Error deleting door", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }

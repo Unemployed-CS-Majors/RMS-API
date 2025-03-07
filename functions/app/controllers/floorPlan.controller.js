@@ -3,6 +3,7 @@ const DoorService = require("../services/door.service");
 const WallService = require("../services/wall.service");
 const WindowService = require("../services/window.service");
 const TableService = require("../services/table.service");
+const {logger} = require("../logger/FirebaseLogger");
 
 class FloorPlanController {
     static async getFloorPlan(req, res) {
@@ -26,7 +27,7 @@ class FloorPlanController {
             return res.status(200).json(createResponse("success", "Floor plan fetched successfully", floorPlan));
 
         } catch (e) {
-            console.error("Error getting floor plan", e);
+            logger.error("Error getting floor plan", e);
             return res.status(500).json(createResponse("error", e.message, null));
         }
     }

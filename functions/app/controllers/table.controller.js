@@ -1,6 +1,7 @@
 const {createResponse} = require("../utils/response.utils");
 const {validateCreateTable} = require("../validators/table.validators");
 const TableService = require("../services/table.service");
+const {logger} = require("firebase-functions");
 
 class TableController {
     /**
@@ -19,7 +20,7 @@ class TableController {
             }
             return res.status(200).json(createResponse("success", "Table fetched successfully", table));
         } catch (error) {
-            console.error("Error getting table", error);
+            logger.error("Error getting table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -36,7 +37,7 @@ class TableController {
             const tables = await TableService.getAllTables();
             return res.status(200).json(createResponse("success", "Tables fetched successfully", tables));
         } catch (error) {
-            console.error("Error getting all tables", error);
+            logger.error("Error getting all tables", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -58,7 +59,7 @@ class TableController {
             const newTable = await TableService.createTable(tableData);
             return res.status(201).json(createResponse("success", "Table created successfully", {id: newTable}));
         } catch (error) {
-            console.error("Error creating table", error);
+            logger.error("Error creating table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -76,7 +77,7 @@ class TableController {
             const updatedTable = await TableService.updateTable(tableId, tableData);
             return res.status(200).json(createResponse("success", "Table updated successfully", updatedTable));
         } catch (error) {
-            console.error("Error updating table", error);
+            logger.error("Error updating table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -94,7 +95,7 @@ class TableController {
             await TableService.deleteTable(tableId);
             return res.status(200).json(createResponse("success", "Table deleted successfully", null));
         } catch (error) {
-            console.error("Error deleting table", error);
+            logger.error("Error deleting table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -113,7 +114,7 @@ class TableController {
             const updatedTable = await TableService.updateTable(tableId, tableData);
             return res.status(200).json(createResponse("success", "Table deactivated successfully", updatedTable));
         } catch (error) {
-            console.error("Error deactivating table", error);
+            logger.error("Error deactivating table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }
@@ -132,7 +133,7 @@ class TableController {
             const updatedTable = await TableService.updateTable(tableId, tableData);
             return res.status(200).json(createResponse("success", "Table activated successfully", updatedTable));
         } catch (error) {
-            console.error("Error activating table", error);
+            logger.error("Error activating table", error);
             return res.status(500).json(createResponse("error", error.message, null));
         }
     }

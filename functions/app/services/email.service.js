@@ -2,6 +2,7 @@ const axios = require("axios");
 const {Reservation} = require("../models/reservation.model");
 const {User} = require("../models/user.model");
 const functions = require('firebase-functions');
+const {logger} = require("../logger/FirebaseLogger");
 
 // Define template IDs as constants
 const TEMPLATE_ID_PENDING = "351ndgwooon4zqx8";
@@ -17,11 +18,11 @@ class EmailService {
      */
     static async sendReservationConfirmationEmailStatusPending(reservation, user) {
         if (!(reservation instanceof Reservation)) {
-            console.error("Invalid reservation object");
+            logger.error("Invalid reservation object");
         }
 
         if (!(user instanceof User)) {
-            console.error("Invalid user object");
+            logger.error("Invalid user object",);
         }
 
         const data = {
@@ -67,7 +68,7 @@ class EmailService {
             console.log("Email sent successfully:", response.data);
             return response.data;
         } catch (error) {
-            console.error("Error sending email:", error.response ? error.response.data : error.message);
+            logger.error("Error sending email:", error);
             throw error;
         }
     }
@@ -128,10 +129,9 @@ class EmailService {
                     }
                 }
             );
-            console.log("Email sent successfully:", response.data);
             return response.data;
         } catch (error) {
-            console.error("Error sending email:", error.response ? error.response.data : error.message);
+            logger.error("Error sending email:", error);
             throw error;
         }
     }
@@ -192,10 +192,9 @@ class EmailService {
                     }
                 }
             );
-            console.log("Email sent successfully:", response.data);
             return response.data;
         } catch (error) {
-            console.error("Error sending email:", error.response ? error.response.data : error.message);
+            logger.error("Error sending email:", error);
             throw error;
         }
     }
