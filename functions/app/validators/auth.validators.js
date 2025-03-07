@@ -48,8 +48,14 @@ function validateRefreshToken(req) {
     return null;
 }
 
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 module.exports = {
     validateRegister,
     validateLogin,
     validateRefreshToken,
+    isValidEmail,
 };

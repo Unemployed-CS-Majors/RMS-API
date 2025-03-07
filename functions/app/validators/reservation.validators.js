@@ -62,7 +62,20 @@ function validateTimeFormat(time) {
     return null;
 }
 
+function validateSeats(seats){
+    if(!Number.isInteger(seats)){
+        return "Seats must be an integer";
+    }
+
+    if(seats <= 0){
+        return "Seats must be greater than 0";
+    }
+
+    return null;
+}
+
 module.exports = {
     validateCreateReservation,
-    validateTimeFormat
+    validateTimeFormat,
+    validateSeats
 };

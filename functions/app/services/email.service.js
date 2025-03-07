@@ -5,8 +5,8 @@ const functions = require('firebase-functions');
 
 // Define template IDs as constants
 const TEMPLATE_ID_PENDING = "351ndgwooon4zqx8";
-const TEMPLATE_ID_CONFIRMED = "z3m5jgr111d4dpyo";
-const TEMPLATE_ID_CANCELLED = "neqvygm555j40p7w";
+const TEMPLATE_ID_CONFIRMED = "neqvygm555j40p7w";
+const TEMPLATE_ID_CANCELLED = "z3m5jgr111d4dpyo";
 class EmailService {
     /**
      * Sends a reservation confirmation email with status pending.

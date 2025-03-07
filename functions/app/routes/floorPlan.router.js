@@ -5,48 +5,37 @@ const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: FloorPlans
- *   description: Floor plan management
- */
-
-/**
- * @swagger
- * /floorPlans:
+ * /floorPlan:
  *   get:
  *     summary: Retrieve the floor plan
- *     tags: [FloorPlans]
+ *     tags:
+ *       - FloorPlan
  *     responses:
  *       200:
- *         description: The floor plan
+ *         description: The floor plan details
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 id:
- *                   type: string
- *                   description: The floor plan ID
- *                 name:
- *                   type: string
- *                   description: The name of the floor plan
- *                 layout:
+ *                 tables:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       tableId:
- *                         type: string
- *                         description: The table ID
- *                       position:
- *                         type: object
- *                         properties:
- *                           x:
- *                             type: number
- *                             description: The x-coordinate
- *                           y:
- *                             type: number
- *                             description: The y-coordinate
+ *                     $ref: '#/components/schemas/Table'
+ *                 doors:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Door'
+ *                 walls:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Wall'
+ *                 windows:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Window'
+ *       500:
+ *         description: Internal server error
  */
 router.get('/', FloorPlanController.getFloorPlan);
 

@@ -31,6 +31,16 @@ class TableService {
         return tables;
     }
 
+    static async getTablesWithMinSeats(seats) {
+        const tablesRef = db.collection("tables");
+        const snapshot = await tablesRef.where("seats", ">=", seats).get();
+        const tables = [];
+        snapshot.forEach(doc => {
+            tables.push(Table.fromFirestore(doc));
+        });
+        return tables;
+    }
+
     /**
      * Creates a new table.
      * @param {Object} tableData - The data for the new table.
