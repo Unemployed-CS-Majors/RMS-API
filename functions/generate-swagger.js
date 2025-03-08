@@ -14,7 +14,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app', 
+      url: 'https://api-d4o6tbc5fq-uc.a.run.app/',
     },
   ],
   components: {
