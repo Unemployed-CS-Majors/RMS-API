@@ -199,7 +199,26 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
  *         description: Validation error
  *       401:
  *         description: Unauthorized
- */router.get('/user', verifyIdToken, ReservationController.getReservationsForUser);
+ */
+router.get('/user', verifyIdToken, ReservationController.getReservationsForUser);
+
+/**
+ * @swagger
+ * /reservation/user/upcoming:
+ *   get:
+ *     summary: Get upcoming reservations for a user
+ *     description: Get all upcoming reservations for the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Upcoming reservations retrieved successfully
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/user/upcoming', verifyIdToken, ReservationController.getUpcomingReservationsForUser);
 
 /**
  * @swagger
@@ -235,5 +254,6 @@ router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableFor
 router.get('/all', verifyIdToken, isOwner, ReservationController.getAllReservations);
 
 router.get('/:status', verifyIdToken, isOwner, ReservationController.getReservationByStatus);
+
 
 module.exports = router;

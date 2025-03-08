@@ -310,6 +310,18 @@ class ReservationController {
         }
     }
 
+    static async getUpcomingReservationsForUser(req, res) {
+        try {
+            const userId = await UserService.verifyUser(req);
+
+            const  reservation = await ReservationService.getUpcomingReservationsForUser(userId);
+            return res.status(200).json(createResponse("success", null, reservation));
+        } catch (e) {
+            logger.error("Error getting upcoming reservations for user", e);
+            return res.status(500).json(createResponse("error", e.message));
+        }
+    }
+
     /**
      * Retrieves all free tables for a given time period.
      * @param {Object} req - The request object.
