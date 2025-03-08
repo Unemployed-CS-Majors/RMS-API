@@ -181,6 +181,19 @@ class ReservationService {
 
         return reservations;
     }
+
+    static async getUpcomingReservationsForUser(userId) {
+        const reservationsRef = db.collection("reservations");
+        const query = await reservationsRef.where("userId", "==", userId).where("startTime", ">=", new Date().getTime() / 1000).get();
+        const reservations = [];
+
+        query.forEach((doc) => {
+            reservations.push(Reservation.fromFirestore(doc));
+        });
+
+        return reservations[0];
+
+    }
 }
 
 module.exports = ReservationService;
