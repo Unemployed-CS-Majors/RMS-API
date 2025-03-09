@@ -13,11 +13,13 @@ const wallRouter = require("./app/routes/wall.router");
 const doorRouter = require("./app/routes/door.router");
 const floorPlanRouter = require("./app/routes/floorPlan.router");
 const menuItemRouter = require("./app/routes/menuItem.router");
+const paymentRouter = require("./app/routes/payment.router");
+const orderRouter = require("./app/routes/order.router");
 const { logger, LogLevel } = require("./app/logger/FirebaseLogger");
 const { metricsMiddleware } = require("./app/config/prometheus.config");
 const { setupCounters } = require("./app/utils/counter.utils");
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB;
-
+require('dotenv').config();
 const app = express();
 
 app.use(logger.httpMiddleware());
@@ -41,6 +43,8 @@ app.use("/walls", wallRouter);
 app.use("/doors", doorRouter);
 app.use("/floorPlan", floorPlanRouter);
 app.use("/menu-items", menuItemRouter);
+app.use("/order", orderRouter);
+app.use("/payments", paymentRouter);
 
 app.use((req, res) => {
     res.status(404).json({ error: "Endpoint not found" });
