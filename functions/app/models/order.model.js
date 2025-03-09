@@ -268,6 +268,11 @@ class Order {
             if (!this.deliveryAddress) {
                 return {isValid: false, message: "Delivery address is required for home delivery"};
             }
+
+            const { street, city, county, eirCode, country } = this.deliveryAddress;
+            if (!street || !city || !county || !eirCode || !country) {
+                return {isValid: false, message: "Incomplete delivery address"};
+            }
         } else {
             return {isValid: false, message: "Invalid delivery method"};
         }

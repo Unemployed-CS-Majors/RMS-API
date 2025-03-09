@@ -4,6 +4,7 @@ const { logger } = require("../logger/FirebaseLogger");
 const { Order, OrderStatus, PaymentMethod } = require("../models/order.model");
 const stripeService = require("./stripe.service");
 const {db} = require("../config/firebase.config");
+const UserServices = require("./user.service");
 /**
  * Service for handling order operations
  */
@@ -100,7 +101,10 @@ class OrderService {
                 throw new Error(`Order ${orderId} not found`);
             }
 
-            return Order.fromFirestore(orderDoc);
+            const order = Order.fromFirestore(orderDoc);
+            const user = await UserServices.getUser(order.userId);
+            order.user = user;
+            return order;
         } catch (error) {
             logger.log("error", `Error getting order ${orderId}: ${error.message}`);
             throw error;
@@ -304,6 +308,12 @@ class OrderService {
                 orders.push(Order.fromFirestore(doc));
             });
 
+            // for each order add user details to the order
+            for (let i = 0; i < orders.length; i++) {
+                const user = await UserServices.getUser(orders[i].userId);
+                orders[i].user = user;
+            }
+
             return orders;
         } catch (error) {
             logger.log("error", `Error getting active orders: ${error.message}`);
@@ -330,6 +340,12 @@ class OrderService {
             querySnapshot.forEach(doc => {
                 orders.push(Order.fromFirestore(doc));
             });
+
+            // for each order add user details to the order
+            for (let i = 0; i < orders.length; i++) {
+                const user = await UserServices.getUser(orders[i].userId);
+                orders[i].user = user;
+            }
 
             return orders;
         } catch (error) {
