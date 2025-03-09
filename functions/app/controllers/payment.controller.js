@@ -2,6 +2,7 @@ const { logger } = require("../logger/FirebaseLogger");
 const OrderService = require("../services/order.service");
 const StripeService = require("../services/stripe.service");
 const {db} = require("../config/firebase.config");
+const {createResponse} = require("../utils/response.utils");
 /**
  * Controller for handling payment-related endpoints
  */
@@ -41,10 +42,10 @@ class PaymentController {
             }
 
             // Return success response
-            return res.status(200).json({ received: true });
+            return res.status(200).json(createResponse("success", "Webhook received", {received: true }));
         } catch (error) {
             logger.log("error", `Error handling webhook: ${error.message}`);
-            return res.status(400).json({ error: error.message });
+            return res.status(400).json(createResponse("error", "Error while receiving webhook" ,error));
         }
     }
 
@@ -160,9 +161,7 @@ class PaymentController {
             // If no order is found, return an error
             if (querySnapshot.empty) {
                 console.error(`No order found for session ${session_id} or payment intent ${session.payment_intent}`);
-                return res.status(404).json({
-                    error: `No order found for this payment session. Please contact support with reference: ${session_id}`
-                });
+                return res.status(404).json(createResponse("error", "No order found for this payment session. Please contact support with reference: ${session_id}", { session_id }));
             }
 
             // Get the order ID and update the order
@@ -186,7 +185,7 @@ class PaymentController {
             }
         } catch (error) {
             console.error(`Error handling payment success: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error while receiving order", error));
         }
     }
 
@@ -212,7 +211,7 @@ class PaymentController {
             return res.redirect('/order/canceled');
         } catch (error) {
             logger.log("error", `Error handling payment cancel: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error while receiving order", error));
         }
     }
 }

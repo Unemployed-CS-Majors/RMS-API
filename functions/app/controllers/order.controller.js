@@ -1,11 +1,8 @@
-// controllers/orderController.js - Handles order endpoints
-
 const { logger } = require("../logger/FirebaseLogger");
 const { Order, OrderStatus, DeliveryMethod, PaymentMethod } = require("../models/order.model");
 const OrderService = require("../services/order.service");
 const UserService = require("../services/user.service");
-const {db} = require("../config/firebase.config");
-const {getAuth} = require("firebase-admin/auth");
+const {createResponse} = require("../utils/response.utils");
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB ? true : false;
 /**
  * Controller for handling order-related endpoints
@@ -78,10 +75,11 @@ class OrderController {
                 );
             }
 
-            return res.status(201).json(createdOrder);
+            return res.status(201).json(createResponse("success", "Order created successfully", createdOrder));
+            
         } catch (error) {
             logger.log("error", `Error creating order: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error creating order", error.message));
         }
     }
 
@@ -98,10 +96,10 @@ class OrderController {
             // Get the order
             const order = await OrderService.getOrderById(orderId);
 
-            return res.status(200).json(order);
+            return res.status(200).json(createResponse("success", "Order retrieved successfully", order));
         } catch (error) {
             logger.log("error", `Error getting order: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 
@@ -119,10 +117,10 @@ class OrderController {
             // Get the user's orders
             const orders = await OrderService.getUserOrders(userId, limit);
 
-            return res.status(200).json(orders);
+            return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
             logger.log("error", `Error getting user orders: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 
@@ -139,7 +137,7 @@ class OrderController {
             const { status } = req.body;
 
             if (!status) {
-                return res.status(400).json({ error: "Status is required" });
+                return res.status(400).json(createResponse("error", "Missing required fields"));
             }
 
             // For orders being marked as "IN_PROGRESS", set estimated delivery time
@@ -163,10 +161,10 @@ class OrderController {
             // Update the order status
             const updatedOrder = await OrderService.updateOrderStatus(orderId, status, additionalData);
 
-            return res.status(200).json(updatedOrder);
+            return res.status(200).json(createResponse("success", "Order updated successfully", updatedOrder));
         } catch (error) {
             logger.log("error", `Error updating order status: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 
@@ -178,18 +176,14 @@ class OrderController {
      */
     static async getActiveOrders(req, res) {
         try {
-            // Check if user is a restaurant employee
-            
-
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : 50;
 
-            // Get active orders
             const orders = await OrderService.getActiveOrders(limit);
 
-            return res.status(200).json(orders);
+            return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
             logger.log("error", `Error getting active orders: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 
@@ -201,24 +195,21 @@ class OrderController {
      */
     static async getOrdersByStatus(req, res) {
         try {
-            // Check if user is a restaurant employee
-            
-
             const { status } = req.params;
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : 50;
 
             // Validate the status
             if (!Object.values(OrderStatus).includes(status)) {
-                return res.status(400).json({ error: "Invalid status" });
+                return res.status(400).json(createResponse("error", "Invalid status"));
             }
 
             // Get orders by status
             const orders = await OrderService.getOrdersByStatus(status, limit);
 
-            return res.status(200).json(orders);
+            return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
             logger.log("error", `Error getting orders by status: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 
@@ -231,12 +222,8 @@ class OrderController {
     static async cancelOrder(req, res) {
         try {
             const { orderId } = req.params;
-            const userId = await UserService.verifyUser(req);
 
-            // Get the order
             const order = await OrderService.getOrderById(orderId);
-
-            
 
             // Check if order can be canceled
             if ([OrderStatus.COMPLETED, OrderStatus.CANCELED].includes(order.status)) {
@@ -258,10 +245,10 @@ class OrderController {
                 additionalData
             );
 
-            return res.status(200).json(canceledOrder);
+            return res.status(200).json(createResponse("success", "Order cancelled successfully", canceledOrder));
         } catch (error) {
             logger.log("error", `Error canceling order: ${error.message}`);
-            return res.status(500).json({ error: error.message });
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
 }
