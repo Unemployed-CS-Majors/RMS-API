@@ -6,6 +6,14 @@ const {verifyIdToken} = require("../middlewares/auth.middleware");
 
 /**
  * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentication and user management
+ */
+
+
+/**
+ * @swagger
  * /auth/register:
  *   post:
  *     summary: Register a new user
@@ -189,6 +197,7 @@ router.delete('/deleteEmployee/:uid', isOwner, AuthController.deleteEmployee);
  * /auth/google:
  *   post:
  *     summary: Sign in with Google
+ *     tags: [Auth]
  *     description: Accepts an ID token from the client after Google sign-in via Firebase Auth.
  *     requestBody:
  *       required: true

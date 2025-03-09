@@ -5,6 +5,14 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: FloorPlan
+ *   description: Floor plan management
+ */
+
+
+/**
+ * @swagger
  * /floorPlan:
  *   get:
  *     summary: Retrieve the floor plan

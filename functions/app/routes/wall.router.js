@@ -7,6 +7,13 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Walls
+ *   description: Wall management
+ */
+
+/**
+ * @swagger
  * /walls:
  *   get:
  *     summary: Retrieve a list of all walls

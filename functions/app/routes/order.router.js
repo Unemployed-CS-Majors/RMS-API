@@ -8,9 +8,18 @@ const {Order} = require("../models/order.model");
 
 /**
  * @swagger
+ * tags:
+ *   name: Order
+ *   description: Order management
+ */
+
+
+/**
+ * @swagger
  * /orders:
  *   post:
  *     summary: Create a new order
+ *     tags: [Order]
  *     description: Creates a new order with specified items, delivery method, and payment method.
  *     security:
  *       - bearerAuth: []
@@ -107,6 +116,7 @@ router.post("/", verifyIdToken, OrderController.createOrder);
  * /orders:
  *   get:
  *     summary: Get user's orders
+ *     tags: [Order]
  *     description: Retrieves all orders for the authenticated user.
  *     security:
  *       - bearerAuth: []
@@ -157,6 +167,7 @@ router.get("/", verifyIdToken, OrderController.getUserOrders);
  * /orders/{orderId}:
  *   get:
  *     summary: Get order by ID
+ *     tags: [Order]
  *     description: Retrieves a specific order by its ID.
  *     security:
  *       - bearerAuth: []
@@ -209,6 +220,7 @@ router.get("/:orderId", verifyIdToken, OrderController.getOrder);
  * /orders/{orderId}/cancel:
  *   post:
  *     summary: Cancel an order
+ *     tags: [Order]
  *     description: Cancels an existing order if it's in a cancellable state.
  *     security:
  *       - bearerAuth: []
@@ -259,6 +271,7 @@ router.post("/:orderId/cancel", verifyIdToken, OrderController.cancelOrder);
  * /orders/{orderId}/status:
  *   patch:
  *     summary: Update order status
+ *     tags: [Order]
  *     description: Updates the status of an order (restaurant employees only).
  *     security:
  *       - bearerAuth: []
@@ -300,6 +313,7 @@ router.patch("/:orderId/status", verifyIdToken,isEmployee, OrderController.updat
  * /orders/employee/active:
  *   get:
  *     summary: Get active orders
+ *     tags: [Order]
  *     description: Retrieves all active orders (restaurant employees only).
  *     security:
  *       - bearerAuth: []
@@ -342,6 +356,7 @@ router.get("/employee/active", verifyIdToken,isEmployee, OrderController.getActi
  * /orders/employee/status/{status}:
  *   get:
  *     summary: Get orders by status
+ *     tags: [Order]
  *     description: Retrieves all orders with a specific status (restaurant employees only).
  *     security:
  *       - bearerAuth: []

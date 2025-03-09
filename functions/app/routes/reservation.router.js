@@ -5,9 +5,18 @@ const { verifyIdToken } = require("../middlewares/auth.middleware");
 const { isOwner } = require("../middlewares/privilages.middleware");
 /**
  * @swagger
+ * tags:
+ *   name: Reservation
+ *   description: Reservation management
+ */
+
+
+/**
+ * @swagger
  * /reservation/create:
  *   post:
  *     summary: Create a new reservation
+ *     tags: [Reservation]
  *     description: Create a new reservation.
  *     security:
  *       - bearerAuth: []
@@ -43,6 +52,7 @@ router.post('/create', verifyIdToken, ReservationController.createReservation);
  * /reservation/cancel/{reservationId}:
  *   post:
  *     summary: Cancel a reservation
+ *     tags: [Reservation]
  *     description: Cancel an existing reservation.
  *     security:
  *       - bearerAuth: []
@@ -70,6 +80,7 @@ router.post('/cancel/:reservationId', verifyIdToken, ReservationController.cance
  * /reservation/confirm/{reservationId}:
  *   post:
  *     summary: Confirm a reservation
+ *     tags: [Reservation]
  *     description: Confirm an existing reservation.
  *     security:
  *       - bearerAuth: []
@@ -97,6 +108,7 @@ router.post('/confirm/:reservationId', verifyIdToken, ReservationController.conf
  * /reservation/complete/{reservationId}:
  *   post:
  *     summary: Complete a reservation
+ *     tags: [Reservation]
  *     description: Complete an existing reservation.
  *     security:
  *       - bearerAuth: []
@@ -124,6 +136,7 @@ router.post('/complete/:reservationId', verifyIdToken, ReservationController.com
  * /reservation/reschedule/{reservationId}:
  *   post:
  *     summary: Reschedule a reservation
+ *     tags: [Reservation]
  *     description: Reschedule an existing reservation.
  *     security:
  *       - bearerAuth: []
@@ -162,6 +175,7 @@ router.post('/reschedule/:reservationId', verifyIdToken, ReservationController.r
  * /reservation/get/{reservationId}:
  *   get:
  *     summary: Get reservation details
+ *     tags: [Reservation]
  *     description: Get details of a specific reservation.
  *     security:
  *       - bearerAuth: []
@@ -189,6 +203,7 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
  * /reservation/user:
  *   get:
  *     summary: Get reservations for a user
+ *     tags: [Reservation]
  *     description: Get all reservations for the authenticated user.
  *     security:
  *       - bearerAuth: []
@@ -207,6 +222,7 @@ router.get('/user', verifyIdToken, ReservationController.getReservationsForUser)
  * /reservation/user/upcoming:
  *   get:
  *     summary: Get upcoming reservations for a user
+ *     tags: [Reservation]
  *     description: Get all upcoming reservations for the authenticated user.
  *     security:
  *       - bearerAuth: []
@@ -225,6 +241,7 @@ router.get('/user/upcoming', verifyIdToken, ReservationController.getUpcomingRes
  * /reservation/free-tables:
  *   post:
  *     summary: Get free tables for a given time
+ *     tags: [Reservation]
  *     description: Get available tables for a specified time period.
  *     security:
  *       - bearerAuth: []
@@ -251,8 +268,93 @@ router.get('/user/upcoming', verifyIdToken, ReservationController.getUpcomingRes
  */
 router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableForGivenTime);
 
+/**
+ * @swagger
+ * /reservation/all:
+ *   get:
+ *     summary: Get all reservations
+ *     tags: [Reservation]
+ *     description: Retrieve all reservations (owner only).
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all reservations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   userId:
+ *                     type: string
+ *                   tableId:
+ *                     type: string
+ *                   startTime:
+ *                     type: string
+ *                   endTime:
+ *                     type: string
+ *                   people:
+ *                     type: integer
+ *                   status:
+ *                     type: string
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Not an owner
+ */
 router.get('/all', verifyIdToken, isOwner, ReservationController.getAllReservations);
 
+/**
+ * @swagger
+ * /reservation/{status}:
+ *   get:
+ *     summary: Get reservations by status
+ *     tags: [Reservation]
+ *     description: Retrieve reservations by status (owner only).
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: status
+ *         required: true
+ *         description: The status of the reservations to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of reservations with the specified status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   userId:
+ *                     type: string
+ *                   tableId:
+ *                     type: string
+ *                   startTime:
+ *                     type: string
+ *                   endTime:
+ *                     type: string
+ *                   people:
+ *                     type: integer
+ *                   status:
+ *                     type: string
+ *       400:
+ *         description: Invalid status
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Not an owner
+ */
 router.get('/:status', verifyIdToken, isOwner, ReservationController.getReservationByStatus);
 
 

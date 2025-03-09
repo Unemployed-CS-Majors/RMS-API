@@ -7,6 +7,13 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Windows
+ *   description: Window management
+ */
+
+/**
+ * @swagger
  * /windows:
  *   get:
  *     summary: Retrieve a list of all windows

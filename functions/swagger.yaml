@@ -171,6 +171,8 @@ paths:
   /auth/google:
     post:
       summary: Sign in with Google
+      tags:
+        - Auth
       description: >-
         Accepts an ID token from the client after Google sign-in via Firebase
         Auth.
@@ -526,6 +528,8 @@ paths:
   /opening-hours/{id}:
     get:
       summary: Retrieve opening hours by ID
+      tags:
+        - Opening Hours
       description: Retrieve the opening hours for a specific ID.
       parameters:
         - in: path
@@ -550,6 +554,8 @@ paths:
           description: Opening hours not found
     put:
       summary: Update opening hours
+      tags:
+        - Opening Hours
       description: Update existing opening hours.
       security:
         - bearerAuth: []
@@ -586,6 +592,8 @@ paths:
           description: Opening hours not found
     delete:
       summary: Delete opening hours
+      tags:
+        - Opening Hours
       description: Delete existing opening hours.
       security:
         - bearerAuth: []
@@ -608,6 +616,8 @@ paths:
   /opening-hours:
     get:
       summary: Retrieve all opening hours
+      tags:
+        - Opening Hours
       description: Retrieve all opening hours.
       responses:
         '200':
@@ -625,6 +635,8 @@ paths:
                       type: string
     post:
       summary: Create new opening hours
+      tags:
+        - Opening Hours
       description: Create new opening hours.
       security:
         - bearerAuth: []
@@ -653,6 +665,8 @@ paths:
   /orders:
     post:
       summary: Create a new order
+      tags:
+        - Order
       description: >-
         Creates a new order with specified items, delivery method, and payment
         method.
@@ -750,6 +764,8 @@ paths:
           description: Unauthorized
     get:
       summary: Get user's orders
+      tags:
+        - Order
       description: Retrieves all orders for the authenticated user.
       security:
         - bearerAuth: []
@@ -795,6 +811,8 @@ paths:
   /orders/{orderId}:
     get:
       summary: Get order by ID
+      tags:
+        - Order
       description: Retrieves a specific order by its ID.
       security:
         - bearerAuth: []
@@ -842,6 +860,8 @@ paths:
   /orders/{orderId}/cancel:
     post:
       summary: Cancel an order
+      tags:
+        - Order
       description: Cancels an existing order if it's in a cancellable state.
       security:
         - bearerAuth: []
@@ -888,6 +908,8 @@ paths:
   /orders/{orderId}/status:
     patch:
       summary: Update order status
+      tags:
+        - Order
       description: Updates the status of an order (restaurant employees only).
       security:
         - bearerAuth: []
@@ -931,6 +953,8 @@ paths:
   /orders/employee/active:
     get:
       summary: Get active orders
+      tags:
+        - Order
       description: Retrieves all active orders (restaurant employees only).
       security:
         - bearerAuth: []
@@ -968,6 +992,8 @@ paths:
   /orders/employee/status/{status}:
     get:
       summary: Get orders by status
+      tags:
+        - Order
       description: Retrieves all orders with a specific status (restaurant employees only).
       security:
         - bearerAuth: []
@@ -1042,6 +1068,8 @@ paths:
   /payments/success:
     get:
       summary: Payment success redirect
+      tags:
+        - Payments
       description: Endpoint for handling successful payment redirects from Stripe.
       parameters:
         - in: query
@@ -1060,6 +1088,8 @@ paths:
   /payments/cancel:
     get:
       summary: Payment cancel redirect
+      tags:
+        - Payments
       description: Endpoint for handling canceled payment redirects from Stripe.
       parameters:
         - in: query
@@ -1226,6 +1256,8 @@ paths:
   /reservation/user:
     get:
       summary: Get reservations for a user
+      tags:
+        - Reservation
       description: Get all reservations for the authenticated user.
       security:
         - bearerAuth: []
@@ -1239,6 +1271,8 @@ paths:
   /reservation/user/upcoming:
     get:
       summary: Get upcoming reservations for a user
+      tags:
+        - Reservation
       description: Get all upcoming reservations for the authenticated user.
       security:
         - bearerAuth: []
@@ -1252,6 +1286,8 @@ paths:
   /reservation/free-tables:
     post:
       summary: Get free tables for a given time
+      tags:
+        - Reservation
       description: Get available tables for a specified time period.
       security:
         - bearerAuth: []
@@ -1275,6 +1311,87 @@ paths:
           description: Validation error
         '401':
           description: Unauthorized
+  /reservation/all:
+    get:
+      summary: Get all reservations
+      tags:
+        - Reservation
+      description: Retrieve all reservations (owner only).
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of all reservations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    userId:
+                      type: string
+                    tableId:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+                    people:
+                      type: integer
+                    status:
+                      type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Not an owner
+  /reservation/{status}:
+    get:
+      summary: Get reservations by status
+      tags:
+        - Reservation
+      description: Retrieve reservations by status (owner only).
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: status
+          required: true
+          description: The status of the reservations to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of reservations with the specified status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    userId:
+                      type: string
+                    tableId:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+                    people:
+                      type: integer
+                    status:
+                      type: string
+        '400':
+          description: Invalid status
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Not an owner
   /tables:
     get:
       summary: Retrieve a list of all tables
@@ -1458,6 +1575,8 @@ paths:
   /user:
     get:
       summary: Retrieve user information
+      tags:
+        - User
       description: Retrieve the details of the authenticated user.
       security:
         - bearerAuth: []
@@ -1480,6 +1599,8 @@ paths:
   /user/all:
     get:
       summary: Retrieve all users
+      tags:
+        - User
       description: Retrieve a list of all users. Only accessible by owners.
       security:
         - bearerAuth: []
@@ -1510,6 +1631,8 @@ paths:
   /user/privileged:
     get:
       summary: Retrieve all privileged users
+      tags:
+        - User
       description: Retrieve a list of all privileged users. Only accessible by owners.
       security:
         - bearerAuth: []
@@ -1536,6 +1659,8 @@ paths:
   /user/{userId}/privilege:
     put:
       summary: Change user privilege
+      tags:
+        - User
       description: Change the privilege level of a user. Only accessible by owners.
       security:
         - bearerAuth: []
@@ -1832,5 +1957,13 @@ paths:
         '404':
           description: Window not found
 tags:
+  - name: Auth
+    description: Authentication and user management
+  - name: Doors
+    description: Door management
+  - name: FloorPlan
+    description: Floor plan management
+  - name: MenuItem
+    description: Menu item management
   - name: Tables
     description: Table management

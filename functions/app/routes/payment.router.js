@@ -5,9 +5,17 @@ const PaymentController = require("../controllers/payment.controller");
 
 /**
  * @swagger
+ * tags:
+ *   name: Payments
+ *   description: Payment processing
+ */
+
+/**
+ * @swagger
  * /payments/webhook:
  *   post:
  *     summary: Stripe webhook endpoint
+ *     tags: [Payments]
  *     description: Endpoint for handling Stripe webhook events.
  *     requestBody:
  *       content:
@@ -34,6 +42,7 @@ router.post("/webhook", PaymentController.handleWebhook);
  * /payments/success:
  *   get:
  *     summary: Payment success redirect
+ *     tags: [Payments]
  *     description: Endpoint for handling successful payment redirects from Stripe.
  *     parameters:
  *       - in: query
@@ -57,6 +66,7 @@ router.get("/success", PaymentController.handlePaymentSuccess);
  * /payments/cancel:
  *   get:
  *     summary: Payment cancel redirect
+ *     tags: [Payments]
  *     description: Endpoint for handling canceled payment redirects from Stripe.
  *     parameters:
  *       - in: query

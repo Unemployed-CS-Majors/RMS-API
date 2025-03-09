@@ -7,9 +7,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: User
+ *   description: User management
+ */
+
+/**
+ * @swagger
  * /user:
  *   get:
  *     summary: Retrieve user information
+ *     tags: [User]
  *     description: Retrieve the details of the authenticated user.
  *     security:
  *       - bearerAuth: []
@@ -37,6 +45,7 @@ router.get('/', verifyIdToken, UserController.getUser);
  * /user/all:
  *   get:
  *     summary: Retrieve all users
+ *     tags: [User]
  *     description: Retrieve a list of all users. Only accessible by owners.
  *     security:
  *       - bearerAuth: []
@@ -72,6 +81,7 @@ router.get('/all', verifyIdToken, isOwner, UserController.getAllUsers);
  * /user/privileged:
  *   get:
  *     summary: Retrieve all privileged users
+ *     tags: [User]
  *     description: Retrieve a list of all privileged users. Only accessible by owners.
  *     security:
  *       - bearerAuth: []
@@ -103,6 +113,7 @@ router.get('/privileged', verifyIdToken, isOwner, UserController.getAllPrivilege
  * /user/{userId}/privilege:
  *   put:
  *     summary: Change user privilege
+ *     tags: [User]
  *     description: Change the privilege level of a user. Only accessible by owners.
  *     security:
  *       - bearerAuth: []

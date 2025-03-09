@@ -7,6 +7,14 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Doors
+ *   description: Door management
+ */
+
+
+/**
+ * @swagger
  * /doors:
  *   get:
  *     summary: Retrieve a list of all doors

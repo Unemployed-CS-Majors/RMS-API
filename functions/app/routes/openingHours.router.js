@@ -8,9 +8,18 @@ const {isOwner} = require("../middlewares/privilages.middleware");
 
 /**
  * @swagger
+ * tags:
+ *   name: Opening Hours
+ *   description: Opening hours management
+ */
+
+
+/**
+ * @swagger
  * /opening-hours/{id}:
  *   get:
  *     summary: Retrieve opening hours by ID
+ *     tags: [Opening Hours]
  *     description: Retrieve the opening hours for a specific ID.
  *     parameters:
  *       - in: path
@@ -41,6 +50,7 @@ router.get("/:id", OpeningHoursController.getOpeningHoursById);
  * /opening-hours:
  *   get:
  *     summary: Retrieve all opening hours
+ *     tags: [Opening Hours]
  *     description: Retrieve all opening hours.
  *     responses:
  *       200:
@@ -64,6 +74,7 @@ router.get("/", OpeningHoursController.getAllOpeningHours);
  * /opening-hours:
  *   post:
  *     summary: Create new opening hours
+ *     tags: [Opening Hours]
  *     description: Create new opening hours.
  *     security:
  *       - bearerAuth: []
@@ -102,6 +113,7 @@ router.post(
  * /opening-hours/{id}:
  *   put:
  *     summary: Update opening hours
+ *     tags: [Opening Hours]
  *     description: Update existing opening hours.
  *     security:
  *       - bearerAuth: []
@@ -149,6 +161,7 @@ router.put(
  * /opening-hours/{id}:
  *   delete:
  *     summary: Delete opening hours
+ *     tags: [Opening Hours]
  *     description: Delete existing opening hours.
  *     security:
  *       - bearerAuth: []

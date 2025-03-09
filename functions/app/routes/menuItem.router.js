@@ -7,6 +7,14 @@ const MenuItemController = require("../controllers/menuItem.controller");
 
 /**
  * @swagger
+ * tags:
+ *   name: MenuItem
+ *   description: Menu item management
+ */
+
+
+/**
+ * @swagger
  * /:
  *   post:
  *     summary: Create a new menu item
