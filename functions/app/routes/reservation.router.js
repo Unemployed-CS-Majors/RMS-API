@@ -186,7 +186,7 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
 
 /**
  * @swagger
- * /reservation/user
+ * /reservation/user:
  *   get:
  *     summary: Get reservations for a user
  *     description: Get all reservations for the authenticated user.
