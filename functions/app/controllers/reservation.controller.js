@@ -58,17 +58,18 @@ class ReservationController {
                     .json(createResponse("error", "Time slot is already booked", null));
             }
 
-            const newReservation = await ReservationService.createReservationRecord(userId, tableId, startTime, endTime, people);
 
             const date = new Date(startTime);
 
-            const openingHours = OpeningHours.fromFirestore(await OpeningHoursService.getOpeningHoursById(date.getDay().toString()));
+            const openingHours = await OpeningHoursService.getOpeningHoursById(date.getDay().toString());
 
             if (startTime < openingHours.startTime || endTime > openingHours.endTime) {
                 return res
                     .status(409)
                     .json(createResponse("error", "Time slot is not within opening hours", null));
             }
+
+            const newReservation = await ReservationService.createReservationRecord(userId, tableId, startTime, endTime, people);
 
             const user = await UserService.getUser(userId);
             if (user === null) {

@@ -44,8 +44,8 @@ class OrderController {
             // Process payment if needed
             if (createdOrder.paymentMethod === PaymentMethod.ONLINE) {
                 // Create success and cancel URLs
-                const successUrl = isEmulator ? `http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/success` : `${req.protocol}://${req.get('host')}/payments/success`  ;
-                const cancelUrl = isEmulator ? `http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/cancel` : `${req.protocol}://${req.get('host')}/payments/cancel`;
+                const successUrl = isEmulator ? `http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/success` : `${req.protocol}://${req.get('host')}/profile#order?reservation=${createdOrder.id}`;
+                const cancelUrl = isEmulator ? `http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/cancel` : `${req.protocol}://${req.get('host')}/profile#order?reservation=${createdOrder.id}`;
                 logger.info(successUrl);
                 logger.info(cancelUrl);
                 // Process payment

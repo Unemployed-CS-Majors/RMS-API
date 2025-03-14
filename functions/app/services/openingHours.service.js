@@ -5,7 +5,7 @@ class OpeningHoursService {
     /**
      * Retrieves opening hours by ID.
      * @param {string} openingHoursId - The ID of the opening hours document.
-     * @returns {Promise<Object|null>} The opening hours data or null if not found.
+     * @returns {Promise<OpeningHours|null>} The opening hours data or null if not found.
      */
     static async getOpeningHoursById(openingHoursId) {
         const openingHoursRef = db.collection("opening_hours").doc(openingHoursId);
@@ -13,7 +13,7 @@ class OpeningHoursService {
         if (!openingHoursDoc.exists) {
             return null;
         }
-        return openingHoursDoc.data();
+        return OpeningHours.fromFirestore(openingHoursDoc);
     }
 
     /**
