@@ -8,7 +8,9 @@ const TableService = require("../services/table.service");
 const ReservationService = require("../services/reservation.service");
 const {ReservationStatus} = require("../models/reservation.model");
 const userService = require("../services/user.service");
+const OpeningHoursService = require("../services/openingHours.service");
 const {logger} = require("../logger/FirebaseLogger");
+const {OpeningHours} = require("../models/openingHours.model");
 /**
  * Controller for handling reservation-related operations.
  */
@@ -57,6 +59,16 @@ class ReservationController {
             }
 
             const newReservation = await ReservationService.createReservationRecord(userId, tableId, startTime, endTime, people);
+
+            const date = new Date(startTime);
+
+            const openingHours = OpeningHours.fromFirestore(await OpeningHoursService.getOpeningHoursById(date.getDay().toString()));
+
+            if (startTime < openingHours.startTime || endTime > openingHours.endTime) {
+                return res
+                    .status(409)
+                    .json(createResponse("error", "Time slot is not within opening hours", null));
+            }
 
             const user = await UserService.getUser(userId);
             if (user === null) {
