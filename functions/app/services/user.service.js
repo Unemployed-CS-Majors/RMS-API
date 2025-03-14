@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 const {db} = require("../config/firebase.config");
-
+const {User} = require("../models/user.model");
 class UserService {
   /**
    * Verifies the user by checking the authorization token in the request headers.
@@ -29,7 +29,7 @@ class UserService {
     if (!user.exists) {
       return null;
     }
-    return user.data();
+    return User.fromFirestore(user);
   }
 
   static async changePrivilege(userId, privilege) {
@@ -42,7 +42,7 @@ class UserService {
     const snapshot = await usersRef.get();
     const users = [];
     snapshot.forEach(doc => {
-      users.push(doc.data());
+      users.push(User.fromFirestore(doc));
     });
     return users;
   }
@@ -55,6 +55,16 @@ class UserService {
       users.push({ uid: doc.id, ...doc.data() });
     });
     return users;
+  }
+
+  static async getUserByEmail(email) {
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.where("email", "==", email).get();
+    if (snapshot.empty) {
+      return null;
+    }
+    const user = snapshot.docs[0];
+    return User.fromFirestore(user);
   }
 }
 

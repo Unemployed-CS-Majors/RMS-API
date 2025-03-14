@@ -3,6 +3,8 @@ const OrderService = require("../services/order.service");
 const StripeService = require("../services/stripe.service");
 const {db} = require("../config/firebase.config");
 const {createResponse} = require("../utils/response.utils");
+const EmailService = require("../services/email.service");
+const UserService = require("../services/user.service");
 /**
  * Controller for handling payment-related endpoints
  */
@@ -175,6 +177,10 @@ class PaymentController {
                     paymentIntentId: session.payment_intent, // Ensure it's saved
                     checkoutSessionId: session_id // Ensure it's saved
                 });
+                const user = await UserService.getUser(querySnapshot.docs[0].data().userId);
+                const order = OrderService.getOrderById(orderId);
+                await EmailService.sendOrderPaymentReceivedEmail(user, order);
+
 
                 // Redirect to a success page (can be configured as needed)
                 return res.redirect(`/order/success?orderId=${orderId}`);
