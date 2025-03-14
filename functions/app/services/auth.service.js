@@ -11,6 +11,8 @@ const {
 const {log} = require("firebase-functions/logger");
 const {isValidEmail} = require("../validators/auth.validators");
 const {logger} = require("../logger/FirebaseLogger");
+const {get} = require("axios");
+const EmailService = require("./email.service");
 
 /**
  * AuthService class provides methods for user authentication and management.
@@ -38,6 +40,12 @@ class AuthService {
             });
 
             const user = new User(userRecord.uid, firstName, lastName, email, phoneNumber, isEmulator ? Privileges.OWNER : Privileges.CUSTOMER);
+            var actionCodeSettings = {
+                url: 'https://restaurant-management-sy-1a0cd.web.app/',
+            };
+            const verificationLink = await getAuth().generateEmailVerificationLink(email, actionCodeSettings);
+            await EmailService.sendVerificationEmail(user, verificationLink);
+
             await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
             return {success: true, uid: userRecord.uid};

@@ -6,6 +6,7 @@ const {changePrivilege} = require("../services/user.service");
 const {log} = require("firebase-functions/logger");
 const UserService = require("../services/user.service");
 const {logger} = require("../logger/FirebaseLogger");
+const EmailService = require("../services/email.service");
 
 class AuthController {
     static async register(req, res) {
@@ -157,6 +158,9 @@ class AuthController {
         const result = await AuthService.forgotPassword(email);
         if (result.success) {
             logger.info("Password reset email sent", {email});
+            const user = await UserService.getUserByEmail(email);
+
+            await EmailService.sendPasswordResetEmail(user, result);
             res.status(200).json(createResponse("success", "Password reset email sent", null));
         } else {
             logger.error("Forgot password failed", {error: result.error});

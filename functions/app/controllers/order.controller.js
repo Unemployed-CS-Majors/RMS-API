@@ -3,6 +3,7 @@ const { Order, OrderStatus, DeliveryMethod, PaymentMethod } = require("../models
 const OrderService = require("../services/order.service");
 const UserService = require("../services/user.service");
 const {createResponse} = require("../utils/response.utils");
+const EmailService = require("../services/email.service");
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB ? true : false;
 /**
  * Controller for handling order-related endpoints
@@ -74,6 +75,8 @@ class OrderController {
                     OrderStatus.PAID
                 );
             }
+            const user = await UserService.getUser(userId);
+            await EmailService.sendOrderPlacedEmail(user, order);
 
             return res.status(201).json(createResponse("success", "Order created successfully", createdOrder));
             
@@ -157,10 +160,22 @@ class OrderController {
 
                 additionalData.estimatedDeliveryTime = estimatedTime.getTime();
             }
+            const user = await UserService.getUser(userId);
+
 
             // Update the order status
             const updatedOrder = await OrderService.updateOrderStatus(orderId, status, additionalData);
-
+            switch (status) {
+                case OrderStatus.IN_PROGRESS:
+                    await EmailService.sendOrderBeingPreparedEmail(user, updatedOrder);
+                    break;
+                case OrderStatus.READY_FOR_PICKUP:
+                    await EmailService.sendOrderReadyForPickupEmail(user, updatedOrder);
+                    break;
+                case OrderStatus.OUT_FOR_DELIVERY:
+                    await EmailService.sendOrderIsOnTheWayEmail(user, updatedOrder);
+                    break;
+            }
             return res.status(200).json(createResponse("success", "Order updated successfully", updatedOrder));
         } catch (error) {
             logger.log("error", `Error updating order status: ${error.message}`);
