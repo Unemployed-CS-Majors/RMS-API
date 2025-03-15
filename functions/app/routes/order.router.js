@@ -164,7 +164,7 @@ router.get("/", verifyIdToken, OrderController.getUserOrders);
 
 /**
  * @swagger
- * /orders/{orderId}:
+ * /order/{orderId}:
  *   get:
  *     summary: Get order by ID
  *     tags: [Order]
@@ -217,7 +217,7 @@ router.get("/:orderId", verifyIdToken, OrderController.getOrder);
 
 /**
  * @swagger
- * /orders/{orderId}/cancel:
+ * /order/{orderId}/cancel:
  *   post:
  *     summary: Cancel an order
  *     tags: [Order]
@@ -268,7 +268,7 @@ router.post("/:orderId/cancel", verifyIdToken, OrderController.cancelOrder);
 
 /**
  * @swagger
- * /orders/{orderId}/status:
+ * /order/{orderId}/status:
  *   patch:
  *     summary: Update order status
  *     tags: [Order]
@@ -310,7 +310,7 @@ router.patch("/:orderId/status", verifyIdToken,isEmployee, OrderController.updat
 
 /**
  * @swagger
- * /orders/employee/active:
+ * /order/employee/active:
  *   get:
  *     summary: Get active orders
  *     tags: [Order]
@@ -353,7 +353,7 @@ router.get("/employee/active", verifyIdToken,isEmployee, OrderController.getActi
 
 /**
  * @swagger
- * /orders/employee/status/{status}:
+ * /order/employee/status/{status}:
  *   get:
  *     summary: Get orders by status
  *     tags: [Order]

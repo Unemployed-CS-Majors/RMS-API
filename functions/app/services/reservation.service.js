@@ -184,7 +184,11 @@ class ReservationService {
 
     static async getUpcomingReservationsForUser(userId) {
         const reservationsRef = db.collection("reservations");
-        const query = await reservationsRef.where("userId", "==", userId).where("startTime", ">=", new Date().getTime() / 1000).get();
+        const query = await reservationsRef
+            .where("userId", "==", userId)
+            .where("startTime", ">=", new Date().getTime() / 1000)
+            .where("status", "in", [ReservationStatus.PENDING, ReservationStatus.CONFIRMED])
+            .get();
         const reservations = [];
 
         query.forEach((doc) => {
