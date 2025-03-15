@@ -267,6 +267,19 @@ class OrderController {
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
+
+    static async getAllOrders(req, res) {
+        try {
+            const limit = req.query.limit ? parseInt(req.query.limit, 10) : 50;
+
+            const orders = await OrderService.getAllOrders(limit);
+
+            return res.status(200).json(createResponse("success", "Orders retrieved successfully", orders));
+        } catch (error) {
+            logger.error( `Error getting all orders: ${error.message}`,error);
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
+        }
+    }
 }
 
 module.exports = OrderController;
