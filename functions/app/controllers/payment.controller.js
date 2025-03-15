@@ -131,7 +131,7 @@ class PaymentController {
                 return res.status(400).json({ error: "Missing session ID" });
             }
 
-            console.log(`Processing successful payment for session: ${session_id}`);
+            logger.log(`Processing successful payment for session: ${session_id}`);
 
             // Retrieve the session from Stripe
             const session = await StripeService.retrieveCheckoutSession(session_id);
@@ -144,7 +144,7 @@ class PaymentController {
 
             // If not found, try to find by payment intent ID
             if (querySnapshot.empty && session.payment_intent) {
-                console.log(`No order found with session ID ${session_id}, trying payment intent ${session.payment_intent}`);
+                logger.error(`No order found with session ID ${session_id}, trying payment intent ${session.payment_intent}`);
                 querySnapshot = await db.collection("orders")
                     .where('paymentIntentId', '==', session.payment_intent)
                     .limit(1)
@@ -153,7 +153,7 @@ class PaymentController {
 
             // If still not found, look in metadata
             if (querySnapshot.empty && session.metadata && session.metadata.orderId) {
-                console.log(`No order found with payment intent, trying metadata orderId: ${session.metadata.orderId}`);
+                logger.log(`No order found with payment intent, trying metadata orderId: ${session.metadata.orderId}`);
                 querySnapshot = await db.collection("orders")
                     .where('__name__', '==', session.metadata.orderId)
                     .limit(1)
@@ -162,13 +162,13 @@ class PaymentController {
 
             // If no order is found, return an error
             if (querySnapshot.empty) {
-                console.error(`No order found for session ${session_id} or payment intent ${session.payment_intent}`);
+                logger.error(`No order found for session ${session_id} or payment intent ${session.payment_intent}`);
                 return res.status(404).json(createResponse("error", "No order found for this payment session. Please contact support with reference: ${session_id}", { session_id }));
             }
 
             // Get the order ID and update the order
             const orderId = querySnapshot.docs[0].id;
-            console.log(`Found order: ${orderId}`);
+            logger.log(`Found order: ${orderId}`);
 
             // Check if the payment was successful and update the order
             if (session.payment_status === 'paid') {
@@ -177,20 +177,25 @@ class PaymentController {
                     paymentIntentId: session.payment_intent, // Ensure it's saved
                     checkoutSessionId: session_id // Ensure it's saved
                 });
-                const user = await UserService.getUser(querySnapshot.docs[0].data().userId);
-                const order = OrderService.getOrderById(orderId);
-                await EmailService.sendOrderPaymentReceivedEmail(user, order);
+                try {
+                    const user = await UserService.getUser(querySnapshot.docs[0].data().userId);
+                    const order = OrderService.getOrderById(orderId);
+                    await EmailService.sendOrderPaymentReceivedEmail(user, order);
+
+                }catch(error) {
+                    logger.error("Error sending email", error);
+                }
 
 
                 // Redirect to a success page (can be configured as needed)
                 return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#order?reservation=${orderId}`);
             } else {
                 // If payment wasn't successful for some reason
-                console.warn(`Payment not marked as paid for session ${session_id}`);
+                logger.warn(`Payment not marked as paid for session ${session_id}`);
                 return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#order?reservation=${orderId}`);
             }
         } catch (error) {
-            console.error(`Error handling payment success: ${error.message}`);
+            logger.error(`Error handling payment success`,error);
             return res.status(500).json(createResponse("error", "Error while receiving order", error));
         }
     }

@@ -1,7 +1,6 @@
 const {Reservation, ReservationStatus} = require("../models/reservation.model");
 const {db} = require("../config/firebase.config");
-const WebSocket = require("ws");
-let wss;
+
 class ReservationService {
     /**
      * Checks for overlapping reservations for a given table and time range.

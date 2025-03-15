@@ -15,6 +15,7 @@ const floorPlanRouter = require("./app/routes/floorPlan.router");
 const menuItemRouter = require("./app/routes/menuItem.router");
 const paymentRouter = require("./app/routes/payment.router");
 const orderRouter = require("./app/routes/order.router");
+const restaurantConfigRouter = require("./app/routes/restaurantConfig.router");
 const { logger, LogLevel } = require("./app/logger/FirebaseLogger");
 const { metricsMiddleware } = require("./app/config/prometheus.config");
 const { setupCounters } = require("./app/utils/counter.utils");
@@ -45,7 +46,7 @@ app.use("/floorPlan", floorPlanRouter);
 app.use("/menu-items", menuItemRouter);
 app.use("/order", orderRouter);
 app.use("/payments", paymentRouter);
-
+app.use("/restaurant", restaurantConfigRouter);
 app.use((req, res) => {
     res.status(404).json({ error: "Endpoint not found" });
 });

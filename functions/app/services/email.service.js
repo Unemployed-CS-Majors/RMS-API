@@ -151,11 +151,11 @@ class EmailService {
             },
             'confirmed': {
                 templateId: TEMPLATES.RESERVATION_CONFIRMED,
-                subject: "Your reservation is confirmed!"
+                subject: "Your reservation is confirmed"
             },
             'cancelled': {
                 templateId: TEMPLATES.RESERVATION_CANCELLED,
-                subject: "Your Reservation Has Been Cancelled"
+                subject: "Your reservation has been cancelled"
             }
         };
 
@@ -180,7 +180,7 @@ class EmailService {
 
         const variables = {
             email: user.email,
-            website_url: "undefined", // TODO: Add proper URL
+            website_url: "rms.ie", // TODO: Add proper URL
             contact_email: "rms@rms.ie",
             verification_link: verificationLink,
             name: user.firstName,
@@ -230,12 +230,12 @@ class EmailService {
      */
     static _createOrderBaseVariables(user, order) {
         return {
-            contact_phone: "undefined", // TODO: Add contact phone
-            contact_email: "undefined", // TODO: Add contact email
-            track_order_url: "undefined", // TODO: Add track order URL
-            delivery_time: order.estimatedDeliveryTime.toTimeString(),
-            order_id: order.id,
-            name: user.firstName,
+            contact_phone: "+353 123456789", // TODO: Add contact phone
+            contact_email: "test@test.pl", // TODO: Add contact email
+            track_order_url: "https://google.com", // TODO: Add track order URL
+            delivery_time: (new Date(order?.estimatedDeliveryTime || 0))?.toTimeString() || "N/A"  ,
+            order_id: order?.id || "N/A",
+            name: user?.firstName|| "N/A",
             restaurant_name: DEFAULT_RESTAURANT_NAME
         };
     }
@@ -251,25 +251,25 @@ class EmailService {
 
         const variables = {
             ...this._createOrderBaseVariables(user, order),
-            delivery_method_formatted: order.deliveryMethod.replace("_", " "),
-            country: order.deliveryAddress.country,
-            eircode: order.deliveryAddress.eircode,
-            county: order.deliveryAddress.county,
-            city: order.deliveryAddress.city,
-            street: order.deliveryAddress.street,
-            total: order.total,
-            delivery_fee: order.deliveryFee,
-            tax: order.tax,
-            subtotal: order.subtotal,
-            order_items: order.items,
-            order_date: order.date.toDateString(),
-            delivery_method: order.deliveryMethod
+            delivery_method_formatted: (order?.deliveryMethod || "N/A").replace("_", " "),
+            country: order?.deliveryAddress?.country || "N/A",
+            eircode: order?.deliveryAddress?.eircode || "N/A",
+            county: order?.deliveryAddress?.county || "N/A",
+            city: order?.deliveryAddress?.city || "N/A",
+            street: order?.deliveryAddress?.street || "N/A",
+            total: order?.total || "N/A",
+            delivery_fee: order?.deliveryFee || "N/A",
+            tax: order?.tax || "N/A",
+            subtotal: order?.subtotal || "N/A",
+            order_items: order?.items || "",
+            order_date: (new Date(order?.createdAt || 0)).toDateString(),
+            delivery_method: order?.deliveryMethod || "N/A",
         };
 
         return this._sendEmail(
             user,
             TEMPLATES.ORDER_PLACED,
-            "Order Confirmation: Your Food is Being Prepared!",
+            "Order confirmation",
             variables
         );
     }
@@ -293,7 +293,7 @@ class EmailService {
         return this._sendEmail(
             user,
             TEMPLATES.PAYMENT_RECEIVED,
-            "We have received your payment!",
+            "We have received your payment",
             variables
         );
     }
@@ -316,7 +316,7 @@ class EmailService {
         return this._sendEmail(
             user,
             TEMPLATES.ORDER_PREPARING,
-            "Your Order is Being Prepared!",
+            "Your order is being prepared",
             variables
         );
     }
@@ -343,7 +343,7 @@ class EmailService {
         return this._sendEmail(
             user,
             TEMPLATES.ORDER_ON_WAY,
-            "Your order is on the Way!",
+            "Your order is on the way",
             variables
         );
     }
@@ -369,7 +369,7 @@ class EmailService {
         return this._sendEmail(
             user,
             TEMPLATES.ORDER_PICKUP_READY,
-            "Your Order is Ready for Pickup!",
+            "Your order is ready for pickup",
             variables
         );
     }

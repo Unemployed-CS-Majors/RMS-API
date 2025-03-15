@@ -101,10 +101,7 @@ class OrderService {
                 throw new Error(`Order ${orderId} not found`);
             }
 
-            const order = Order.fromFirestore(orderDoc);
-            const user = await UserServices.getUser(order.userId);
-            order.user = user;
-            return order;
+            return Order.fromFirestore(orderDoc);
         } catch (error) {
             logger.log("error", `Error getting order ${orderId}: ${error.message}`);
             throw error;
