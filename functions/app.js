@@ -20,6 +20,8 @@ const analyticsRouter = require("./app/routes/analytics.router");
 const { logger, LogLevel } = require("./app/logger/FirebaseLogger");
 const { metricsMiddleware } = require("./app/config/prometheus.config");
 const { setupCounters } = require("./app/utils/counter.utils");
+const initializeFeatures = require('./app/utils/initializeFeatures.util');
+
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB;
 require('dotenv').config();
 const app = express();
@@ -54,5 +56,6 @@ app.use((req, res) => {
 });
 
 setupCounters();
+initializeFeatures();
 
 module.exports = app;

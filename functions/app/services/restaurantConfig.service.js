@@ -4,7 +4,7 @@ const {Email} = require("../models/email.model");
 const {Address} = require("../models/address.model");
 const {Map} = require("../models/map.model");
 const {db} = require("../config/firebase.config");
-
+const {Feature} = require("../models/feature.model");
 
 class RestaurantConfigService {
     
@@ -142,13 +142,53 @@ class RestaurantConfigService {
         return Map.fromFirestore(snapshot);
     }
 
-
     static async getRestaurantConfig() {
         const phoneNumber = await this.getPhoneNumber();
         const email = await this.getEmail();
         const address = await this.getAddress();
         const map = await this.getMap();
-        return {phoneNumber, email, address, map};
+        const features = await this.getAllFeatures();
+        return {phoneNumber, email, address, map,features};
+    }
+
+    static async addFeature(name, enabled) {
+        const featureRef = db.collection("restaurantConfig").doc("features").collection("features").doc(name);
+        const feature = new Feature(name, enabled);
+        await featureRef.set(feature.toFirestore());
+        logger.info("Feature added successfully");
+    }
+
+    static async updateFeature(name, enabled) {
+        const featureRef = db.collection("restaurantConfig").doc("features").collection("features").doc(name);
+        const feature = new Feature(name, enabled);
+        await featureRef.update(feature.toFirestore());
+        logger.info("Feature updated successfully");
+    }
+
+    static async deleteFeature(name) {
+        const featureRef = db.collection("restaurantConfig").doc("features").collection("features").doc(name);
+        await featureRef.delete();
+        logger.info("Feature deleted successfully");
+    }
+
+    static async getFeature(name) {
+        const featureRef = db.collection("restaurantConfig").doc("features").collection("features").doc(name);
+        const snapshot = await featureRef.get();
+        if (!snapshot.exists) {
+            logger.error("Feature not found");
+            return null;
+        }
+        return Feature.fromFirestore(snapshot);
+    }
+
+    static async getAllFeatures() {
+        const featuresRef = db.collection("restaurantConfig").doc("features").collection("features");
+        const snapshot = await featuresRef.get();
+        const features = [];
+        snapshot.forEach(doc => {
+            features.push(Feature.fromFirestore(doc));
+        });
+        return features;
     }
 }
 

@@ -164,6 +164,56 @@ class RestaurantConfigController {
         }
     }
 
+    static async addFeature(req, res) {
+        try {
+            const {name, enabled} = req.body;
+            await RestaurantConfigService.addFeature(name, enabled);
+            return res.status(201).json(createResponse("success", "Feature added successfully", null));
+        } catch (error) {
+            return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+    static async updateFeature(req, res) {
+        try {
+            const {name, enabled} = req.body;
+            await RestaurantConfigService.updateFeature(name, enabled);
+            return res.status(200).json(createResponse("success", "Feature updated successfully", null));
+        } catch (error) {
+            return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+    static async getFeature(req, res) {
+        try {
+            const {name} = req.params;
+            const feature = await RestaurantConfigService.getFeature(name);
+            return res.status(200).json(createResponse("success", "Feature fetched successfully", feature));
+        } catch (error) {
+            return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+    static async deleteFeature(req, res) {
+        try {
+            const {name} = req.params;
+            await RestaurantConfigService.deleteFeature(name);
+            return res.status(200).json(createResponse("success", "Feature deleted successfully", null));
+        } catch (error) {
+            return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+    static async getAllFeatures(req, res) {
+        try {
+            const features = await RestaurantConfigService.getAllFeatures();
+            return res.status(200).json(createResponse("success", "Features fetched successfully", features));
+        } catch (error) {
+            return res.status(500).json(createResponse("error", error.message, null));
+        }
+    }
+
+
     static async getRestaurantConfig(req, res) {
         try {
             const config = await RestaurantConfigService.getRestaurantConfig();

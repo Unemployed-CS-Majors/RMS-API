@@ -499,6 +499,187 @@ router.get('/map', RestaurantConfigController.getMap);
 
 /**
  * @swagger
+ * /api/restaurant/feature:
+ *   post:
+ *     summary: Add a new feature
+ *     tags: [Features]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               enabled:
+ *                 type: boolean
+ *     responses:
+ *       201:
+ *         description: Feature added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Feature added successfully
+ *       500:
+ *         description: Server error
+ */
+router.post('/feature', isOwner, RestaurantConfigController.addFeature);
+
+/**
+ * @swagger
+ * /api/restaurant/feature:
+ *   put:
+ *     summary: Update an existing feature
+ *     tags: [Features]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               enabled:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Feature updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Feature updated successfully
+ *       500:
+ *         description: Server error
+ */
+router.put('/feature', isOwner, RestaurantConfigController.updateFeature);
+
+/**
+ * @swagger
+ * /api/restaurant/feature/{name}:
+ *   get:
+ *     summary: Get a feature by name
+ *     tags: [Features]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The name of the feature
+ *     responses:
+ *       200:
+ *         description: Feature fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Feature fetched successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     enabled:
+ *                       type: boolean
+ *       500:
+ *         description: Server error
+ */
+router.get('/feature/:name', RestaurantConfigController.getFeature);
+
+/**
+ * @swagger
+ * /api/restaurant/feature/{name}:
+ *   delete:
+ *     summary: Delete a feature by name
+ *     tags: [Features]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The name of the feature
+ *     responses:
+ *       200:
+ *         description: Feature deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Feature deleted successfully
+ *       500:
+ *         description: Server error
+ */
+router.delete('/feature/:name', isOwner, RestaurantConfigController.deleteFeature);
+
+/**
+ * @swagger
+ * /api/restaurant/features:
+ *   get:
+ *     summary: Get all features
+ *     tags: [Features]
+ *     responses:
+ *       200:
+ *         description: Features fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Features fetched successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                       enabled:
+ *                         type: boolean
+ *       500:
+ *         description: Server error
+ */
+router.get('/features', RestaurantConfigController.getAllFeatures);
+
+/**
+ * @swagger
  * /api/restaurant/config:
  *   get:
  *     summary: Get all restaurant configuration
