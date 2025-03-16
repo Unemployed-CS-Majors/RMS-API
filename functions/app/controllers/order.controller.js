@@ -66,7 +66,7 @@ class OrderController {
                 // For in-store payment, keep status as PENDING_PAYMENT
                 await OrderService.updateOrderStatus(
                     createdOrder.id,
-                    OrderStatus.PENDING_PAYMENT
+                    OrderStatus.PAID
                 );
             } else if (createdOrder.paymentMethod === PaymentMethod.CASH_ON_DELIVERY) {
                 // For cash on delivery, move to PAID status directly
@@ -81,7 +81,7 @@ class OrderController {
             return res.status(201).json(createResponse("success", "Order created successfully", createdOrder));
             
         } catch (error) {
-            logger.log("error", `Error creating order: ${error.message}`);
+            logger.error( `Error creating order: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error creating order", error.message));
         }
     }
@@ -101,7 +101,7 @@ class OrderController {
 
             return res.status(200).json(createResponse("success", "Order retrieved successfully", order));
         } catch (error) {
-            logger.log("error", `Error getting order: ${error.message}`);
+            logger.error( `Error getting order: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
@@ -122,7 +122,7 @@ class OrderController {
 
             return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
-            logger.log("error", `Error getting user orders: ${error.message}`);
+            logger.error( `Error getting user orders: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
@@ -160,6 +160,7 @@ class OrderController {
 
                 additionalData.estimatedDeliveryTime = estimatedTime.getTime();
             }
+            const userId = await UserService.verifyUser(req);
             const user = await UserService.getUser(userId);
 
 
@@ -178,7 +179,7 @@ class OrderController {
             }
             return res.status(200).json(createResponse("success", "Order updated successfully", updatedOrder));
         } catch (error) {
-            logger.log("error", `Error updating order status: ${error.message}`);
+            logger.error( `Error updating order status: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
@@ -197,7 +198,7 @@ class OrderController {
 
             return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
-            logger.log("error", `Error getting active orders: ${error.message}`);
+            logger.error( `Error getting active orders: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
@@ -223,7 +224,7 @@ class OrderController {
 
             return res.status(200).json(createResponse("success", "Order retrieved successfully", orders));
         } catch (error) {
-            logger.log("error", `Error getting orders by status: ${error.message}`);
+            logger.error( `Error getting orders by status: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }
@@ -262,7 +263,20 @@ class OrderController {
 
             return res.status(200).json(createResponse("success", "Order cancelled successfully", canceledOrder));
         } catch (error) {
-            logger.log("error", `Error canceling order: ${error.message}`);
+            logger.error( `Error canceling order: ${error.message}`,error);
+            return res.status(500).json(createResponse("error", "Error getting order", error.message));
+        }
+    }
+
+    static async getAllOrders(req, res) {
+        try {
+            const limit = req.query.limit ? parseInt(req.query.limit, 10) : 50;
+
+            const orders = await OrderService.getAllOrders(limit);
+
+            return res.status(200).json(createResponse("success", "Orders retrieved successfully", orders));
+        } catch (error) {
+            logger.error( `Error getting all orders: ${error.message}`,error);
             return res.status(500).json(createResponse("error", "Error getting order", error.message));
         }
     }

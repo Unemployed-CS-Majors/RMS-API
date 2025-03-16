@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ReservationController = require("../controllers/reservation.controller");
 const { verifyIdToken } = require("../middlewares/auth.middleware");
-const { isOwner } = require("../middlewares/privilages.middleware");
+const { isOwner, isEmployee} = require("../middlewares/privilages.middleware");
 /**
  * @swagger
  * tags:
@@ -306,7 +306,7 @@ router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableFor
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/all', verifyIdToken, isOwner, ReservationController.getAllReservations);
+router.get('/all', verifyIdToken, isEmployee, ReservationController.getAllReservations);
 
 /**
  * @swagger
@@ -355,7 +355,7 @@ router.get('/all', verifyIdToken, isOwner, ReservationController.getAllReservati
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/:status', verifyIdToken, isOwner, ReservationController.getReservationByStatus);
+router.get('/:status', verifyIdToken, isEmployee, ReservationController.getReservationByStatus);
 
 
 module.exports = router;

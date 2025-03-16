@@ -328,6 +328,7 @@ class ReservationController {
             const userId = await UserService.verifyUser(req);
 
             const  reservation = await ReservationService.getUpcomingReservationsForUser(userId);
+
             return res.status(200).json(createResponse("success", null, reservation));
         } catch (e) {
             logger.error("Error getting upcoming reservations for user", e);
@@ -385,9 +386,11 @@ class ReservationController {
             const reservationsWithUser = [];
             for (const reservation of reservations) {
                 const user = await userService.getUser(reservation.userId);
+                const table = await TableService.getTable(reservation.tableId.toString());
                 reservation.fullName = user.firstName + ' ' + user.lastName;
                 reservation.email = user.email;
                 reservation.phoneNumber = user.phoneNumber;
+                reservation.tableNum = table.tabeleNum;
                 reservationsWithUser.push(reservation);
             }
 
@@ -411,9 +414,11 @@ class ReservationController {
             const reservationsWithUser = [];
             for (const reservation of reservations) {
                 const user = await userService.getUser(reservation.userId);
+                const table = await TableService.getTable(reservation.tableId.toString());
                 reservation.fullName = user.firstName + ' ' + user.lastName;
                 reservation.email = user.email;
                 reservation.phoneNumber = user.phoneNumber;
+                reservation.tableNum = table.tabeleNum;
                 reservationsWithUser.push(reservation);
             }
 

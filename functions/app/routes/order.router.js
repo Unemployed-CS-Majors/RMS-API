@@ -353,6 +353,49 @@ router.get("/employee/active", verifyIdToken,isEmployee, OrderController.getActi
 
 /**
  * @swagger
+ * /order/employee/all:
+ *   get:
+ *     summary: Get all orders
+ *     tags: [Order]
+ *     description: Retrieves all orders (restaurant employees only).
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 50
+ *         description: Maximum number of orders to return
+ *     responses:
+ *       200:
+ *         description: List of all orders
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   userId:
+ *                     type: string
+ *                   items:
+ *                     type: array
+ *                   status:
+ *                     type: string
+ *                   createdAt:
+ *                     type: number
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Not a restaurant employee
+ */
+router.get("/employee/all", verifyIdToken, isEmployee, OrderController.getAllOrders);
+
+/**
+ * @swagger
  * /order/employee/status/{status}:
  *   get:
  *     summary: Get orders by status

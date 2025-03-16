@@ -101,10 +101,7 @@ class OrderService {
                 throw new Error(`Order ${orderId} not found`);
             }
 
-            const order = Order.fromFirestore(orderDoc);
-            const user = await UserServices.getUser(order.userId);
-            order.user = user;
-            return order;
+            return Order.fromFirestore(orderDoc);
         } catch (error) {
             logger.log("error", `Error getting order ${orderId}: ${error.message}`);
             throw error;
@@ -350,6 +347,31 @@ class OrderService {
             return orders;
         } catch (error) {
             logger.log("error", `Error getting orders with status ${status}: ${error.message}`);
+            throw error;
+        }
+    }
+
+    static async getAllOrders(limit = 50) {
+        try {
+            const querySnapshot = await db.collection('orders')
+                .orderBy('createdAt', 'desc')
+                .limit(limit)
+                .get();
+
+            const orders = [];
+            querySnapshot.forEach(doc => {
+                orders.push(Order.fromFirestore(doc));
+            });
+
+            // for each order add user details to the order
+            for (let i = 0; i < orders.length; i++) {
+                const user = await UserServices.getUser(orders[i].userId);
+                orders[i].user = user;
+            }
+
+            return orders;
+        } catch (error) {
+            logger.log("error", `Error getting orders: ${error.message}`);
             throw error;
         }
     }
