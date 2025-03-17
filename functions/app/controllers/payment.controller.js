@@ -188,11 +188,11 @@ class PaymentController {
 
 
                 // Redirect to a success page (can be configured as needed)
-                return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#order?reservation=${orderId}`);
+                return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`);
             } else {
                 // If payment wasn't successful for some reason
                 logger.warn(`Payment not marked as paid for session ${session_id}`);
-                return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#order?reservation=${orderId}`);
+                return res.redirect(`https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`);
             }
         } catch (error) {
             logger.error(`Error handling payment success`,error);
