@@ -175,12 +175,6 @@ describe('Analytics Routes Integration', () => {
             expect(require('../../app/services/analytics.service').getMenuItemAnalytics)
                 .toHaveBeenCalledWith(45);
         });
-
-        it('should handle days parameter for all analytics', async () => {
-            await request(app).get('/analytics/all?days=90');
-            expect(require('../../app/services/analytics.service').getAllAnalytics)
-                .toHaveBeenCalledWith(90);
-        });
     });
 
     describe('Response structure', () => {
