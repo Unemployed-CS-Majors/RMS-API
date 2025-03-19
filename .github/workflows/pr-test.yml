@@ -13,7 +13,6 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
-    environment: DEV
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,15 +28,11 @@ jobs:
         run: npm ci
         working-directory: ./functions
 
+      - name: Decode and create .env file
+        run: echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env
+        working-directory: ./functions
+
       - name: Run unit tests
-        env:
-          CLIENT_AUTH_API_KEY: ${{ secrets.CLIENT_AUTH_API_KEY }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-          MAILJET_PUBLIC_KEY: ${{ secrets.MAILJET_PUBLIC_KEY }}
-          MAILJET_PRIVATE_KEY: ${{ secrets.MAILJET_PRIVATE_KEY }}
         run: npm test
         working-directory: ./functions
 
