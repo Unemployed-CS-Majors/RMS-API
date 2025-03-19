@@ -167,14 +167,14 @@ describe("Analytics Routes Integration", () => {
     it("should handle days parameter for revenue analytics", async () => {
       await request(app).get("/analytics/revenue?days=60");
       expect(
-        require("../../app/services/analytics.service").getRevenueAnalytics,
+        require("../../app/services/analytics.service").getRevenueAnalytics
       ).toHaveBeenCalledWith(60);
     });
 
     it("should handle days parameter for menu item analytics", async () => {
       await request(app).get("/analytics/menu-items?days=45");
       expect(
-        require("../../app/services/analytics.service").getMenuItemAnalytics,
+        require("../../app/services/analytics.service").getMenuItemAnalytics
       ).toHaveBeenCalledWith(45);
     });
   });

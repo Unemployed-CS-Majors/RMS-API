@@ -44,14 +44,14 @@ class AuthService {
         lastName,
         email,
         phoneNumber,
-        isEmulator ? Privileges.OWNER : Privileges.CUSTOMER,
+        isEmulator ? Privileges.OWNER : Privileges.CUSTOMER
       );
       const actionCodeSettings = {
         url: "https://restaurant-management-sy-1a0cd.web.app/",
       };
       const verificationLink = await getAuth().generateEmailVerificationLink(
         email,
-        actionCodeSettings,
+        actionCodeSettings
       );
       await EmailService.sendVerificationEmail(user, verificationLink);
 
@@ -141,7 +141,7 @@ class AuthService {
         lastName,
         email,
         phoneNumber,
-        Privileges.EMPLOYEE,
+        Privileges.EMPLOYEE
       );
       await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
@@ -179,7 +179,7 @@ class AuthService {
         lastName,
         email,
         phoneNumber,
-        Privileges.OWNER,
+        Privileges.OWNER
       );
       await db.collection("users").doc(userRecord.uid).set(user.toFirestore());
 
@@ -220,7 +220,7 @@ class AuthService {
           lastName,
           email,
           phoneNumber,
-          isEmulator ? Privileges.OWNER : Privileges.CUSTOMER,
+          isEmulator ? Privileges.OWNER : Privileges.CUSTOMER
         );
         await db.collection("users").doc(uid).set(user.toFirestore());
       }

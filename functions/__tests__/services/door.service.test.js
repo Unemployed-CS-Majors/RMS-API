@@ -51,7 +51,7 @@ describe("Door Service", () => {
       ];
       const mockSnapshot = {
         forEach: jest.fn((callback) =>
-          mockDoorsData.forEach((data) => callback({ data: () => data })),
+          mockDoorsData.forEach((data) => callback({ data: () => data }))
         ),
       };
       db.collection.mockReturnValue({ get: jest.fn().mockResolvedValue(mockSnapshot) });
@@ -108,7 +108,7 @@ describe("Door Service", () => {
       });
 
       await expect(
-        DoorService.createDoor({ location: "Front", isAutomatic: true }),
+        DoorService.createDoor({ location: "Front", isAutomatic: true })
       ).rejects.toThrow("Counter document does not exist!");
     });
   });

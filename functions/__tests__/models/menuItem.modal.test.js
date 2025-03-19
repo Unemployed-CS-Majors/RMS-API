@@ -36,7 +36,7 @@ describe("MenuItem Model", () => {
         sampleMenuItemData.allergens,
         sampleMenuItemData.imageUrl,
         sampleMenuItemData.createdAt,
-        sampleMenuItemData.updatedAt,
+        sampleMenuItemData.updatedAt
       );
 
       expect(menuItem.id).toBe(sampleMenuItemData.id);
@@ -58,7 +58,7 @@ describe("MenuItem Model", () => {
         sampleMenuItemData.name,
         null,
         sampleMenuItemData.price,
-        sampleMenuItemData.type,
+        sampleMenuItemData.type
       );
 
       expect(menuItem.id).toBeNull();
@@ -85,7 +85,7 @@ describe("MenuItem Model", () => {
         sampleMenuItemData.allergens,
         sampleMenuItemData.imageUrl,
         sampleMenuItemData.createdAt,
-        sampleMenuItemData.updatedAt,
+        sampleMenuItemData.updatedAt
       );
 
       const firestoreData = menuItem.toFirestore();
@@ -113,7 +113,7 @@ describe("MenuItem Model", () => {
         sampleMenuItemData.name,
         sampleMenuItemData.description,
         sampleMenuItemData.price,
-        sampleMenuItemData.type,
+        sampleMenuItemData.type
       );
 
       const firestoreData = menuItem.toFirestore();
@@ -132,7 +132,7 @@ describe("MenuItem Model", () => {
         null, // No calories
         15, // Has avgWaitTime
         [], // Empty allergens
-        null, // No imageUrl
+        null // No imageUrl
       );
 
       const firestoreData = menuItem.toFirestore();
@@ -281,7 +281,7 @@ describe("MenuItem Model", () => {
         sampleMenuItemData.allergens,
         sampleMenuItemData.imageUrl,
         sampleMenuItemData.createdAt,
-        sampleMenuItemData.updatedAt,
+        sampleMenuItemData.updatedAt
       );
 
       const json = menuItem.toJSON();

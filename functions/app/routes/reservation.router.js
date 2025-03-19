@@ -170,7 +170,7 @@ router.post("/complete/:reservationId", verifyIdToken, ReservationController.com
 router.post(
   "/reschedule/:reservationId",
   verifyIdToken,
-  ReservationController.rescheduleReservation,
+  ReservationController.rescheduleReservation
 );
 
 /**

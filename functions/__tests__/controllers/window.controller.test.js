@@ -29,7 +29,7 @@ describe("Window Controller", () => {
           status: "success",
           message: "Window fetched successfully",
           data: mockWindow,
-        }),
+        })
       );
     });
 
@@ -47,7 +47,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Window not found",
-        }),
+        })
       );
     });
 
@@ -66,7 +66,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        }),
+        })
       );
     });
   });
@@ -88,7 +88,7 @@ describe("Window Controller", () => {
           status: "success",
           message: "Windows fetched successfully",
           data: mockWindows,
-        }),
+        })
       );
     });
 
@@ -107,7 +107,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        }),
+        })
       );
     });
   });
@@ -124,7 +124,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: expect.any(String),
-        }),
+        })
       );
     });
   });
@@ -144,7 +144,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Window not found",
-        }),
+        })
       );
     });
 
@@ -163,7 +163,7 @@ describe("Window Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        }),
+        })
       );
     });
   });

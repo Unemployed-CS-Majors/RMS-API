@@ -17,7 +17,7 @@ describe("Wall Model", () => {
         sampleWallData.x1,
         sampleWallData.y1,
         sampleWallData.x2,
-        sampleWallData.y2,
+        sampleWallData.y2
       );
 
       expect(wall.id).toBe(sampleWallData.id);
@@ -35,7 +35,7 @@ describe("Wall Model", () => {
         sampleWallData.x1,
         sampleWallData.y1,
         sampleWallData.x2,
-        sampleWallData.y2,
+        sampleWallData.y2
       );
 
       const firestoreData = wall.toFirestore();

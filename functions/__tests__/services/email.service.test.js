@@ -9,7 +9,9 @@ jest.mock("node-mailjet");
 jest.mock("../../app/logger/FirebaseLogger");
 
 describe("Email Service", () => {
-  let mockUser; let mockReservation; let mockOrder;
+  let mockUser;
+  let mockReservation;
+  let mockOrder;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -57,7 +59,7 @@ describe("Email Service", () => {
   describe("sendReservationEmail", () => {
     it("throws error for invalid reservation status", async () => {
       await expect(
-        EmailService.sendReservationEmail(mockReservation, mockUser, "invalid"),
+        EmailService.sendReservationEmail(mockReservation, mockUser, "invalid")
       ).rejects.toThrow("Invalid reservation status: invalid");
     });
   });
@@ -66,7 +68,7 @@ describe("Email Service", () => {
     it("sends verification email successfully", async () => {
       const result = await EmailService.sendVerificationEmail(
         mockUser,
-        "https://example.com/verify",
+        "https://example.com/verify"
       );
       expect(result.body.success).toBe(true);
     });
@@ -76,7 +78,7 @@ describe("Email Service", () => {
     it("sends password reset email successfully", async () => {
       const result = await EmailService.sendPasswordResetEmail(
         mockUser,
-        "https://example.com/reset",
+        "https://example.com/reset"
       );
       expect(result.body.success).toBe(true);
     });

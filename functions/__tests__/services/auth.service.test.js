@@ -84,12 +84,12 @@ describe("Auth Service", () => {
 
       expect(getAuth().generateEmailVerificationLink).toHaveBeenCalledWith(
         userData.email,
-        expect.any(Object),
+        expect.any(Object)
       );
 
       expect(EmailService.sendVerificationEmail).toHaveBeenCalledWith(
         expect.any(User),
-        "https://example.com/verify",
+        "https://example.com/verify"
       );
 
       expect(db.collection).toHaveBeenCalledWith("users");

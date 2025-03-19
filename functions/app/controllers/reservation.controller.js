@@ -66,7 +66,7 @@ class ReservationController {
         tableId,
         startTime,
         endTime,
-        people,
+        people
       );
 
       const user = await UserService.getUser(userId);
@@ -113,7 +113,7 @@ class ReservationController {
 
       const updateReservationStatus = await ReservationService.updateReservationStatus(
         reservationId,
-        ReservationStatus.CANCELLED,
+        ReservationStatus.CANCELLED
       );
 
       if (updateReservationStatus) {
@@ -164,7 +164,7 @@ class ReservationController {
 
       const updateReservationStatus = await ReservationService.updateReservationStatus(
         reservationId,
-        ReservationStatus.CONFIRMED,
+        ReservationStatus.CONFIRMED
       );
       if (updateReservationStatus) {
         return res.status(409).json(createResponse("error", updateReservationStatus, null));
@@ -201,7 +201,7 @@ class ReservationController {
     try {
       const updateReservationStatus = await ReservationService.updateReservationStatus(
         reservationId,
-        ReservationStatus.COMPLETED,
+        ReservationStatus.COMPLETED
       );
       if (updateReservationStatus) {
         return res.status(409).json(createResponse("error", updateReservationStatus, null));
@@ -242,7 +242,7 @@ class ReservationController {
         reservationId,
         tableId,
         startTime,
-        endTime,
+        endTime
       );
       if (updateReservationStatus) {
         return res.status(409).json(createResponse("error", updateReservationStatus, null));

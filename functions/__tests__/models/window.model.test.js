@@ -19,7 +19,7 @@ describe("Window Model", () => {
         sampleWindowData.y,
         sampleWindowData.width,
         sampleWindowData.height,
-        sampleWindowData.rotation,
+        sampleWindowData.rotation
       );
 
       expect(windowObj.id).toBe(sampleWindowData.id);
@@ -39,7 +39,7 @@ describe("Window Model", () => {
         sampleWindowData.y,
         sampleWindowData.width,
         sampleWindowData.height,
-        sampleWindowData.rotation,
+        sampleWindowData.rotation
       );
 
       const firestoreData = windowObj.toFirestore();

@@ -50,7 +50,7 @@ describe("Wall Service", () => {
       const result = await WallService.getAllWalls();
 
       expect(result).toEqual(
-        wallsData.map((data) => Wall.fromFirestore(mockDocumentSnapshot(data.id, data))),
+        wallsData.map((data) => Wall.fromFirestore(mockDocumentSnapshot(data.id, data)))
       );
     });
   });

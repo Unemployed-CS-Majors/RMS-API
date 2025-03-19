@@ -85,20 +85,20 @@ class FirebaseLogger {
     const logMessage = `${message}`;
 
     switch (level) {
-    case LogLevel.DEBUG:
-      debug(logMessage, logData);
-      break;
-    case LogLevel.INFO:
-      info(logMessage, logData);
-      break;
-    case LogLevel.WARN:
-      warn(logMessage, logData);
-      break;
-    case LogLevel.ERROR:
-      error(logMessage, logData);
-      break;
-    default:
-      write(logMessage, logData);
+      case LogLevel.DEBUG:
+        debug(logMessage, logData);
+        break;
+      case LogLevel.INFO:
+        info(logMessage, logData);
+        break;
+      case LogLevel.WARN:
+        warn(logMessage, logData);
+        break;
+      case LogLevel.ERROR:
+        error(logMessage, logData);
+        break;
+      default:
+        write(logMessage, logData);
     }
   }
 
@@ -139,9 +139,9 @@ class FirebaseLogger {
         chalk.redBright(error?.message || "Unknown error"),
       ];
 
-      const stackTrace = error?.stack ?
-        "\n" + chalk.gray(error.stack.split("\n").slice(1).join("\n")) :
-        "";
+      const stackTrace = error?.stack
+        ? "\n" + chalk.gray(error.stack.split("\n").slice(1).join("\n"))
+        : "";
 
       console.error(messageParts.join(" ") + stackTrace);
       return;
@@ -165,9 +165,9 @@ class FirebaseLogger {
         chalk.redBright(error?.message || "Unknown error"),
       ];
 
-      const stackTrace = error?.stack ?
-        "\n" + chalk.gray(error.stack.split("\n").slice(1).join("\n")) :
-        "";
+      const stackTrace = error?.stack
+        ? "\n" + chalk.gray(error.stack.split("\n").slice(1).join("\n"))
+        : "";
 
       console.error(messageParts.join(" ") + stackTrace);
       return;
@@ -188,7 +188,7 @@ class FirebaseLogger {
           chalk.white.bold(method) +
             chalk.cyan(url) +
             chalk.gray(" → ") +
-            chalk.blue("Request received"),
+            chalk.blue("Request received")
         );
       } else {
         debug("HTTP Request", {
@@ -215,7 +215,7 @@ class FirebaseLogger {
               chalk.cyan(url) +
               chalk.gray(" ← ") +
               statusColor(`${status} `) +
-              chalk.gray(`${ms}ms`),
+              chalk.gray(`${ms}ms`)
           );
         } else {
           info("HTTP Response", {

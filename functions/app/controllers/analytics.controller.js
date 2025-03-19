@@ -19,7 +19,7 @@ class AnalyticsController {
       return res
         .status(200)
         .json(
-          createResponse("success", "Revenue analytics retrieved successfully", revenueAnalytics),
+          createResponse("success", "Revenue analytics retrieved successfully", revenueAnalytics)
         );
     } catch (error) {
       logger.error("Error in getRevenueAnalytics controller:", error);
@@ -45,7 +45,7 @@ class AnalyticsController {
       return res
         .status(200)
         .json(
-          createResponse("success", "Menu item analytics retrieved successfully", menuItemAnalytics),
+          createResponse("success", "Menu item analytics retrieved successfully", menuItemAnalytics)
         );
     } catch (error) {
       logger.error("Error in getMenuItemAnalytics controller:", error);
@@ -74,8 +74,8 @@ class AnalyticsController {
           createResponse(
             "success",
             "Reservation analytics retrieved successfully",
-            reservationAnalytics,
-          ),
+            reservationAnalytics
+          )
         );
     } catch (error) {
       logger.error("Error in getReservationAnalytics controller:", error);
@@ -104,8 +104,8 @@ class AnalyticsController {
           createResponse(
             "success",
             "Order status analytics retrieved successfully",
-            orderStatusAnalytics,
-          ),
+            orderStatusAnalytics
+          )
         );
     } catch (error) {
       logger.error("Error in getOrderStatusAnalytics controller:", error);
@@ -131,7 +131,7 @@ class AnalyticsController {
       return res
         .status(200)
         .json(
-          createResponse("success", "Customer analytics retrieved successfully", customerAnalytics),
+          createResponse("success", "Customer analytics retrieved successfully", customerAnalytics)
         );
     } catch (error) {
       logger.error("Error in getCustomerAnalytics controller:", error);
@@ -157,8 +157,8 @@ class AnalyticsController {
           createResponse(
             "success",
             "Operational analytics retrieved successfully",
-            operationalAnalytics,
-          ),
+            operationalAnalytics
+          )
         );
     } catch (error) {
       logger.error("Error in getOperationalAnalytics controller:", error);
@@ -181,7 +181,7 @@ class AnalyticsController {
       return res
         .status(200)
         .json(
-          createResponse("success", "Dashboard summary retrieved successfully", dashboardSummary),
+          createResponse("success", "Dashboard summary retrieved successfully", dashboardSummary)
         );
     } catch (error) {
       logger.error("Error in getDashboardSummary controller:", error);
