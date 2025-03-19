@@ -53,7 +53,7 @@ class MenuItem {
     allergens = [],
     imageUrl = null,
     createdAt = null,
-    updatedAt = null
+    updatedAt = null,
   ) {
     this.id = id;
     this.name = name;
@@ -119,7 +119,7 @@ class MenuItem {
       data.allergens || [],
       data.imageUrl || null,
       data.createdAt ? data.createdAt : null,
-      data.updatedAt ? data.updatedAt : null
+      data.updatedAt ? data.updatedAt : null,
     );
   }
 
@@ -147,7 +147,7 @@ class MenuItem {
       data.calories ? parseInt(data.calories) : null,
       data.avgWaitTime ? parseInt(data.avgWaitTime) : null,
       allergens,
-      data.imageUrl || null
+      data.imageUrl || null,
     );
   }
 

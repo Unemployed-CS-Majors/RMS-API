@@ -23,7 +23,7 @@ describe("MenuItem Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Validation failed",
-        })
+        }),
       );
     });
   });
@@ -45,7 +45,7 @@ describe("MenuItem Controller", () => {
           status: "success",
           message: "Menu item retrieved successfully",
           data: mockMenuItem,
-        })
+        }),
       );
     });
 
@@ -63,7 +63,7 @@ describe("MenuItem Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Menu item not found",
-        })
+        }),
       );
     });
   });

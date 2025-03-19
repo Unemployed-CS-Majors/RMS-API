@@ -56,7 +56,7 @@ class DoorService {
         doorData.y,
         doorData.width,
         doorData.height,
-        doorData.rotation
+        doorData.rotation,
       );
 
       transaction.update(counterRef, { count: newId });

@@ -57,7 +57,7 @@ class WindowService {
         windowData.y,
         windowData.width,
         windowData.height,
-        windowData.rotation
+        windowData.rotation,
       );
 
       transaction.update(counterRef, { count: newId });

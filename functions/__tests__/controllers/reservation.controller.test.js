@@ -35,7 +35,7 @@ describe("Reservation Controller", () => {
         expect.objectContaining({
           status: "success",
           message: "Reservation cancelled successfully",
-        })
+        }),
       );
     });
 
@@ -47,7 +47,7 @@ describe("Reservation Controller", () => {
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({ status: "error", message: "Reservation ID is required" })
+        expect.objectContaining({ status: "error", message: "Reservation ID is required" }),
       );
     });
 
@@ -61,7 +61,7 @@ describe("Reservation Controller", () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({ status: "error", message: "Reservation not found" })
+        expect.objectContaining({ status: "error", message: "Reservation not found" }),
       );
     });
 
@@ -77,7 +77,7 @@ describe("Reservation Controller", () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({ status: "error", message: "User not found" })
+        expect.objectContaining({ status: "error", message: "User not found" }),
       );
     });
 
@@ -93,7 +93,7 @@ describe("Reservation Controller", () => {
       expect(logger.error).toHaveBeenCalledWith("Error cancelling reservation", error);
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({ status: "error", message: "Database error" })
+        expect.objectContaining({ status: "error", message: "Database error" }),
       );
     });
   });

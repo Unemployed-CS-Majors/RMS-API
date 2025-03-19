@@ -29,7 +29,7 @@ describe("Wall Controller", () => {
           status: "success",
           message: "Wall fetched successfully",
           data: mockWall,
-        })
+        }),
       );
     });
 
@@ -47,7 +47,7 @@ describe("Wall Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Wall not found",
-        })
+        }),
       );
     });
 
@@ -66,7 +66,7 @@ describe("Wall Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -88,7 +88,7 @@ describe("Wall Controller", () => {
           status: "success",
           message: "Walls fetched successfully",
           data: mockWalls,
-        })
+        }),
       );
     });
 
@@ -107,7 +107,7 @@ describe("Wall Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -124,7 +124,7 @@ describe("Wall Controller", () => {
         expect.objectContaining({
           status: "error",
           message: expect.any(String),
-        })
+        }),
       );
     });
   });
@@ -143,7 +143,7 @@ describe("Wall Controller", () => {
           status: "success",
           message: "Wall deleted successfully",
           data: null,
-        })
+        }),
       );
     });
 
@@ -162,7 +162,7 @@ describe("Wall Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });

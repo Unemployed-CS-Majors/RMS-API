@@ -287,7 +287,7 @@ describe("MenuItem Validators", () => {
       });
 
       // Invalid JSON string
-      expect(validateAllergens('{"invalid json"}')).toEqual({
+      expect(validateAllergens("{\"invalid json\"}")).toEqual({
         isValid: false,
         error: "Allergens must be a valid JSON array",
       });
@@ -347,7 +347,7 @@ describe("MenuItem Validators", () => {
       expect(result.errors).toContain("Calories cannot be negative");
       expect(result.errors).toContain("Average wait time cannot exceed 180 minutes (3 hours)");
       expect(result.errors).toContain(
-        `Invalid allergens: invalid_allergen. Valid options are: ${Object.values(Allergen).join(", ")}`
+        `Invalid allergens: invalid_allergen. Valid options are: ${Object.values(Allergen).join(", ")}`,
       );
     });
   });

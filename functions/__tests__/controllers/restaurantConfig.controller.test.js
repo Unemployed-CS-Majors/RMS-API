@@ -25,7 +25,7 @@ describe("RestaurantConfig Controller", () => {
           status: "success",
           message: "Phone number added successfully",
           data: null,
-        })
+        }),
       );
     });
 
@@ -44,7 +44,7 @@ describe("RestaurantConfig Controller", () => {
           status: "error",
           message: "Database error",
           data: null,
-        })
+        }),
       );
     });
   });
@@ -63,7 +63,7 @@ describe("RestaurantConfig Controller", () => {
           status: "success",
           message: "Phone number updated successfully",
           data: null,
-        })
+        }),
       );
     });
 
@@ -82,7 +82,7 @@ describe("RestaurantConfig Controller", () => {
           status: "error",
           message: "Database error",
           data: null,
-        })
+        }),
       );
     });
   });
@@ -101,7 +101,7 @@ describe("RestaurantConfig Controller", () => {
           status: "success",
           message: "Phone number deleted successfully",
           data: null,
-        })
+        }),
       );
     });
 
@@ -120,7 +120,7 @@ describe("RestaurantConfig Controller", () => {
           status: "error",
           message: "Database error",
           data: null,
-        })
+        }),
       );
     });
   });
@@ -142,7 +142,7 @@ describe("RestaurantConfig Controller", () => {
           status: "success",
           message: "Phone number fetched successfully",
           data: mockPhoneNumber,
-        })
+        }),
       );
     });
 
@@ -161,7 +161,7 @@ describe("RestaurantConfig Controller", () => {
           status: "error",
           message: "Database error",
           data: null,
-        })
+        }),
       );
     });
   });

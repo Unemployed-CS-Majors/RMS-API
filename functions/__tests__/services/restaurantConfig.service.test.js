@@ -65,7 +65,7 @@ describe("RestaurantConfigService", () => {
       const result = await RestaurantConfigService.getPhoneNumber();
 
       expect(result).toEqual(
-        PhoneNumber.fromFirestore(mockDocumentSnapshot("phoneNumber", phoneNumberData))
+        PhoneNumber.fromFirestore(mockDocumentSnapshot("phoneNumber", phoneNumberData)),
       );
     });
 
@@ -154,7 +154,7 @@ describe("RestaurantConfigService", () => {
         addressData.city,
         addressData.county,
         addressData.eircode,
-        addressData.country
+        addressData.country,
       );
 
       expect(mockAddressRef.set).toHaveBeenCalledWith(expect.any(Object));
@@ -178,7 +178,7 @@ describe("RestaurantConfigService", () => {
         addressData.city,
         addressData.county,
         addressData.eircode,
-        addressData.country
+        addressData.country,
       );
 
       expect(mockAddressRef.update).toHaveBeenCalledWith(expect.any(Object));
@@ -298,7 +298,7 @@ describe("RestaurantConfigService", () => {
       jest
         .spyOn(RestaurantConfigService, "getPhoneNumber")
         .mockResolvedValue(
-          PhoneNumber.fromFirestore(mockDocumentSnapshot("phoneNumber", phoneNumberData))
+          PhoneNumber.fromFirestore(mockDocumentSnapshot("phoneNumber", phoneNumberData)),
         );
       jest
         .spyOn(RestaurantConfigService, "getEmail")
@@ -312,14 +312,14 @@ describe("RestaurantConfigService", () => {
       jest
         .spyOn(RestaurantConfigService, "getAllFeatures")
         .mockResolvedValue(
-          featuresData.map((f) => Feature.fromFirestore(mockDocumentSnapshot(f.name, f)))
+          featuresData.map((f) => Feature.fromFirestore(mockDocumentSnapshot(f.name, f))),
         );
 
       const result = await RestaurantConfigService.getRestaurantConfig();
 
       expect(result).toEqual({
         phoneNumber: PhoneNumber.fromFirestore(
-          mockDocumentSnapshot("phoneNumber", phoneNumberData)
+          mockDocumentSnapshot("phoneNumber", phoneNumberData),
         ),
         email: Email.fromFirestore(mockDocumentSnapshot("email", emailData)),
         address: Address.fromFirestore(mockDocumentSnapshot("address", addressData)),

@@ -30,7 +30,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "success",
           data: mockUser,
-        })
+        }),
       );
     });
 
@@ -49,7 +49,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -70,7 +70,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "success",
           data: mockUsers,
-        })
+        }),
       );
     });
 
@@ -89,7 +89,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -110,7 +110,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "success",
           data: mockUsers,
-        })
+        }),
       );
     });
 
@@ -129,7 +129,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -147,7 +147,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "success",
           message: "Privilege updated successfully",
-        })
+        }),
       );
     });
 
@@ -166,7 +166,7 @@ describe("User Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });

@@ -79,7 +79,7 @@ describe("Reservation Validators", () => {
         },
       };
       expect(validateCreateReservation(req1)).toBe(
-        "Start and end time must be valid ISO 8601 date-time strings"
+        "Start and end time must be valid ISO 8601 date-time strings",
       );
 
       // Invalid endTime format
@@ -92,7 +92,7 @@ describe("Reservation Validators", () => {
         },
       };
       expect(validateCreateReservation(req2)).toBe(
-        "Start and end time must be valid ISO 8601 date-time strings"
+        "Start and end time must be valid ISO 8601 date-time strings",
       );
     });
 
@@ -172,12 +172,12 @@ describe("Reservation Validators", () => {
 
       // Non-ISO 8601 format
       expect(validateTimeFormat("01/12/2023 18:00")).toBe(
-        "Time must be a valid ISO 8601 date-time string"
+        "Time must be a valid ISO 8601 date-time string",
       );
 
       // Invalid date
       expect(validateTimeFormat("2023-13-01T18:00:00Z")).toBe(
-        "Time must be a valid ISO 8601 date-time string"
+        "Time must be a valid ISO 8601 date-time string",
       );
     });
   });
