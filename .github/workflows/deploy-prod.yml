@@ -30,6 +30,10 @@ jobs:
         run: npm ci
         working-directory: ./functions
 
+      - name: Decode and create .env file
+        run: echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env
+        working-directory: ./functions
+
       - name: Validate code
         run: npm run validate
         working-directory: ./functions
