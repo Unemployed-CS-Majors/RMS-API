@@ -1,9 +1,9 @@
-const express = require('express');
-const WindowController = require('../controllers/window.controller');
-const {isOwner} = require("../middlewares/privilages.middleware");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
-
+const express = require("express");
 const router = express.Router();
+const WindowController = require("../controllers/window.controller");
+const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
+
 
 /**
  * @swagger
@@ -35,7 +35,7 @@ const router = express.Router();
  *       403:
  *         description: Forbidden
  */
-router.get('/', verifyIdToken, isOwner, WindowController.getAllWindows);
+router.get("/", verifyIdToken, isOwner, WindowController.getAllWindows);
 
 /**
  * @swagger
@@ -67,7 +67,7 @@ router.get('/', verifyIdToken, isOwner, WindowController.getAllWindows);
  *       404:
  *         description: Window not found
  */
-router.get('/:windowId', verifyIdToken, isOwner, WindowController.getWindow);
+router.get("/:windowId", verifyIdToken, isOwner, WindowController.getWindow);
 
 /**
  * @swagger
@@ -102,7 +102,7 @@ router.get('/:windowId', verifyIdToken, isOwner, WindowController.getWindow);
  *       403:
  *         description: Forbidden
  */
-router.post('/', verifyIdToken, isOwner, WindowController.createWindow);
+router.post("/", verifyIdToken, isOwner, WindowController.createWindow);
 
 /**
  * @swagger
@@ -142,7 +142,7 @@ router.post('/', verifyIdToken, isOwner, WindowController.createWindow);
  *       404:
  *         description: Window not found
  */
-router.put('/:windowId', verifyIdToken, isOwner, WindowController.updateWindow);
+router.put("/:windowId", verifyIdToken, isOwner, WindowController.updateWindow);
 
 /**
  * @swagger
@@ -170,6 +170,6 @@ router.put('/:windowId', verifyIdToken, isOwner, WindowController.updateWindow);
  *       404:
  *         description: Window not found
  */
-router.delete('/:windowId', verifyIdToken, isOwner, WindowController.deleteWindow);
+router.delete("/:windowId", verifyIdToken, isOwner, WindowController.deleteWindow);
 
 module.exports = router;

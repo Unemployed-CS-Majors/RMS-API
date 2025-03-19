@@ -1,7 +1,6 @@
 // functions/app.js
 const express = require("express");
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const cors = require("cors");
 
 const authRouter = require("./app/routes/auth.router");
 const tableRouter = require("./app/routes/table.router");
@@ -20,17 +19,17 @@ const analyticsRouter = require("./app/routes/analytics.router");
 const { logger, LogLevel } = require("./app/logger/FirebaseLogger");
 const { metricsMiddleware } = require("./app/config/prometheus.config");
 const { setupCounters } = require("./app/utils/counter.utils");
-const initializeFeatures = require('./app/utils/initializeFeatures.util');
+const initializeFeatures = require("./app/utils/initializeFeatures.util");
 
 const isEmulator = process.env.FIREBASE_EMULATOR_HUB;
-require('dotenv').config();
+require("dotenv").config();
 const app = express();
 
 app.use(logger.httpMiddleware());
 
 if (!isEmulator) {
-    logger.info("Running in emulator mode. Setting log level to DEBUG.");
-    logger.setLogLevel(LogLevel.DEBUG);
+  logger.info("Running in emulator mode. Setting log level to DEBUG.");
+  logger.setLogLevel(LogLevel.DEBUG);
 }
 
 app.use(cors());
@@ -52,7 +51,7 @@ app.use("/payments", paymentRouter);
 app.use("/restaurant", restaurantConfigRouter);
 app.use("/analytics", analyticsRouter);
 app.use((req, res) => {
-    res.status(404).json({ error: "Endpoint not found" });
+  res.status(404).json({ error: "Endpoint not found" });
 });
 
 setupCounters();

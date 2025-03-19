@@ -1,7 +1,7 @@
-const express = require('express');
-const WallController = require('../controllers/wall.controller');
-const {isOwner} = require("../middlewares/privilages.middleware");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
+const express = require("express");
+const WallController = require("../controllers/wall.controller");
+const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
@@ -35,7 +35,7 @@ const router = express.Router();
  *       403:
  *         description: Forbidden
  */
-router.get('/', verifyIdToken, isOwner, WallController.getAllWalls);
+router.get("/", verifyIdToken, isOwner, WallController.getAllWalls);
 
 /**
  * @swagger
@@ -67,7 +67,7 @@ router.get('/', verifyIdToken, isOwner, WallController.getAllWalls);
  *       404:
  *         description: Wall not found
  */
-router.get('/:wallId', verifyIdToken, isOwner, WallController.getWall);
+router.get("/:wallId", verifyIdToken, isOwner, WallController.getWall);
 
 /**
  * @swagger
@@ -102,7 +102,7 @@ router.get('/:wallId', verifyIdToken, isOwner, WallController.getWall);
  *       403:
  *         description: Forbidden
  */
-router.post('/', verifyIdToken, isOwner, WallController.createWall);
+router.post("/", verifyIdToken, isOwner, WallController.createWall);
 
 /**
  * @swagger
@@ -142,7 +142,7 @@ router.post('/', verifyIdToken, isOwner, WallController.createWall);
  *       404:
  *         description: Wall not found
  */
-router.put('/:wallId', verifyIdToken, isOwner, WallController.updateWall);
+router.put("/:wallId", verifyIdToken, isOwner, WallController.updateWall);
 
 /**
  * @swagger
@@ -170,6 +170,6 @@ router.put('/:wallId', verifyIdToken, isOwner, WallController.updateWall);
  *       404:
  *         description: Wall not found
  */
-router.delete('/:wallId', verifyIdToken, isOwner, WallController.deleteWall);
+router.delete("/:wallId", verifyIdToken, isOwner, WallController.deleteWall);
 
 module.exports = router;

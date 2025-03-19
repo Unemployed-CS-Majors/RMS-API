@@ -4,11 +4,11 @@
  * @enum {string}
  */
 const ReservationStatus = Object.freeze({
-  PENDING: 'pending',
-  CONFIRMED: 'confirmed',
-  CANCELLED: 'cancelled',
-  SEATED: 'seated',
-  COMPLETED: 'completed'
+  PENDING: "pending",
+  CONFIRMED: "confirmed",
+  CANCELLED: "cancelled",
+  SEATED: "seated",
+  COMPLETED: "completed",
 });
 
 /**
@@ -46,7 +46,7 @@ class Reservation {
       userId: this.userId,
       tableId: this.tableId,
       people: this.people,
-      status: this.status
+      status: this.status,
     };
   }
 
@@ -58,13 +58,13 @@ class Reservation {
   static fromFirestore(snapshot) {
     const data = snapshot.data();
     return new Reservation(
-        snapshot.id,
-        new Date(data.startTime * 1000),
-        new Date(data.endTime * 1000),
-        data.userId,
-        data.tableId,
-        data.people,
-        data.status
+      snapshot.id,
+      new Date(data.startTime * 1000),
+      new Date(data.endTime * 1000),
+      data.userId,
+      data.tableId,
+      data.people,
+      data.status,
     );
   }
 }

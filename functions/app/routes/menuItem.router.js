@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const busboyMiddleware = require("../middlewares/busboy.middleware");
-const {isOwner} = require("../middlewares/privilages.middleware");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
+const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
 const MenuItemController = require("../controllers/menuItem.controller");
 
 /**
@@ -11,7 +11,6 @@ const MenuItemController = require("../controllers/menuItem.controller");
  *   name: MenuItem
  *   description: Menu item management
  */
-
 
 /**
  * @swagger
@@ -53,7 +52,7 @@ const MenuItemController = require("../controllers/menuItem.controller");
  *       500:
  *         description: Failed to create menu item
  */
-router.post('/', verifyIdToken, isOwner, busboyMiddleware, MenuItemController.createMenuItem);
+router.post("/", verifyIdToken, isOwner, busboyMiddleware, MenuItemController.createMenuItem);
 
 /**
  * @swagger
@@ -67,7 +66,7 @@ router.post('/', verifyIdToken, isOwner, busboyMiddleware, MenuItemController.cr
  *       500:
  *         description: Failed to retrieve menu items
  */
-router.get('/', MenuItemController.getAllMenuItems);
+router.get("/", MenuItemController.getAllMenuItems);
 
 /**
  * @swagger
@@ -81,7 +80,7 @@ router.get('/', MenuItemController.getAllMenuItems);
  *       500:
  *         description: Failed to retrieve enum values
  */
-router.get('/enums', MenuItemController.getEnumValues);
+router.get("/enums", MenuItemController.getEnumValues);
 
 /**
  * @swagger
@@ -103,7 +102,7 @@ router.get('/enums', MenuItemController.getEnumValues);
  *       500:
  *         description: Failed to retrieve menu item
  */
-router.get('/:id', MenuItemController.getMenuItemById);
+router.get("/:id", MenuItemController.getMenuItemById);
 
 /**
  * @swagger
@@ -153,7 +152,7 @@ router.get('/:id', MenuItemController.getMenuItemById);
  *       500:
  *         description: Failed to update menu item
  */
-router.put('/:id', verifyIdToken, isOwner, busboyMiddleware, MenuItemController.updateMenuItem);
+router.put("/:id", verifyIdToken, isOwner, busboyMiddleware, MenuItemController.updateMenuItem);
 
 /**
  * @swagger
@@ -175,6 +174,6 @@ router.put('/:id', verifyIdToken, isOwner, busboyMiddleware, MenuItemController.
  *       500:
  *         description: Failed to delete menu item
  */
-router.delete('/:id', verifyIdToken, isOwner, MenuItemController.deleteMenuItem);
+router.delete("/:id", verifyIdToken, isOwner, MenuItemController.deleteMenuItem);
 
 module.exports = router;

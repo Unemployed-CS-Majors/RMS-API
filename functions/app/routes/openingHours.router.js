@@ -3,8 +3,8 @@ const router = express.Router();
 const OpeningHoursController = require("../controllers/openingHours.controller");
 
 // Import middlewares
-const {verifyIdToken} = require("../middlewares/auth.middleware");
-const {isOwner} = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
+const { isOwner } = require("../middlewares/privilages.middleware");
 
 /**
  * @swagger
@@ -12,7 +12,6 @@ const {isOwner} = require("../middlewares/privilages.middleware");
  *   name: Opening Hours
  *   description: Opening hours management
  */
-
 
 /**
  * @swagger
@@ -101,12 +100,7 @@ router.get("/", OpeningHoursController.getAllOpeningHours);
  *       403:
  *         description: Forbidden
  */
-router.post(
-    "/",
-    verifyIdToken,
-    isOwner,
-    OpeningHoursController.createOpeningHours
-);
+router.post("/", verifyIdToken, isOwner, OpeningHoursController.createOpeningHours);
 
 /**
  * @swagger
@@ -149,12 +143,7 @@ router.post(
  *       404:
  *         description: Opening hours not found
  */
-router.put(
-    "/:id",
-    verifyIdToken,
-    isOwner,
-    OpeningHoursController.updateOpeningHours
-);
+router.put("/:id", verifyIdToken, isOwner, OpeningHoursController.updateOpeningHours);
 
 /**
  * @swagger
@@ -182,11 +171,6 @@ router.put(
  *       404:
  *         description: Opening hours not found
  */
-router.delete(
-    "/:id",
-    verifyIdToken,
-    isOwner,
-    OpeningHoursController.deleteOpeningHours
-);
+router.delete("/:id", verifyIdToken, isOwner, OpeningHoursController.deleteOpeningHours);
 
 module.exports = router;

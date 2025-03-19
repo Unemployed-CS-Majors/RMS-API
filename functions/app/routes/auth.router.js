@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const AuthController = require('../controllers/auth.controller');
-const {isOwner} = require("../middlewares/privilages.middleware");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
+const AuthController = require("../controllers/auth.controller");
+const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
 
 /**
  * @swagger
@@ -10,7 +10,6 @@ const {verifyIdToken} = require("../middlewares/auth.middleware");
  *   name: Auth
  *   description: Authentication and user management
  */
-
 
 /**
  * @swagger
@@ -43,7 +42,7 @@ const {verifyIdToken} = require("../middlewares/auth.middleware");
  *       500:
  *         description: Internal server error
  */
-router.post('/register', AuthController.register);
+router.post("/register", AuthController.register);
 
 /**
  * @swagger
@@ -70,7 +69,7 @@ router.post('/register', AuthController.register);
  *       500:
  *         description: Internal server error
  */
-router.post('/login', AuthController.login);
+router.post("/login", AuthController.login);
 
 /**
  * @swagger
@@ -95,7 +94,7 @@ router.post('/login', AuthController.login);
  *       500:
  *         description: Internal server error
  */
-router.post('/refreshToken', AuthController.refreshToken);
+router.post("/refreshToken", AuthController.refreshToken);
 
 /**
  * @swagger
@@ -130,7 +129,7 @@ router.post('/refreshToken', AuthController.refreshToken);
  *       500:
  *         description: Internal server error
  */
-router.post('/createEmployee', isOwner, AuthController.createEmployee);
+router.post("/createEmployee", isOwner, AuthController.createEmployee);
 
 /**
  * @swagger
@@ -165,7 +164,7 @@ router.post('/createEmployee', isOwner, AuthController.createEmployee);
  *       500:
  *         description: Internal server error
  */
-router.post('/createOwner', isOwner, AuthController.createOwner);
+router.post("/createOwner", isOwner, AuthController.createOwner);
 
 /**
  * @swagger
@@ -190,7 +189,7 @@ router.post('/createOwner', isOwner, AuthController.createOwner);
  *       500:
  *         description: Internal server error
  */
-router.delete('/deleteEmployee/:uid', isOwner, AuthController.deleteEmployee);
+router.delete("/deleteEmployee/:uid", isOwner, AuthController.deleteEmployee);
 
 /**
  * @swagger
@@ -216,7 +215,7 @@ router.delete('/deleteEmployee/:uid', isOwner, AuthController.deleteEmployee);
  *       500:
  *         description: Internal server error
  */
-router.post('/google', AuthController.googleAuth);
+router.post("/google", AuthController.googleAuth);
 
 /**
  * @swagger
@@ -241,7 +240,7 @@ router.post('/google', AuthController.googleAuth);
  *       500:
  *         description: Internal server error
  */
-router.post('/forgotPassword', AuthController.forgotPassword);
+router.post("/forgotPassword", AuthController.forgotPassword);
 
 /**
  * @swagger
@@ -257,6 +256,6 @@ router.post('/forgotPassword', AuthController.forgotPassword);
  *       500:
  *         description: Internal server error
  */
-router.delete('/deleteAccount',verifyIdToken, AuthController.deleteAccount);
+router.delete("/deleteAccount", verifyIdToken, AuthController.deleteAccount);
 
 module.exports = router;

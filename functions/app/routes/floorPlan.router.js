@@ -1,5 +1,5 @@
-const express = require('express');
-const FloorPlanController = require('../controllers/floorPlan.controller');
+const express = require("express");
+const FloorPlanController = require("../controllers/floorPlan.controller");
 
 const router = express.Router();
 
@@ -9,7 +9,6 @@ const router = express.Router();
  *   name: FloorPlan
  *   description: Floor plan management
  */
-
 
 /**
  * @swagger
@@ -45,6 +44,6 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get('/', FloorPlanController.getFloorPlan);
+router.get("/", FloorPlanController.getFloorPlan);
 
 module.exports = router;

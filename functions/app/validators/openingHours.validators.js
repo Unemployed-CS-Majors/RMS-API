@@ -8,16 +8,16 @@
  * @returns {string|null} An error message if validation fails, otherwise null.
  */
 function validateOpeningHours(req) {
-    const { day, startTime, endTime } = req.body;
-    if (!day) {
-        return "All fields are required";
+  const { day, startTime, endTime } = req.body;
+  if (!day) {
+    return "All fields are required";
+  }
+  if (startTime && endTime) {
+    if (startTime >= endTime) {
+      return "Start time must be before end time";
     }
-    if (startTime && endTime) {
-        if (startTime >= endTime) {
-            return "Start time must be before end time";
-        }
-    }
-    return null;
+  }
+  return null;
 }
 
 module.exports = { validateOpeningHours };

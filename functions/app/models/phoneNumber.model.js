@@ -1,18 +1,18 @@
 class PhoneNumber {
-    constructor(phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  constructor(phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
-    toFirestore() {
-        return {
-            phoneNumber: this.phoneNumber
-        };
-    }
+  toFirestore() {
+    return {
+      phoneNumber: this.phoneNumber,
+    };
+  }
 
-    static fromFirestore(snapshot) {
-        const data = snapshot.data();
-        return new PhoneNumber(data.phoneNumber);
-    }
+  static fromFirestore(snapshot) {
+    const data = snapshot.data();
+    return new PhoneNumber(data.phoneNumber);
+  }
 }
 
-module.exports = {PhoneNumber};
+module.exports = { PhoneNumber };

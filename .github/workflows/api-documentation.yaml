@@ -5,11 +5,11 @@ permissions:
 on:
   push:
     branches:
-      - main
+      - release
       - develop
   pull_request:
     branches:
-      - main
+      - release
       - develop
 jobs:
   deploy-doc:

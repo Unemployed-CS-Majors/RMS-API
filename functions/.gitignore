@@ -1,4 +1,36 @@
+# Test coverage
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Firebase emulator logs
+firebase-debug.log
+ui-debug.log
+firestore-debug.log
+pubsub-debug.log
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies
 node_modules/
-*.local
-service_account.json
-.runtimeconfig.json
+package-lock.json
+yarn.lock
+
+# Build files
+dist/
+build/
+lib/
+
+# Temporary files
+*.log
+*.swp
+.DS_Store

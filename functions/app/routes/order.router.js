@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const OrderController = require("../controllers/order.controller");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
-const {isEmployee} = require("../middlewares/privilages.middleware");
-const {Order} = require("../models/order.model");
-// Import middlewares
+const { verifyIdToken } = require("../middlewares/auth.middleware");
+const { isEmployee } = require("../middlewares/privilages.middleware");
 
 /**
  * @swagger
@@ -12,7 +10,6 @@ const {Order} = require("../models/order.model");
  *   name: Order
  *   description: Order management
  */
-
 
 /**
  * @swagger
@@ -306,7 +303,7 @@ router.post("/:orderId/cancel", verifyIdToken, OrderController.cancelOrder);
  *       404:
  *         description: Order not found
  */
-router.patch("/:orderId/status", verifyIdToken,isEmployee, OrderController.updateOrderStatus);
+router.patch("/:orderId/status", verifyIdToken, isEmployee, OrderController.updateOrderStatus);
 
 /**
  * @swagger
@@ -349,7 +346,7 @@ router.patch("/:orderId/status", verifyIdToken,isEmployee, OrderController.updat
  *       403:
  *         description: Forbidden - Not a restaurant employee
  */
-router.get("/employee/active", verifyIdToken,isEmployee, OrderController.getActiveOrders);
+router.get("/employee/active", verifyIdToken, isEmployee, OrderController.getActiveOrders);
 
 /**
  * @swagger
@@ -444,6 +441,11 @@ router.get("/employee/all", verifyIdToken, isEmployee, OrderController.getAllOrd
  *       403:
  *         description: Forbidden - Not a restaurant employee
  */
-router.get("/employee/status/:status", verifyIdToken,isEmployee, OrderController.getOrdersByStatus);
+router.get(
+  "/employee/status/:status",
+  verifyIdToken,
+  isEmployee,
+  OrderController.getOrdersByStatus,
+);
 
 module.exports = router;

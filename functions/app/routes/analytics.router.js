@@ -1,5 +1,5 @@
-const express = require('express');
-const AnalyticsController = require('../controllers/analytics.controller');
+const express = require("express");
+const AnalyticsController = require("../controllers/analytics.controller");
 const { verifyIdToken } = require("../middlewares/auth.middleware");
 const { isOwner } = require("../middlewares/privilages.middleware");
 
@@ -29,7 +29,7 @@ const router = express.Router();
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/dashboard-summary', verifyIdToken, isOwner, AnalyticsController.getDashboardSummary);
+router.get("/dashboard-summary", verifyIdToken, isOwner, AnalyticsController.getDashboardSummary);
 
 /**
  * @swagger
@@ -55,7 +55,7 @@ router.get('/dashboard-summary', verifyIdToken, isOwner, AnalyticsController.get
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/revenue', verifyIdToken, isOwner, AnalyticsController.getRevenueAnalytics);
+router.get("/revenue", verifyIdToken, isOwner, AnalyticsController.getRevenueAnalytics);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ router.get('/revenue', verifyIdToken, isOwner, AnalyticsController.getRevenueAna
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/menu-items', verifyIdToken, isOwner, AnalyticsController.getMenuItemAnalytics);
+router.get("/menu-items", verifyIdToken, isOwner, AnalyticsController.getMenuItemAnalytics);
 
 /**
  * @swagger
@@ -107,7 +107,7 @@ router.get('/menu-items', verifyIdToken, isOwner, AnalyticsController.getMenuIte
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/reservations', verifyIdToken, isOwner, AnalyticsController.getReservationAnalytics);
+router.get("/reservations", verifyIdToken, isOwner, AnalyticsController.getReservationAnalytics);
 
 /**
  * @swagger
@@ -133,7 +133,7 @@ router.get('/reservations', verifyIdToken, isOwner, AnalyticsController.getReser
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/orders', verifyIdToken, isOwner, AnalyticsController.getOrderStatusAnalytics);
+router.get("/orders", verifyIdToken, isOwner, AnalyticsController.getOrderStatusAnalytics);
 
 /**
  * @swagger
@@ -159,7 +159,7 @@ router.get('/orders', verifyIdToken, isOwner, AnalyticsController.getOrderStatus
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/customers', verifyIdToken, isOwner, AnalyticsController.getCustomerAnalytics);
+router.get("/customers", verifyIdToken, isOwner, AnalyticsController.getCustomerAnalytics);
 
 /**
  * @swagger
@@ -178,7 +178,7 @@ router.get('/customers', verifyIdToken, isOwner, AnalyticsController.getCustomer
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/operational', verifyIdToken, isOwner, AnalyticsController.getOperationalAnalytics);
+router.get("/operational", verifyIdToken, isOwner, AnalyticsController.getOperationalAnalytics);
 
 /**
  * @swagger
@@ -204,6 +204,6 @@ router.get('/operational', verifyIdToken, isOwner, AnalyticsController.getOperat
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/all', verifyIdToken, isOwner, AnalyticsController.getAllAnalytics);
+router.get("/all", verifyIdToken, isOwner, AnalyticsController.getAllAnalytics);
 
 module.exports = router;

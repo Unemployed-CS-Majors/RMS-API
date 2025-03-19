@@ -6,13 +6,13 @@
  * @returns {Object} The response object.
  */
 const createResponse = (status, message, data = null) => {
-    return {
-        status,
-        message,
-        data
-    };
+  return {
+    status,
+    message,
+    data,
+  };
 };
 
 module.exports = {
-    createResponse
+  createResponse,
 };

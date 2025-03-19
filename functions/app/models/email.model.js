@@ -1,4 +1,3 @@
-
 class Email {
   constructor(email) {
     this.email = email;
@@ -6,14 +5,14 @@ class Email {
 
   toFirestore() {
     return {
-      email: this.email
+      email: this.email,
     };
   }
 
-    static fromFirestore(snapshot) {
-        const data = snapshot.data();
-        return new Email(data.email);
-    }
+  static fromFirestore(snapshot) {
+    const data = snapshot.data();
+    return new Email(data.email);
+  }
 }
 
-module.exports = {Email};
+module.exports = { Email };
