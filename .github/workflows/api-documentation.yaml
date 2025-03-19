@@ -1,20 +1,30 @@
-name: Check & deploy API documentation
+name: API Documentation
 permissions:
   contents: read
   pull-requests: write
+
 on:
   push:
     branches:
-      - main
+      - release
       - develop
+    paths:
+      - 'functions/**/*.js'
+      - 'functions/swagger.yaml'
+      - 'functions/generate-swagger.js'
+      - '.github/workflows/api-documentation.yaml'
   pull_request:
     branches:
-      - main
+      - release
       - develop
+    paths:
+      - 'functions/**/*.js'
+      - 'functions/swagger.yaml'
+      - 'functions/generate-swagger.js'
+
 jobs:
-  deploy-doc:
-    if: ${{ github.event_name == 'push' }}
-    name: Deploy API documentation on Bump.sh
+  validate-api-docs:
+    name: Validate API Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,26 +33,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Set your project's Node version here
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './functions/package-lock.json'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+        working-directory: ./functions
 
       - name: Generate API documentation (YAML)
         run: node generate-swagger.js
         working-directory: ./functions
 
-      - name: Deploy API documentation
-        uses: bump-sh/github-action@v1
+      - name: Validate OpenAPI Specification
+        uses: mbowman100/swagger-validator-action@master
         with:
-          doc: 49ff646b-a2ae-46b6-91d6-235db15f32ba
-          token: ${{ secrets.BUMP_TOKEN }}
-          file: ./functions/swagger.yaml
+          files: ./functions/swagger.yaml
 
   api-diff:
     if: ${{ github.event_name == 'pull_request' }}
     name: Check API diff on Bump.sh
     runs-on: ubuntu-latest
+    needs: validate-api-docs
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -50,10 +62,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Set your project's Node version here
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './functions/package-lock.json'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+        working-directory: ./functions
 
       - name: Generate API documentation (YAML)
         run: node generate-swagger.js
@@ -68,3 +83,45 @@ jobs:
           command: diff
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-doc:
+    if: ${{ github.event_name == 'push' }}
+    name: Deploy API documentation on Bump.sh
+    runs-on: ubuntu-latest
+    needs: validate-api-docs
+    environment:
+      name: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
+      url: ${{ github.ref == 'refs/heads/release' && format('https://bump.sh/{0}', steps.deploy-docs.outputs.version_id) || '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './functions/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./functions
+
+      - name: Generate API documentation (YAML)
+        run: node generate-swagger.js
+        working-directory: ./functions
+
+      - name: Deploy API documentation
+        id: deploy-docs
+        uses: bump-sh/github-action@v1
+        with:
+          doc: 49ff646b-a2ae-46b6-91d6-235db15f32ba
+          token: ${{ secrets.BUMP_TOKEN }}
+          file: ./functions/swagger.yaml
+
+      - name: Archive generated documentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-docs
+          path: ./functions/swagger.yaml
+          retention-days: 30

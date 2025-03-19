@@ -1,5 +1,5 @@
-const express = require('express');
-const TableController = require('../controllers/table.controller');
+const express = require("express");
+const TableController = require("../controllers/table.controller");
 const { isOwner } = require("../middlewares/privilages.middleware");
 const { verifyIdToken } = require("../middlewares/auth.middleware");
 
@@ -30,7 +30,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get('/', TableController.getAllTables);
+router.get("/", TableController.getAllTables);
 
 /**
  * @swagger
@@ -57,7 +57,7 @@ router.get('/', TableController.getAllTables);
  *       500:
  *         description: Internal server error
  */
-router.get('/:tableId', TableController.getTable);
+router.get("/:tableId", TableController.getTable);
 
 /**
  * @swagger
@@ -93,7 +93,7 @@ router.get('/:tableId', TableController.getTable);
  *       500:
  *         description: Internal server error
  */
-router.post('/', verifyIdToken, isOwner, TableController.createTable);
+router.post("/", verifyIdToken, isOwner, TableController.createTable);
 
 /**
  * @swagger
@@ -134,7 +134,7 @@ router.post('/', verifyIdToken, isOwner, TableController.createTable);
  *       500:
  *         description: Internal server error
  */
-router.put('/:tableId', verifyIdToken, isOwner, TableController.updateTable);
+router.put("/:tableId", verifyIdToken, isOwner, TableController.updateTable);
 
 /**
  * @swagger
@@ -163,7 +163,7 @@ router.put('/:tableId', verifyIdToken, isOwner, TableController.updateTable);
  *       500:
  *         description: Internal server error
  */
-router.delete('/:tableId', verifyIdToken, isOwner, TableController.deleteTable);
+router.delete("/:tableId", verifyIdToken, isOwner, TableController.deleteTable);
 
 /**
  * @swagger

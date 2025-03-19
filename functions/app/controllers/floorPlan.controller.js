@@ -1,36 +1,36 @@
-const {createResponse} = require("../utils/response.utils");
+const { createResponse } = require("../utils/response.utils");
 const DoorService = require("../services/door.service");
 const WallService = require("../services/wall.service");
 const WindowService = require("../services/window.service");
 const TableService = require("../services/table.service");
-const {logger} = require("../logger/FirebaseLogger");
+const { logger } = require("../logger/FirebaseLogger");
 
 class FloorPlanController {
-    static async getFloorPlan(req, res) {
-        try {
+  static async getFloorPlan(req, res) {
+    try {
+      const tables = await TableService.getAllTables();
 
-            const tables = await TableService.getAllTables();
+      const doors = await DoorService.getAllDoors();
 
-            const doors = await DoorService.getAllDoors();
+      const walls = await WallService.getAllWalls();
 
-            const walls = await WallService.getAllWalls();
+      const windows = await WindowService.getAllWindows();
 
-            const windows = await WindowService.getAllWindows();
+      const floorPlan = {
+        tables: tables,
+        doors: doors,
+        walls: walls,
+        windows: windows,
+      };
 
-            const floorPlan = {
-                tables: tables,
-                doors: doors,
-                walls: walls,
-                windows: windows
-            };
-
-            return res.status(200).json(createResponse("success", "Floor plan fetched successfully", floorPlan));
-
-        } catch (e) {
-            logger.error("Error getting floor plan", e);
-            return res.status(500).json(createResponse("error", e.message, null));
-        }
+      return res
+        .status(200)
+        .json(createResponse("success", "Floor plan fetched successfully", floorPlan));
+    } catch (e) {
+      logger.error("Error getting floor plan", e);
+      return res.status(500).json(createResponse("error", e.message, null));
     }
+  }
 }
 
 module.exports = FloorPlanController;

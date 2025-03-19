@@ -20,6 +20,7 @@
 ##  Table of Contents
 
 - [ Overview](#-overview)
+- [ Deployment](#-firebase-functions-multi-environment-deployment)
 - [ Features](#-features)
 - [ Project Structure](#-project-structure)
   - [ Project Index](#-project-index)
@@ -41,6 +42,105 @@ The RMS-API project is a robust solution for managing real-time data interaction
 
 ---
 
+## Firebase Functions Multi-Environment Deployment
+
+This project uses a multi-environment approach for Firebase Functions with separate development and production functions.
+
+### Environment Setup
+
+The project deploys two distinct functions to the same Firebase project:
+
+- `api-dev`: Development function (less resources, development database)
+- `api`: Production function (more resources, production database)
+
+### Deployment Methods
+
+#### Using GitHub Actions (CI/CD)
+
+Pushes to specific branches automatically trigger deployments:
+
+- Push to `develop` branch → Deploys `api-dev` function
+- Push to `release` branch → Deploys `api` function
+
+#### Using Local Scripts
+
+For local deployment, use the convenience scripts:
+
+```bash
+# Deploy development function
+./scripts/deploy-dev.sh
+
+# Deploy production function
+./scripts/deploy-prod.sh
+```
+
+#### Using npm Scripts
+
+You can also deploy directly with npm commands:
+
+```bash
+# Install dependencies
+cd functions
+npm install
+
+# Deploy development function
+npm run deploy:dev
+
+# Deploy production function
+npm run deploy:prod
+```
+
+### Local Development
+
+To run the functions locally with Firebase emulators:
+
+```bash
+# Run all functions
+npm run serve
+
+# Run only development function
+npm run serve:dev
+
+# Run only production function
+npm run serve:prod
+```
+
+### Environment Variables
+
+Environment variables are set at runtime for each function. You can modify them in `.env` for local development:
+
+```env
+# Common environment variables
+API_KEY=your-api-key
+STRIPE_SECRET_KEY=your-stripe-key
+CLIENT_AUTH_API_KEY=your-firebase-client-key
+
+# The other variables like NODE_ENV and FUNCTION_NAME 
+# are automatically set based on which function is running
+```
+
+### Database Configuration
+
+Both functions use the same Firebase project but different Firestore databases:
+
+- `api-dev` uses the `develop` database
+- `api` uses the default database
+
+### Checking Logs
+
+To check function logs:
+
+```bash
+# All functions
+npm run logs
+
+# Development function only
+npm run logs:dev
+
+# Production function only
+npm run logs:prod
+```
+---
 ##  Features
 
 |      | Feature         | Summary       |

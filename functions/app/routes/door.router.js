@@ -1,7 +1,7 @@
-const express = require('express');
-const DoorController = require('../controllers/door.controller');
-const {isOwner} = require("../middlewares/privilages.middleware");
-const {verifyIdToken} = require("../middlewares/auth.middleware");
+const express = require("express");
+const DoorController = require("../controllers/door.controller");
+const { isOwner } = require("../middlewares/privilages.middleware");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
@@ -11,7 +11,6 @@ const router = express.Router();
  *   name: Doors
  *   description: Door management
  */
-
 
 /**
  * @swagger
@@ -36,7 +35,7 @@ const router = express.Router();
  *       403:
  *         description: Forbidden
  */
-router.get('/', verifyIdToken, isOwner, DoorController.getAllDoors);
+router.get("/", verifyIdToken, isOwner, DoorController.getAllDoors);
 
 /**
  * @swagger
@@ -68,7 +67,7 @@ router.get('/', verifyIdToken, isOwner, DoorController.getAllDoors);
  *       404:
  *         description: Door not found
  */
-router.get('/:doorId', verifyIdToken, isOwner, DoorController.getDoor);
+router.get("/:doorId", verifyIdToken, isOwner, DoorController.getDoor);
 
 /**
  * @swagger
@@ -103,7 +102,7 @@ router.get('/:doorId', verifyIdToken, isOwner, DoorController.getDoor);
  *       403:
  *         description: Forbidden
  */
-router.post('/', verifyIdToken, isOwner, DoorController.createDoor);
+router.post("/", verifyIdToken, isOwner, DoorController.createDoor);
 
 /**
  * @swagger
@@ -143,7 +142,7 @@ router.post('/', verifyIdToken, isOwner, DoorController.createDoor);
  *       404:
  *         description: Door not found
  */
-router.put('/:doorId', verifyIdToken, isOwner, DoorController.updateDoor);
+router.put("/:doorId", verifyIdToken, isOwner, DoorController.updateDoor);
 
 /**
  * @swagger
@@ -171,6 +170,6 @@ router.put('/:doorId', verifyIdToken, isOwner, DoorController.updateDoor);
  *       404:
  *         description: Door not found
  */
-router.delete('/:doorId', verifyIdToken, isOwner, DoorController.deleteDoor);
+router.delete("/:doorId", verifyIdToken, isOwner, DoorController.deleteDoor);
 
 module.exports = router;

@@ -1,7 +1,19 @@
-const {onRequest} = require("firebase-functions/v2/https");
+// Load environment variables
+require("dotenv").config();
+
+const { onRequest } = require("firebase-functions/v2/https");
 const app = require("./app");
 
 /**
- * Cloud Function to handle HTTP requests and route them to the Express app.
+ * Development environment function
  */
-exports.api = onRequest(app);
+exports.apiDev = onRequest((req, res) => {
+  return app(req, res);
+});
+
+/**
+ * Production environment function
+ */
+exports.api = onRequest((req, res) => {
+  return app(req, res);
+});

@@ -7,43 +7,51 @@
  * @returns {string|null} An error message if validation fails, otherwise null.
  */
 function validateCreateTable(req) {
-    const {seats, nextToWindow, x, y, rotation, type, tableNum} = req.body;
+  const { seats, nextToWindow, x, y, rotation, type, tableNum } = req.body;
 
-    if (seats === undefined || nextToWindow === undefined || x === undefined || y === undefined || rotation === undefined || type === undefined || tableNum === undefined) {
-        return "All fields are required";
-    }
+  if (
+    seats === undefined ||
+    nextToWindow === undefined ||
+    x === undefined ||
+    y === undefined ||
+    rotation === undefined ||
+    type === undefined ||
+    tableNum === undefined
+  ) {
+    return "All fields are required";
+  }
 
-    if (!Number.isInteger(seats)) {
-        return "Seats must be an integer";
-    }
+  if (!Number.isInteger(seats)) {
+    return "Seats must be an integer";
+  }
 
-    if (typeof nextToWindow !== 'boolean') {
-        return "z to window must be a boolean";
-    }
+  if (typeof nextToWindow !== "boolean") {
+    return "z to window must be a boolean";
+  }
 
-    if (!Number.isInteger(x)) {
-        return "x must be an integer";
-    }
+  if (!Number.isInteger(x)) {
+    return "x must be an integer";
+  }
 
-    if (!Number.isInteger(y)) {
-        return "y must be an integer";
-    }
+  if (!Number.isInteger(y)) {
+    return "y must be an integer";
+  }
 
-    if (!Number.isInteger(rotation)) {
-        return "rotation must be an integer";
-    }
+  if (!Number.isInteger(rotation)) {
+    return "rotation must be an integer";
+  }
 
-    if (typeof type !== 'string') {
-        return "type must be a string";
-    }
+  if (typeof type !== "string") {
+    return "type must be a string";
+  }
 
-    if (!Number.isInteger(tableNum)) {
-        return "tableNum must be an integer";
-    }
+  if (!Number.isInteger(tableNum)) {
+    return "tableNum must be an integer";
+  }
 
-    return null;
+  return null;
 }
 
 module.exports = {
-    validateCreateTable
+  validateCreateTable,
 };

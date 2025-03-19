@@ -4,9 +4,9 @@
  * @enum {string}
  */
 const Privileges = Object.freeze({
-  CUSTOMER: 'customer',
-  OWNER: 'owner',
-  EMPLOYEE: 'employee'
+  CUSTOMER: "customer",
+  OWNER: "owner",
+  EMPLOYEE: "employee",
 });
 
 /**
@@ -48,7 +48,7 @@ class User {
       lastName: this.lastName,
       email: this.email,
       phoneNumber: this.phoneNumber,
-      privileges: this.privileges
+      privileges: this.privileges,
     };
   }
 
@@ -60,12 +60,12 @@ class User {
   static fromFirestore(snapshot) {
     const data = snapshot.data();
     return new User(
-        snapshot.id,
-        data.firstName,
-        data.lastName,
-        data.email,
-        data.phoneNumber,
-        data.privileges
+      snapshot.id,
+      data.firstName,
+      data.lastName,
+      data.email,
+      data.phoneNumber,
+      data.privileges,
     );
   }
 }

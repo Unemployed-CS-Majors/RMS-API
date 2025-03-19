@@ -2,14 +2,13 @@ const express = require("express");
 const router = express.Router();
 const ReservationController = require("../controllers/reservation.controller");
 const { verifyIdToken } = require("../middlewares/auth.middleware");
-const { isOwner, isEmployee} = require("../middlewares/privilages.middleware");
+const { isEmployee } = require("../middlewares/privilages.middleware");
 /**
  * @swagger
  * tags:
  *   name: Reservation
  *   description: Reservation management
  */
-
 
 /**
  * @swagger
@@ -45,7 +44,7 @@ const { isOwner, isEmployee} = require("../middlewares/privilages.middleware");
  *       401:
  *         description: Unauthorized
  */
-router.post('/create', verifyIdToken, ReservationController.createReservation);
+router.post("/create", verifyIdToken, ReservationController.createReservation);
 
 /**
  * @swagger
@@ -73,7 +72,7 @@ router.post('/create', verifyIdToken, ReservationController.createReservation);
  *       404:
  *         description: Reservation not found
  */
-router.post('/cancel/:reservationId', verifyIdToken, ReservationController.cancelReservation);
+router.post("/cancel/:reservationId", verifyIdToken, ReservationController.cancelReservation);
 
 /**
  * @swagger
@@ -101,7 +100,7 @@ router.post('/cancel/:reservationId', verifyIdToken, ReservationController.cance
  *       404:
  *         description: Reservation not found
  */
-router.post('/confirm/:reservationId', verifyIdToken, ReservationController.confirmReservation);
+router.post("/confirm/:reservationId", verifyIdToken, ReservationController.confirmReservation);
 
 /**
  * @swagger
@@ -129,7 +128,7 @@ router.post('/confirm/:reservationId', verifyIdToken, ReservationController.conf
  *       404:
  *         description: Reservation not found
  */
-router.post('/complete/:reservationId', verifyIdToken, ReservationController.completeReservation);
+router.post("/complete/:reservationId", verifyIdToken, ReservationController.completeReservation);
 
 /**
  * @swagger
@@ -168,7 +167,11 @@ router.post('/complete/:reservationId', verifyIdToken, ReservationController.com
  *       404:
  *         description: Reservation not found
  */
-router.post('/reschedule/:reservationId', verifyIdToken, ReservationController.rescheduleReservation);
+router.post(
+  "/reschedule/:reservationId",
+  verifyIdToken,
+  ReservationController.rescheduleReservation,
+);
 
 /**
  * @swagger
@@ -196,7 +199,7 @@ router.post('/reschedule/:reservationId', verifyIdToken, ReservationController.r
  *       404:
  *         description: Reservation not found
  */
-router.get('/get/:reservationId', verifyIdToken, ReservationController.getReservationDetails);
+router.get("/get/:reservationId", verifyIdToken, ReservationController.getReservationDetails);
 
 /**
  * @swagger
@@ -215,7 +218,7 @@ router.get('/get/:reservationId', verifyIdToken, ReservationController.getReserv
  *       401:
  *         description: Unauthorized
  */
-router.get('/user', verifyIdToken, ReservationController.getReservationsForUser);
+router.get("/user", verifyIdToken, ReservationController.getReservationsForUser);
 
 /**
  * @swagger
@@ -234,7 +237,7 @@ router.get('/user', verifyIdToken, ReservationController.getReservationsForUser)
  *       401:
  *         description: Unauthorized
  */
-router.get('/user/upcoming', verifyIdToken, ReservationController.getUpcomingReservationsForUser);
+router.get("/user/upcoming", verifyIdToken, ReservationController.getUpcomingReservationsForUser);
 
 /**
  * @swagger
@@ -266,7 +269,7 @@ router.get('/user/upcoming', verifyIdToken, ReservationController.getUpcomingRes
  *       401:
  *         description: Unauthorized
  */
-router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableForGivenTime);
+router.post("/free-tables", verifyIdToken, ReservationController.getFreeTableForGivenTime);
 
 /**
  * @swagger
@@ -306,7 +309,7 @@ router.post('/free-tables', verifyIdToken, ReservationController.getFreeTableFor
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/all', verifyIdToken, isEmployee, ReservationController.getAllReservations);
+router.get("/all", verifyIdToken, isEmployee, ReservationController.getAllReservations);
 
 /**
  * @swagger
@@ -355,7 +358,6 @@ router.get('/all', verifyIdToken, isEmployee, ReservationController.getAllReserv
  *       403:
  *         description: Forbidden - Not an owner
  */
-router.get('/:status', verifyIdToken, isEmployee, ReservationController.getReservationByStatus);
-
+router.get("/:status", verifyIdToken, isEmployee, ReservationController.getReservationByStatus);
 
 module.exports = router;

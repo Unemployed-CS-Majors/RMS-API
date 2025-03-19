@@ -1,153 +1,168 @@
 // __tests__/controllers/restaurantConfig.controller.test.js
-const RestaurantConfigController = require('../../app/controllers/restaurantConfig.controller');
-const RestaurantConfigService = require('../../app/services/restaurantConfig.service');
-const { mockRequest, mockResponse } = require('../helpers');
-const { logger } = require('../../app/logger/FirebaseLogger');
+const RestaurantConfigController = require("../../app/controllers/restaurantConfig.controller");
+const RestaurantConfigService = require("../../app/services/restaurantConfig.service");
+const { mockRequest, mockResponse } = require("../helpers");
 
-jest.mock('../../app/services/restaurantConfig.service');
-jest.mock('../../app/logger/FirebaseLogger');
+jest.mock("../../app/services/restaurantConfig.service");
+jest.mock("../../app/logger/FirebaseLogger");
 
-describe('RestaurantConfig Controller', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
+describe("RestaurantConfig Controller", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe("addPhoneNumber", () => {
+    it("adds a phone number successfully", async () => {
+      const req = mockRequest({ body: { phoneNumber: "1234567890" } });
+      const res = mockResponse();
+
+      await RestaurantConfigController.addPhoneNumber(req, res);
+
+      expect(RestaurantConfigService.addPhoneNumber).toHaveBeenCalledWith("1234567890");
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "success",
+          message: "Phone number added successfully",
+          data: null,
+        }),
+      );
     });
 
-    describe('addPhoneNumber', () => {
-        it('adds a phone number successfully', async () => {
-            const req = mockRequest({ body: { phoneNumber: '1234567890' } });
-            const res = mockResponse();
+    it("handles errors and returns 500 status", async () => {
+      const req = mockRequest({ body: { phoneNumber: "1234567890" } });
+      const res = mockResponse();
+      const error = new Error("Database error");
 
-            await RestaurantConfigController.addPhoneNumber(req, res);
+      RestaurantConfigService.addPhoneNumber.mockRejectedValue(error);
 
-            expect(RestaurantConfigService.addPhoneNumber).toHaveBeenCalledWith('1234567890');
-            expect(res.status).toHaveBeenCalledWith(201);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'success',
-                message: 'Phone number added successfully',
-                data: null
-            }));
-        });
+      await RestaurantConfigController.addPhoneNumber(req, res);
 
-        it('handles errors and returns 500 status', async () => {
-            const req = mockRequest({ body: { phoneNumber: '1234567890' } });
-            const res = mockResponse();
-            const error = new Error('Database error');
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "error",
+          message: "Database error",
+          data: null,
+        }),
+      );
+    });
+  });
 
-            RestaurantConfigService.addPhoneNumber.mockRejectedValue(error);
+  describe("updatePhoneNumber", () => {
+    it("updates a phone number successfully", async () => {
+      const req = mockRequest({ body: { phoneNumber: "0987654321" } });
+      const res = mockResponse();
 
-            await RestaurantConfigController.addPhoneNumber(req, res);
+      await RestaurantConfigController.updatePhoneNumber(req, res);
 
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'error',
-                message: 'Database error',
-                data: null
-            }));
-        });
+      expect(RestaurantConfigService.updatePhoneNumber).toHaveBeenCalledWith("0987654321");
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "success",
+          message: "Phone number updated successfully",
+          data: null,
+        }),
+      );
     });
 
-    describe('updatePhoneNumber', () => {
-        it('updates a phone number successfully', async () => {
-            const req = mockRequest({ body: { phoneNumber: '0987654321' } });
-            const res = mockResponse();
+    it("handles errors and returns 500 status", async () => {
+      const req = mockRequest({ body: { phoneNumber: "0987654321" } });
+      const res = mockResponse();
+      const error = new Error("Database error");
 
-            await RestaurantConfigController.updatePhoneNumber(req, res);
+      RestaurantConfigService.updatePhoneNumber.mockRejectedValue(error);
 
-            expect(RestaurantConfigService.updatePhoneNumber).toHaveBeenCalledWith('0987654321');
-            expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'success',
-                message: 'Phone number updated successfully',
-                data: null
-            }));
-        });
+      await RestaurantConfigController.updatePhoneNumber(req, res);
 
-        it('handles errors and returns 500 status', async () => {
-            const req = mockRequest({ body: { phoneNumber: '0987654321' } });
-            const res = mockResponse();
-            const error = new Error('Database error');
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "error",
+          message: "Database error",
+          data: null,
+        }),
+      );
+    });
+  });
 
-            RestaurantConfigService.updatePhoneNumber.mockRejectedValue(error);
+  describe("deletePhoneNumber", () => {
+    it("deletes a phone number successfully", async () => {
+      const req = mockRequest();
+      const res = mockResponse();
 
-            await RestaurantConfigController.updatePhoneNumber(req, res);
+      await RestaurantConfigController.deletePhoneNumber(req, res);
 
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'error',
-                message: 'Database error',
-                data: null
-            }));
-        });
+      expect(RestaurantConfigService.deletePhoneNumber).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "success",
+          message: "Phone number deleted successfully",
+          data: null,
+        }),
+      );
     });
 
-    describe('deletePhoneNumber', () => {
-        it('deletes a phone number successfully', async () => {
-            const req = mockRequest();
-            const res = mockResponse();
+    it("handles errors and returns 500 status", async () => {
+      const req = mockRequest();
+      const res = mockResponse();
+      const error = new Error("Database error");
 
-            await RestaurantConfigController.deletePhoneNumber(req, res);
+      RestaurantConfigService.deletePhoneNumber.mockRejectedValue(error);
 
-            expect(RestaurantConfigService.deletePhoneNumber).toHaveBeenCalled();
-            expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'success',
-                message: 'Phone number deleted successfully',
-                data: null
-            }));
-        });
+      await RestaurantConfigController.deletePhoneNumber(req, res);
 
-        it('handles errors and returns 500 status', async () => {
-            const req = mockRequest();
-            const res = mockResponse();
-            const error = new Error('Database error');
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "error",
+          message: "Database error",
+          data: null,
+        }),
+      );
+    });
+  });
 
-            RestaurantConfigService.deletePhoneNumber.mockRejectedValue(error);
+  describe("getPhoneNumber", () => {
+    it("retrieves a phone number successfully", async () => {
+      const req = mockRequest();
+      const res = mockResponse();
+      const mockPhoneNumber = "1234567890";
 
-            await RestaurantConfigController.deletePhoneNumber(req, res);
+      RestaurantConfigService.getPhoneNumber.mockResolvedValue(mockPhoneNumber);
 
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'error',
-                message: 'Database error',
-                data: null
-            }));
-        });
+      await RestaurantConfigController.getPhoneNumber(req, res);
+
+      expect(RestaurantConfigService.getPhoneNumber).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "success",
+          message: "Phone number fetched successfully",
+          data: mockPhoneNumber,
+        }),
+      );
     });
 
-    describe('getPhoneNumber', () => {
-        it('retrieves a phone number successfully', async () => {
-            const req = mockRequest();
-            const res = mockResponse();
-            const mockPhoneNumber = '1234567890';
+    it("handles errors and returns 500 status", async () => {
+      const req = mockRequest();
+      const res = mockResponse();
+      const error = new Error("Database error");
 
-            RestaurantConfigService.getPhoneNumber.mockResolvedValue(mockPhoneNumber);
+      RestaurantConfigService.getPhoneNumber.mockRejectedValue(error);
 
-            await RestaurantConfigController.getPhoneNumber(req, res);
+      await RestaurantConfigController.getPhoneNumber(req, res);
 
-            expect(RestaurantConfigService.getPhoneNumber).toHaveBeenCalled();
-            expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'success',
-                message: 'Phone number fetched successfully',
-                data: mockPhoneNumber
-            }));
-        });
-
-        it('handles errors and returns 500 status', async () => {
-            const req = mockRequest();
-            const res = mockResponse();
-            const error = new Error('Database error');
-
-            RestaurantConfigService.getPhoneNumber.mockRejectedValue(error);
-
-            await RestaurantConfigController.getPhoneNumber(req, res);
-
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-                status: 'error',
-                message: 'Database error',
-                data: null
-            }));
-        });
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: "error",
+          message: "Database error",
+          data: null,
+        }),
+      );
     });
+  });
 });

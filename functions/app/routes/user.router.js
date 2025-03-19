@@ -1,7 +1,7 @@
-const express = require('express');
-const UserController = require('../controllers/user.controller');
-const {verifyIdToken} = require("../middlewares/auth.middleware");
-const {isOwner} = require("../middlewares/privilages.middleware");
+const express = require("express");
+const UserController = require("../controllers/user.controller");
+const { verifyIdToken } = require("../middlewares/auth.middleware");
+const { isOwner } = require("../middlewares/privilages.middleware");
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized
  */
-router.get('/', verifyIdToken, UserController.getUser);
+router.get("/", verifyIdToken, UserController.getUser);
 
 /**
  * @swagger
@@ -74,7 +74,7 @@ router.get('/', verifyIdToken, UserController.getUser);
  *       403:
  *         description: Forbidden
  */
-router.get('/all', verifyIdToken, isOwner, UserController.getAllUsers);
+router.get("/all", verifyIdToken, isOwner, UserController.getAllUsers);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ router.get('/all', verifyIdToken, isOwner, UserController.getAllUsers);
  *       403:
  *         description: Forbidden
  */
-router.get('/privileged', verifyIdToken, isOwner, UserController.getAllPrivilegedUsers);
+router.get("/privileged", verifyIdToken, isOwner, UserController.getAllPrivilegedUsers);
 
 /**
  * @swagger
@@ -146,6 +146,6 @@ router.get('/privileged', verifyIdToken, isOwner, UserController.getAllPrivilege
  *       404:
  *         description: User not found
  */
-router.put('/:userId/privilege', verifyIdToken, isOwner, UserController.changePrivilege);
+router.put("/:userId/privilege", verifyIdToken, isOwner, UserController.changePrivilege);
 
 module.exports = router;

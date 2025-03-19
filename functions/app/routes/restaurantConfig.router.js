@@ -1,6 +1,6 @@
-const express = require('express');
-const RestaurantConfigController = require('../controllers/restaurantConfig.controller');
-const {isOwner} = require("../middlewares/privilages.middleware");
+const express = require("express");
+const RestaurantConfigController = require("../controllers/restaurantConfig.controller");
+const { isOwner } = require("../middlewares/privilages.middleware");
 const router = express.Router();
 
 /**
@@ -121,7 +121,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post('/phone-number', isOwner, RestaurantConfigController.addPhoneNumber);
+router.post("/phone-number", isOwner, RestaurantConfigController.addPhoneNumber);
 
 /**
  * @swagger
@@ -147,7 +147,7 @@ router.post('/phone-number', isOwner, RestaurantConfigController.addPhoneNumber)
  *       500:
  *         description: Server error
  */
-router.put('/phone-number', isOwner, RestaurantConfigController.updatePhoneNumber);
+router.put("/phone-number", isOwner, RestaurantConfigController.updatePhoneNumber);
 
 /**
  * @swagger
@@ -167,7 +167,7 @@ router.put('/phone-number', isOwner, RestaurantConfigController.updatePhoneNumbe
  *       500:
  *         description: Server error
  */
-router.delete('/phone-number', isOwner, RestaurantConfigController.deletePhoneNumber);
+router.delete("/phone-number", isOwner, RestaurantConfigController.deletePhoneNumber);
 
 /**
  * @swagger
@@ -194,7 +194,7 @@ router.delete('/phone-number', isOwner, RestaurantConfigController.deletePhoneNu
  *       500:
  *         description: Server error
  */
-router.get('/phone-number', RestaurantConfigController.getPhoneNumber);
+router.get("/phone-number", RestaurantConfigController.getPhoneNumber);
 
 /**
  * @swagger
@@ -220,7 +220,7 @@ router.get('/phone-number', RestaurantConfigController.getPhoneNumber);
  *       500:
  *         description: Server error
  */
-router.post('/email', isOwner, RestaurantConfigController.addEmail);
+router.post("/email", isOwner, RestaurantConfigController.addEmail);
 
 /**
  * @swagger
@@ -246,7 +246,7 @@ router.post('/email', isOwner, RestaurantConfigController.addEmail);
  *       500:
  *         description: Server error
  */
-router.put('/email', isOwner, RestaurantConfigController.updateEmail);
+router.put("/email", isOwner, RestaurantConfigController.updateEmail);
 
 /**
  * @swagger
@@ -266,7 +266,7 @@ router.put('/email', isOwner, RestaurantConfigController.updateEmail);
  *       500:
  *         description: Server error
  */
-router.delete('/email', isOwner, RestaurantConfigController.deleteEmail);
+router.delete("/email", isOwner, RestaurantConfigController.deleteEmail);
 
 /**
  * @swagger
@@ -293,7 +293,7 @@ router.delete('/email', isOwner, RestaurantConfigController.deleteEmail);
  *       500:
  *         description: Server error
  */
-router.get('/email', RestaurantConfigController.getEmail);
+router.get("/email", RestaurantConfigController.getEmail);
 
 /**
  * @swagger
@@ -319,7 +319,7 @@ router.get('/email', RestaurantConfigController.getEmail);
  *       500:
  *         description: Server error
  */
-router.post('/address', isOwner, RestaurantConfigController.addAddress);
+router.post("/address", isOwner, RestaurantConfigController.addAddress);
 
 /**
  * @swagger
@@ -345,7 +345,7 @@ router.post('/address', isOwner, RestaurantConfigController.addAddress);
  *       500:
  *         description: Server error
  */
-router.put('/address', isOwner, RestaurantConfigController.updateAddress);
+router.put("/address", isOwner, RestaurantConfigController.updateAddress);
 
 /**
  * @swagger
@@ -365,7 +365,7 @@ router.put('/address', isOwner, RestaurantConfigController.updateAddress);
  *       500:
  *         description: Server error
  */
-router.delete('/address', isOwner, RestaurantConfigController.deleteAddress);
+router.delete("/address", isOwner, RestaurantConfigController.deleteAddress);
 
 /**
  * @swagger
@@ -392,7 +392,7 @@ router.delete('/address', isOwner, RestaurantConfigController.deleteAddress);
  *       500:
  *         description: Server error
  */
-router.get('/address', RestaurantConfigController.getAddress);
+router.get("/address", RestaurantConfigController.getAddress);
 
 /**
  * @swagger
@@ -420,7 +420,7 @@ router.get('/address', RestaurantConfigController.getAddress);
  *       500:
  *         description: Server error
  */
-router.post('/map', isOwner, RestaurantConfigController.addMap);
+router.post("/map", isOwner, RestaurantConfigController.addMap);
 
 /**
  * @swagger
@@ -448,7 +448,7 @@ router.post('/map', isOwner, RestaurantConfigController.addMap);
  *       500:
  *         description: Server error
  */
-router.put('/map', isOwner, RestaurantConfigController.updateMap);
+router.put("/map", isOwner, RestaurantConfigController.updateMap);
 
 /**
  * @swagger
@@ -468,7 +468,7 @@ router.put('/map', isOwner, RestaurantConfigController.updateMap);
  *       500:
  *         description: Server error
  */
-router.delete('/map', isOwner, RestaurantConfigController.deleteMap);
+router.delete("/map", isOwner, RestaurantConfigController.deleteMap);
 
 /**
  * @swagger
@@ -495,7 +495,7 @@ router.delete('/map', isOwner, RestaurantConfigController.deleteMap);
  *       500:
  *         description: Server error
  */
-router.get('/map', RestaurantConfigController.getMap);
+router.get("/map", RestaurantConfigController.getMap);
 
 /**
  * @swagger
@@ -533,7 +533,7 @@ router.get('/map', RestaurantConfigController.getMap);
  *       500:
  *         description: Server error
  */
-router.post('/feature', isOwner, RestaurantConfigController.addFeature);
+router.post("/feature", isOwner, RestaurantConfigController.addFeature);
 
 /**
  * @swagger
@@ -571,7 +571,7 @@ router.post('/feature', isOwner, RestaurantConfigController.addFeature);
  *       500:
  *         description: Server error
  */
-router.put('/feature', isOwner, RestaurantConfigController.updateFeature);
+router.put("/feature", isOwner, RestaurantConfigController.updateFeature);
 
 /**
  * @swagger
@@ -610,7 +610,7 @@ router.put('/feature', isOwner, RestaurantConfigController.updateFeature);
  *       500:
  *         description: Server error
  */
-router.get('/feature/:name', RestaurantConfigController.getFeature);
+router.get("/feature/:name", RestaurantConfigController.getFeature);
 
 /**
  * @swagger
@@ -642,7 +642,7 @@ router.get('/feature/:name', RestaurantConfigController.getFeature);
  *       500:
  *         description: Server error
  */
-router.delete('/feature/:name', isOwner, RestaurantConfigController.deleteFeature);
+router.delete("/feature/:name", isOwner, RestaurantConfigController.deleteFeature);
 
 /**
  * @swagger
@@ -676,7 +676,7 @@ router.delete('/feature/:name', isOwner, RestaurantConfigController.deleteFeatur
  *       500:
  *         description: Server error
  */
-router.get('/features', RestaurantConfigController.getAllFeatures);
+router.get("/features", RestaurantConfigController.getAllFeatures);
 
 /**
  * @swagger
@@ -703,6 +703,6 @@ router.get('/features', RestaurantConfigController.getAllFeatures);
  *       500:
  *         description: Server error
  */
-router.get('/config', RestaurantConfigController.getRestaurantConfig);
+router.get("/config", RestaurantConfigController.getRestaurantConfig);
 
 module.exports = router;
