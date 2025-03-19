@@ -44,19 +44,19 @@ class OrderController {
       // Process payment if needed
       if (createdOrder.paymentMethod === PaymentMethod.ONLINE) {
         // Create success and cancel URLs
-        const successUrl = isEmulator ?
-          "http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/success" :
-          `${req.protocol}://${req.get("host")}/payments/success`;
-        const cancelUrl = isEmulator ?
-          "http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/cancel" :
-          `${req.protocol}://${req.get("host")}/payments/cancel`;
+        const successUrl = isEmulator
+          ? "http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/success"
+          : `${req.protocol}://${req.get("host")}/payments/success`;
+        const cancelUrl = isEmulator
+          ? "http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api/payments/cancel"
+          : `${req.protocol}://${req.get("host")}/payments/cancel`;
         logger.info(successUrl);
         logger.info(cancelUrl);
         // Process payment
         const paymentResult = await OrderService.processPayment(
           createdOrder,
           successUrl,
-          cancelUrl,
+          cancelUrl
         );
 
         // If redirect is required, provide the redirect URL
@@ -167,15 +167,15 @@ class OrderController {
       // Update the order status
       const updatedOrder = await OrderService.updateOrderStatus(orderId, status, additionalData);
       switch (status) {
-      case OrderStatus.IN_PROGRESS:
-        await EmailService.sendOrderBeingPreparedEmail(user, updatedOrder);
-        break;
-      case OrderStatus.READY_FOR_PICKUP:
-        await EmailService.sendOrderReadyForPickupEmail(user, updatedOrder);
-        break;
-      case OrderStatus.OUT_FOR_DELIVERY:
-        await EmailService.sendOrderIsOnTheWayEmail(user, updatedOrder);
-        break;
+        case OrderStatus.IN_PROGRESS:
+          await EmailService.sendOrderBeingPreparedEmail(user, updatedOrder);
+          break;
+        case OrderStatus.READY_FOR_PICKUP:
+          await EmailService.sendOrderReadyForPickupEmail(user, updatedOrder);
+          break;
+        case OrderStatus.OUT_FOR_DELIVERY:
+          await EmailService.sendOrderIsOnTheWayEmail(user, updatedOrder);
+          break;
       }
       return res
         .status(200)
@@ -264,7 +264,7 @@ class OrderController {
       const canceledOrder = await OrderService.updateOrderStatus(
         orderId,
         OrderStatus.CANCELED,
-        additionalData,
+        additionalData
       );
 
       return res

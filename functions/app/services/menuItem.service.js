@@ -106,13 +106,13 @@ class MenuItemService {
         data.type || currentMenuItem.type,
         data.calories ? parseInt(data.calories) : currentMenuItem.calories,
         data.avgWaitTime ? parseInt(data.avgWaitTime) : currentMenuItem.avgWaitTime,
-        data.allergens ?
-          typeof data.allergens === "string" ?
-            JSON.parse(data.allergens) :
-            data.allergens :
-          currentMenuItem.allergens,
+        data.allergens
+          ? typeof data.allergens === "string"
+            ? JSON.parse(data.allergens)
+            : data.allergens
+          : currentMenuItem.allergens,
         currentMenuItem.imageUrl,
-        currentMenuItem.createdAt,
+        currentMenuItem.createdAt
       );
 
       if (file) {

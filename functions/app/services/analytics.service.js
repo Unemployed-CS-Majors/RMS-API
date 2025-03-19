@@ -386,7 +386,7 @@ class AnalyticsService {
 
       const totalCustomers = Object.keys(customerOrders).length;
       const customersWithMultipleOrders = Object.values(customerOrders).filter(
-        (orders) => orders.length > 1,
+        (orders) => orders.length > 1
       ).length;
 
       const returning =
@@ -506,14 +506,14 @@ class AnalyticsService {
         totalTables > 0 ? (tablesWithReservations / totalTables) * 100 : 0;
 
       const pendingOrders = activeOrders.filter(
-        (o) => o.status === OrderStatus.PENDING_PAYMENT || o.status === OrderStatus.PAID,
+        (o) => o.status === OrderStatus.PENDING_PAYMENT || o.status === OrderStatus.PAID
       ).length;
       const inProgressOrders = activeOrders.filter(
-        (o) => o.status === OrderStatus.IN_PROGRESS,
+        (o) => o.status === OrderStatus.IN_PROGRESS
       ).length;
       const readyOrders = activeOrders.filter(
         (o) =>
-          o.status === OrderStatus.READY_FOR_PICKUP || o.status === OrderStatus.OUT_FOR_DELIVERY,
+          o.status === OrderStatus.READY_FOR_PICKUP || o.status === OrderStatus.OUT_FOR_DELIVERY
       ).length;
 
       const employeesSnapshot = await db

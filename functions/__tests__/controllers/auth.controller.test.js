@@ -33,7 +33,7 @@ describe("Auth Controller", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
-        }),
+        })
       );
       expect(AuthService.createUser).not.toHaveBeenCalled();
     });
@@ -71,7 +71,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "success",
           data: { uid: "user123" },
-        }),
+        })
       );
     });
 
@@ -101,7 +101,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Failed to create user",
-        }),
+        })
       );
     });
   });
@@ -123,7 +123,7 @@ describe("Auth Controller", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
-        }),
+        })
       );
       expect(AuthService.loginUser).not.toHaveBeenCalled();
     });
@@ -161,7 +161,7 @@ describe("Auth Controller", () => {
             idToken: "token123",
             refreshToken: "refresh123",
           },
-        }),
+        })
       );
     });
 
@@ -188,7 +188,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Invalid credentials",
-        }),
+        })
       );
     });
   });
@@ -207,7 +207,7 @@ describe("Auth Controller", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
-        }),
+        })
       );
       expect(AuthService.refreshUserToken).not.toHaveBeenCalled();
     });
@@ -239,7 +239,7 @@ describe("Auth Controller", () => {
             idToken: "newToken123",
             refreshToken: "newRefresh123",
           },
-        }),
+        })
       );
     });
 
@@ -265,7 +265,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Invalid refresh token",
-        }),
+        })
       );
     });
   });
@@ -284,7 +284,7 @@ describe("Auth Controller", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
-        }),
+        })
       );
       expect(AuthService.forgotPassword).not.toHaveBeenCalled();
     });
@@ -325,7 +325,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "success",
           message: "Password reset email sent",
-        }),
+        })
       );
     });
 
@@ -352,7 +352,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "User not found",
-        }),
+        })
       );
     });
   });
@@ -372,7 +372,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "ID token is required",
-        }),
+        })
       );
       expect(AuthService.signInWithGoogle).not.toHaveBeenCalled();
     });
@@ -407,7 +407,7 @@ describe("Auth Controller", () => {
             idToken: "firebase-id-token-123",
             refreshToken: "refresh-token-123",
           },
-        }),
+        })
       );
     });
 
@@ -433,7 +433,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Invalid token",
-        }),
+        })
       );
     });
   });
@@ -460,7 +460,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "success",
           message: "Account deleted successfully",
-        }),
+        })
       );
     });
 
@@ -482,7 +482,7 @@ describe("Auth Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Unauthorized",
-        }),
+        })
       );
     });
   });

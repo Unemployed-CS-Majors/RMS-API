@@ -34,7 +34,7 @@ const busboyMiddleware = (req, res, next) => {
 
   busboy.on("field", (fieldname, val) => {
     logger.info(
-      `Processed field ${fieldname}: ${val.substring(0, 100)}${val.length > 100 ? "..." : ""}`,
+      `Processed field ${fieldname}: ${val.substring(0, 100)}${val.length > 100 ? "..." : ""}`
     );
 
     if (fieldname === "allergens" && val) {

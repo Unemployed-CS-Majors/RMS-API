@@ -60,7 +60,7 @@ describe("Order Model", () => {
         sampleOrderData.paymentIntentId,
         sampleOrderData.createdAt,
         sampleOrderData.updatedAt,
-        sampleOrderData.estimatedDeliveryTime,
+        sampleOrderData.estimatedDeliveryTime
       );
 
       expect(order.id).toBe(sampleOrderData.id);
@@ -90,7 +90,7 @@ describe("Order Model", () => {
         undefined, // should default to 0
         sampleOrderData.total,
         sampleOrderData.deliveryMethod,
-        sampleOrderData.paymentMethod,
+        sampleOrderData.paymentMethod
       );
 
       expect(order.id).toBeNull();
@@ -121,7 +121,7 @@ describe("Order Model", () => {
         sampleOrderData.paymentIntentId,
         sampleOrderData.createdAt,
         sampleOrderData.updatedAt,
-        sampleOrderData.estimatedDeliveryTime,
+        sampleOrderData.estimatedDeliveryTime
       );
 
       const firestoreData = order.toFirestore();
@@ -157,7 +157,7 @@ describe("Order Model", () => {
         sampleOrderData.deliveryFee,
         sampleOrderData.total,
         sampleOrderData.deliveryMethod,
-        sampleOrderData.paymentMethod,
+        sampleOrderData.paymentMethod
       );
 
       const firestoreData = order.toFirestore();
@@ -330,7 +330,7 @@ describe("Order Model", () => {
           county: "Dublin",
           eirCode: "D01 AB12",
           country: "Ireland",
-        },
+        }
       );
 
       const result = await order.validate();
@@ -348,7 +348,7 @@ describe("Order Model", () => {
         0,
         23.74,
         DeliveryMethod.PICKUP,
-        PaymentMethod.IN_STORE,
+        PaymentMethod.IN_STORE
       );
 
       const result = await order.validate();
@@ -366,7 +366,7 @@ describe("Order Model", () => {
         0,
         0,
         DeliveryMethod.HOME_DELIVERY,
-        PaymentMethod.ONLINE,
+        PaymentMethod.ONLINE
       );
 
       const result = await order.validate();
@@ -387,7 +387,7 @@ describe("Order Model", () => {
         0,
         11.87,
         DeliveryMethod.PICKUP,
-        PaymentMethod.IN_STORE,
+        PaymentMethod.IN_STORE
       );
 
       const result = await order.validate();
@@ -408,7 +408,7 @@ describe("Order Model", () => {
         0,
         11.87,
         DeliveryMethod.PICKUP,
-        PaymentMethod.IN_STORE,
+        PaymentMethod.IN_STORE
       );
 
       const result = await order.validate();
@@ -428,7 +428,7 @@ describe("Order Model", () => {
         0,
         10.79,
         DeliveryMethod.PICKUP,
-        PaymentMethod.IN_STORE,
+        PaymentMethod.IN_STORE
       );
 
       const result = await order.validate();
@@ -446,7 +446,7 @@ describe("Order Model", () => {
         0,
         -10.11,
         DeliveryMethod.PICKUP,
-        PaymentMethod.IN_STORE,
+        PaymentMethod.IN_STORE
       );
 
       const result = await order.validate();
@@ -466,7 +466,7 @@ describe("Order Model", () => {
         DeliveryMethod.HOME_DELIVERY,
         PaymentMethod.ONLINE,
         OrderStatus.PENDING_PAYMENT,
-        null, // Missing delivery address
+        null // Missing delivery address
       );
 
       const result = await order.validate();
@@ -489,7 +489,7 @@ describe("Order Model", () => {
         {
           street: "123 Main St",
           // Missing city, county, etc.
-        },
+        }
       );
 
       const result = await order.validate();
@@ -507,7 +507,7 @@ describe("Order Model", () => {
         5,
         16.87,
         DeliveryMethod.HOME_DELIVERY,
-        PaymentMethod.IN_STORE, // Invalid for home delivery
+        PaymentMethod.IN_STORE // Invalid for home delivery
       );
 
       const result = await order.validate();
@@ -525,7 +525,7 @@ describe("Order Model", () => {
         0,
         11.87,
         "invalid_delivery_method", // Invalid delivery method
-        PaymentMethod.ONLINE,
+        PaymentMethod.ONLINE
       );
 
       const result = await order.validate();

@@ -17,21 +17,21 @@ logger.info(`Configuring auth for ${nodeEnv} environment${isEmulator ? " (emulat
  * Determines the sign-in URL based on whether the Firebase emulator is being used.
  * @type {string}
  */
-const signInUrl = isEmulator ?
-  "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=test" :
-  "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
+const signInUrl = isEmulator
+  ? "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=test"
+  : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
 
-const signInWithCustomToken = isEmulator ?
-  "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=test" :
-  "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey;
+const signInWithCustomToken = isEmulator
+  ? "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=test"
+  : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey;
 
 /**
  * Determines the refresh token URL based on whether the Firebase emulator is being used.
  * @type {string}
  */
-const refreshTokenUrl = isEmulator ?
-  "http://localhost:9099/securetoken.googleapis.com/v1/token?key=test" :
-  "https://securetoken.googleapis.com/v1/token?key=" + apiKey;
+const refreshTokenUrl = isEmulator
+  ? "http://localhost:9099/securetoken.googleapis.com/v1/token?key=test"
+  : "https://securetoken.googleapis.com/v1/token?key=" + apiKey;
 
 module.exports = {
   /**

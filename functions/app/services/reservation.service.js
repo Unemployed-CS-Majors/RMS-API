@@ -49,7 +49,7 @@ class ReservationService {
       userId,
       tableId,
       people,
-      ReservationStatus.PENDING,
+      ReservationStatus.PENDING
     );
     const docRef = await reservationRef.add(newReservation.toFirestore());
     await docRef.update({ id: docRef.id });

@@ -28,7 +28,7 @@ describe("Stripe Service", () => {
         5.0,
         28.74,
         "home_delivery",
-        "online",
+        "online"
       );
       const mockPaymentIntent = { id: "pi_123", amount: 2874, currency: "usd" };
       stripe.paymentIntents.create.mockResolvedValue(mockPaymentIntent);
@@ -40,7 +40,7 @@ describe("Stripe Service", () => {
         expect.objectContaining({
           amount: 2874,
           currency: "usd",
-        }),
+        })
       );
     });
 
@@ -60,12 +60,12 @@ describe("Stripe Service", () => {
         5.0,
         28.74,
         "home_delivery",
-        "online",
+        "online"
       );
       stripe.paymentIntents.create.mockRejectedValue(new Error("Failed to create payment intent"));
 
       await expect(StripeService.createPaymentIntent(order)).rejects.toThrow(
-        "Failed to create payment intent",
+        "Failed to create payment intent"
       );
     });
   });
@@ -83,11 +83,11 @@ describe("Stripe Service", () => {
 
     it("throws an error if payment intent retrieval fails", async () => {
       stripe.paymentIntents.retrieve.mockRejectedValue(
-        new Error("Failed to retrieve payment intent"),
+        new Error("Failed to retrieve payment intent")
       );
 
       await expect(StripeService.retrievePaymentIntent("pi_123")).rejects.toThrow(
-        "Failed to retrieve payment intent",
+        "Failed to retrieve payment intent"
       );
     });
   });
@@ -114,7 +114,7 @@ describe("Stripe Service", () => {
 
     it("throws an error if payment intent retrieval fails", async () => {
       stripe.paymentIntents.retrieve.mockRejectedValue(
-        new Error("Failed to retrieve payment intent"),
+        new Error("Failed to retrieve payment intent")
       );
 
       await expect(StripeService.confirmPaymentSuccess("pi_123")).resolves.toBe(false);
@@ -138,7 +138,7 @@ describe("Stripe Service", () => {
         5.0,
         28.74,
         "home_delivery",
-        "online",
+        "online"
       );
       const mockSession = { id: "cs_123", url: "https://checkout.stripe.com/pay/cs_123" };
       stripe.checkout.sessions.create.mockResolvedValue(mockSession);
@@ -146,7 +146,7 @@ describe("Stripe Service", () => {
       const result = await StripeService.createCheckoutSession(
         order,
         "https://success.url",
-        "https://cancel.url",
+        "https://cancel.url"
       );
 
       expect(result).toEqual(mockSession);
@@ -179,7 +179,7 @@ describe("Stripe Service", () => {
           mode: "payment",
           payment_method_types: ["card"],
           success_url: "https://success.url?session_id={CHECKOUT_SESSION_ID}",
-        }),
+        })
       );
     });
 
@@ -199,14 +199,14 @@ describe("Stripe Service", () => {
         5.0,
         28.74,
         "home_delivery",
-        "online",
+        "online"
       );
       stripe.checkout.sessions.create.mockRejectedValue(
-        new Error("Failed to create checkout session"),
+        new Error("Failed to create checkout session")
       );
 
       await expect(
-        StripeService.createCheckoutSession(order, "https://success.url", "https://cancel.url"),
+        StripeService.createCheckoutSession(order, "https://success.url", "https://cancel.url")
       ).rejects.toThrow("Failed to create checkout session");
     });
   });
@@ -224,11 +224,11 @@ describe("Stripe Service", () => {
 
     it("throws an error if checkout session retrieval fails", async () => {
       stripe.checkout.sessions.retrieve.mockRejectedValue(
-        new Error("Failed to retrieve checkout session"),
+        new Error("Failed to retrieve checkout session")
       );
 
       await expect(StripeService.retrieveCheckoutSession("cs_123")).rejects.toThrow(
-        "Failed to retrieve checkout session",
+        "Failed to retrieve checkout session"
       );
     });
   });
@@ -243,7 +243,11 @@ describe("Stripe Service", () => {
       const result = await StripeService.handleWebhookEvent(payload, signature);
 
       expect(result).toEqual(mockEvent);
-      expect(stripe.webhooks.constructEvent).toHaveBeenCalledWith(payload, signature, expect.any(String));
+      expect(stripe.webhooks.constructEvent).toHaveBeenCalledWith(
+        payload,
+        signature,
+        expect.any(String)
+      );
     });
 
     it("throws an error if webhook event handling fails", async () => {
@@ -254,7 +258,7 @@ describe("Stripe Service", () => {
       });
 
       await expect(StripeService.handleWebhookEvent(payload, signature)).rejects.toThrow(
-        "Invalid signature",
+        "Invalid signature"
       );
     });
   });

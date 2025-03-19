@@ -19,7 +19,7 @@ describe("User Model", () => {
         sampleUserData.lastName,
         sampleUserData.email,
         sampleUserData.phoneNumber,
-        sampleUserData.privileges,
+        sampleUserData.privileges
       );
 
       expect(user.uid).toBe(sampleUserData.id);
@@ -39,7 +39,7 @@ describe("User Model", () => {
         sampleUserData.lastName,
         sampleUserData.email,
         sampleUserData.phoneNumber,
-        sampleUserData.privileges,
+        sampleUserData.privileges
       );
 
       const firestoreData = user.toFirestore();

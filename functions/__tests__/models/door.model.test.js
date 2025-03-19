@@ -19,7 +19,7 @@ describe("Door Model", () => {
         sampleDoorData.y,
         sampleDoorData.width,
         sampleDoorData.height,
-        sampleDoorData.rotation,
+        sampleDoorData.rotation
       );
 
       expect(door.id).toBe(sampleDoorData.id);
@@ -39,7 +39,7 @@ describe("Door Model", () => {
         sampleDoorData.y,
         sampleDoorData.width,
         sampleDoorData.height,
-        sampleDoorData.rotation,
+        sampleDoorData.rotation
       );
 
       const firestoreData = door.toFirestore();

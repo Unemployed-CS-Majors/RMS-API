@@ -27,7 +27,7 @@ describe("OpeningHours Service", () => {
       const result = await OpeningHoursService.getOpeningHoursById("1");
 
       expect(result).toEqual(
-        OpeningHours.fromFirestore(mockDocumentSnapshot("1", mockOpeningHours)),
+        OpeningHours.fromFirestore(mockDocumentSnapshot("1", mockOpeningHours))
       );
     });
 
@@ -103,7 +103,7 @@ describe("OpeningHours Service", () => {
           day: "Monday",
           startTime: "09:00",
           endTime: "17:00",
-        }),
+        })
       ).rejects.toThrow("Counter document does not exist!");
     });
   });
@@ -119,7 +119,7 @@ describe("OpeningHours Service", () => {
 
       const result = await OpeningHoursService.updateOpeningHours(
         "1",
-        new OpeningHours("1", "Monday", "09:00", "17:00"),
+        new OpeningHours("1", "Monday", "09:00", "17:00")
       );
 
       expect(result).toEqual(mockOpeningHours);

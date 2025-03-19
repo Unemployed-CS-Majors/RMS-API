@@ -65,7 +65,7 @@ class User {
       data.lastName,
       data.email,
       data.phoneNumber,
-      data.privileges,
+      data.privileges
     );
   }
 }

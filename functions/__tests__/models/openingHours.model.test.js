@@ -15,7 +15,7 @@ describe("OpeningHours Model", () => {
         sampleOpeningHoursData.dayId,
         sampleOpeningHoursData.day,
         sampleOpeningHoursData.startTime,
-        sampleOpeningHoursData.endTime,
+        sampleOpeningHoursData.endTime
       );
 
       expect(openingHours.dayId).toBe(sampleOpeningHoursData.dayId);
@@ -31,7 +31,7 @@ describe("OpeningHours Model", () => {
         sampleOpeningHoursData.dayId,
         sampleOpeningHoursData.day,
         sampleOpeningHoursData.startTime,
-        sampleOpeningHoursData.endTime,
+        sampleOpeningHoursData.endTime
       );
 
       const firestoreData = openingHours.toFirestore();

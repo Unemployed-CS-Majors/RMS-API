@@ -50,7 +50,7 @@ describe("Window Service", () => {
       const result = await WindowService.getAllWindows();
 
       expect(result).toEqual(
-        windowsData.map((data) => Window.fromFirestore(mockDocumentSnapshot(data.id, data))),
+        windowsData.map((data) => Window.fromFirestore(mockDocumentSnapshot(data.id, data)))
       );
     });
   });

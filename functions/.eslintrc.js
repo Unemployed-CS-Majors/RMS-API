@@ -8,8 +8,8 @@ module.exports = {
   extends: ["eslint:recommended", "google"],
   rules: {
     "new-cap": "off",
-    "quotes": ["error", "double"],
-    "indent": ["error", 2],
+    quotes: ["error", "double"],
+    indent: ["error", 2],
     "object-curly-spacing": ["error", "always"],
     "max-len": ["error", { code: 120 }],
     "require-jsdoc": "off",

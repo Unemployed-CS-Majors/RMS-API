@@ -28,7 +28,7 @@ describe("OpeningHours Controller", () => {
           status: "success",
           message: "Opening hours fetched successfully",
           data: mockOpeningHours,
-        }),
+        })
       );
     });
   });

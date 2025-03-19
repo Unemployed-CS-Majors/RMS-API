@@ -50,7 +50,7 @@ describe("Table Service", () => {
       const result = await TableService.getAllTables();
 
       expect(result).toEqual(
-        tablesData.map((data) => Table.fromFirestore(mockDocumentSnapshot(data.id, data))),
+        tablesData.map((data) => Table.fromFirestore(mockDocumentSnapshot(data.id, data)))
       );
     });
   });

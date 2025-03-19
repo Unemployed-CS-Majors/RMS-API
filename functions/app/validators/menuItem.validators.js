@@ -193,13 +193,14 @@ const validateAllergens = (allergens) => {
 
   // Check if all values are valid allergens
   const invalidAllergens = allergenArray.filter(
-    (allergen) => !Object.values(Allergen).includes(allergen),
+    (allergen) => !Object.values(Allergen).includes(allergen)
   );
 
   if (invalidAllergens.length > 0) {
     return {
       isValid: false,
-      error: `Invalid allergens: ${invalidAllergens.join(", ")}. Valid options are: ` +
+      error:
+        `Invalid allergens: ${invalidAllergens.join(", ")}. Valid options are: ` +
         `${Object.values(Allergen).join(", ")}`,
     };
   }
