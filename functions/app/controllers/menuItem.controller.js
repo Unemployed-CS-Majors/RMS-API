@@ -75,14 +75,14 @@ class MenuItemController {
         price: req.body.price ? parseFloat(req.body.price) : currentMenuItem.price,
         type: req.body.type || currentMenuItem.type,
         calories: req.body.calories ? parseInt(req.body.calories) : currentMenuItem.calories,
-        avgWaitTime: req.body.avgWaitTime
-          ? parseInt(req.body.avgWaitTime)
-          : currentMenuItem.avgWaitTime,
-        allergens: req.body.allergens
-          ? typeof req.body.allergens === "string"
-            ? JSON.parse(req.body.allergens)
-            : req.body.allergens
-          : currentMenuItem.allergens,
+        avgWaitTime: req.body.avgWaitTime ?
+          parseInt(req.body.avgWaitTime) :
+          currentMenuItem.avgWaitTime,
+        allergens: req.body.allergens ?
+          typeof req.body.allergens === "string" ?
+            JSON.parse(req.body.allergens) :
+            req.body.allergens :
+          currentMenuItem.allergens,
       };
 
       const validationResult = validateMenuItem(updatedData);
@@ -95,7 +95,7 @@ class MenuItemController {
       const updatedMenuItem = await menuItemService.updateMenuItem(
         req.params.id,
         req.body,
-        req.file
+        req.file,
       );
 
       res
@@ -139,7 +139,7 @@ class MenuItemController {
             key,
             value,
           })),
-        })
+        }),
       );
     } catch (error) {
       console.error("Error in getEnumValues controller:", error);

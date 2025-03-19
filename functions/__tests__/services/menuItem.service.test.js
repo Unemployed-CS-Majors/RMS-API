@@ -53,7 +53,7 @@ describe("MenuItem Service", () => {
       const result = await MenuItemService.uploadImage(file);
 
       expect(result).toBe(
-        "https://storage.googleapis.com/test-bucket/menu-items/unique-id_test.jpg"
+        "https://storage.googleapis.com/test-bucket/menu-items/unique-id_test.jpg",
       );
     });
 
@@ -209,7 +209,7 @@ describe("MenuItem Service", () => {
       db.collection.mockReturnValue({ doc: jest.fn().mockReturnValue(mockDocRef) });
 
       await expect(
-        MenuItemService.updateMenuItem("1", { name: "Updated Burger" }, null)
+        MenuItemService.updateMenuItem("1", { name: "Updated Burger" }, null),
       ).rejects.toThrow("Menu item not found");
     });
   });

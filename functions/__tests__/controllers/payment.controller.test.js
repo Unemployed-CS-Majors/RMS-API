@@ -26,7 +26,7 @@ describe("Payment Controller", () => {
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({ error: "Missing session ID" })
+        expect.objectContaining({ error: "Missing session ID" }),
       );
     });
 
@@ -46,7 +46,7 @@ describe("Payment Controller", () => {
           status: "error",
           message: "Error while receiving order",
           data: error,
-        })
+        }),
       );
     });
   });
@@ -84,7 +84,7 @@ describe("Payment Controller", () => {
 
       expect(logger.log).toHaveBeenCalledWith(
         "error",
-        `Error handling payment cancel: ${error.message}`
+        `Error handling payment cancel: ${error.message}`,
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith(
@@ -92,7 +92,7 @@ describe("Payment Controller", () => {
           status: "error",
           message: "Error while receiving order",
           data: error,
-        })
+        }),
       );
     });
   });

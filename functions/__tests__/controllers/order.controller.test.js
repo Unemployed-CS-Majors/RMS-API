@@ -32,7 +32,7 @@ describe("Order Controller", () => {
           status: "success",
           message: "Order retrieved successfully",
           data: mockOrder,
-        })
+        }),
       );
     });
 
@@ -51,7 +51,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });
@@ -74,7 +74,7 @@ describe("Order Controller", () => {
           status: "success",
           message: "Order retrieved successfully",
           data: mockOrders,
-        })
+        }),
       );
     });
 
@@ -93,7 +93,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });
@@ -112,7 +112,7 @@ describe("Order Controller", () => {
       expect(OrderService.updateOrderStatus).toHaveBeenCalledWith(
         "order1",
         "IN_PROGRESS",
-        expect.any(Object)
+        expect.any(Object),
       );
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(
@@ -120,7 +120,7 @@ describe("Order Controller", () => {
           status: "success",
           message: "Order updated successfully",
           data: mockOrder,
-        })
+        }),
       );
     });
 
@@ -135,7 +135,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Missing required fields",
-        })
+        }),
       );
     });
 
@@ -150,14 +150,14 @@ describe("Order Controller", () => {
 
       expect(logger.error).toHaveBeenCalledWith(
         "Error updating order status: Database error",
-        error
+        error,
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });
@@ -179,7 +179,7 @@ describe("Order Controller", () => {
           status: "success",
           message: "Order retrieved successfully",
           data: mockOrders,
-        })
+        }),
       );
     });
 
@@ -194,14 +194,14 @@ describe("Order Controller", () => {
 
       expect(logger.error).toHaveBeenCalledWith(
         "Error getting active orders: Database error",
-        error
+        error,
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });
@@ -218,7 +218,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Invalid status",
-        })
+        }),
       );
     });
   });
@@ -239,7 +239,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });
@@ -261,7 +261,7 @@ describe("Order Controller", () => {
           status: "success",
           message: "Orders retrieved successfully",
           data: mockOrders,
-        })
+        }),
       );
     });
 
@@ -280,7 +280,7 @@ describe("Order Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Error getting order",
-        })
+        }),
       );
     });
   });

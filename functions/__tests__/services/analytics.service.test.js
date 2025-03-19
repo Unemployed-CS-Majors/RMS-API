@@ -107,7 +107,7 @@ describe("Analytics Service", () => {
 
       // Check delivery method breakdown
       expect(result.revenueByDeliveryMethod[DeliveryMethod.HOME_DELIVERY]).toBeCloseTo(
-        50.99 + 35.5
+        50.99 + 35.5,
       );
       expect(result.revenueByDeliveryMethod[DeliveryMethod.PICKUP]).toBeCloseTo(27.75);
     });

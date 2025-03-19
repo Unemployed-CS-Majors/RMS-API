@@ -61,7 +61,7 @@ class Order {
     paymentIntentId = null,
     createdAt = null,
     updatedAt = null,
-    estimatedDeliveryTime = null
+    estimatedDeliveryTime = null,
   ) {
     this.id = id;
     this.userId = userId;
@@ -139,7 +139,7 @@ class Order {
       data.paymentIntentId || null,
       data.createdAt ? data.createdAt : null,
       data.updatedAt ? data.updatedAt : null,
-      data.estimatedDeliveryTime || null
+      data.estimatedDeliveryTime || null,
     );
   }
 
@@ -181,7 +181,7 @@ class Order {
       null, // paymentIntentId will be added after Stripe payment is initiated
       null, // createdAt will be set in toFirestore
       null, // updatedAt will be set in toFirestore
-      null // estimatedDeliveryTime will be set later when order is in progress
+      null, // estimatedDeliveryTime will be set later when order is in progress
     );
   }
 

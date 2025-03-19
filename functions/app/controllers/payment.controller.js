@@ -24,20 +24,20 @@ class PaymentController {
 
       // Handle different event types
       switch (event.type) {
-        case "payment_intent.succeeded":
-          await this.handlePaymentIntentSucceeded(event.data.object);
-          break;
+      case "payment_intent.succeeded":
+        await this.handlePaymentIntentSucceeded(event.data.object);
+        break;
 
-        case "payment_intent.payment_failed":
-          await this.handlePaymentIntentFailed(event.data.object);
-          break;
+      case "payment_intent.payment_failed":
+        await this.handlePaymentIntentFailed(event.data.object);
+        break;
 
-        case "checkout.session.completed":
-          await this.handleCheckoutSessionCompleted(event.data.object);
-          break;
+      case "checkout.session.completed":
+        await this.handleCheckoutSessionCompleted(event.data.object);
+        break;
 
-        default:
-          logger.log("info", `Unhandled Stripe event type: ${event.type}`);
+      default:
+        logger.log("info", `Unhandled Stripe event type: ${event.type}`);
       }
 
       // Return success response
@@ -146,7 +146,7 @@ class PaymentController {
       // If not found, try to find by payment intent ID
       if (querySnapshot.empty && session.payment_intent) {
         logger.error(
-          `No order found with session ID ${sessionId}, trying payment intent ${session.payment_intent}`
+          `No order found with session ID ${sessionId}, trying payment intent ${session.payment_intent}`,
         );
         querySnapshot = await db
           .collection("orders")
@@ -158,7 +158,7 @@ class PaymentController {
       // If still not found, look in metadata
       if (querySnapshot.empty && session.metadata && session.metadata.orderId) {
         logger.log(
-          `No order found with payment intent, trying metadata orderId: ${session.metadata.orderId}`
+          `No order found with payment intent, trying metadata orderId: ${session.metadata.orderId}`,
         );
         querySnapshot = await db
           .collection("orders")
@@ -170,7 +170,7 @@ class PaymentController {
       // If no order is found, return an error
       if (querySnapshot.empty) {
         logger.error(
-          `No order found for session ${sessionId} or payment intent ${session.payment_intent}`
+          `No order found for session ${sessionId} or payment intent ${session.payment_intent}`,
         );
         return res
           .status(404)
@@ -178,8 +178,8 @@ class PaymentController {
             createResponse(
               "error",
               "No order found for this payment session. Please contact support with reference: ${session_id}",
-              { session_id: sessionId }
-            )
+              { session_id: sessionId },
+            ),
           );
       }
 
@@ -204,13 +204,13 @@ class PaymentController {
 
         // Redirect to a success page (can be configured as needed)
         return res.redirect(
-          `https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`
+          `https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`,
         );
       } else {
         // If payment wasn't successful for some reason
         logger.warn(`Payment not marked as paid for session ${sessionId}`);
         return res.redirect(
-          `https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`
+          `https://restaurant-management-sy-1a0cd.web.app/profile#orders?order=${orderId}`,
         );
       }
     } catch (error) {

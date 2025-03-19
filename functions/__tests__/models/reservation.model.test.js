@@ -21,7 +21,7 @@ describe("Reservation Model", () => {
         sampleReservationData.userId,
         sampleReservationData.tableId,
         sampleReservationData.people,
-        sampleReservationData.status
+        sampleReservationData.status,
       );
 
       expect(reservation.id).toBe(sampleReservationData.id);
@@ -43,7 +43,7 @@ describe("Reservation Model", () => {
         sampleReservationData.userId,
         sampleReservationData.tableId,
         sampleReservationData.people,
-        sampleReservationData.status
+        sampleReservationData.status,
       );
 
       const firestoreData = reservation.toFirestore();
@@ -109,7 +109,7 @@ describe("Reservation Model", () => {
         sampleReservationData.userId,
         sampleReservationData.tableId,
         sampleReservationData.people,
-        sampleReservationData.status
+        sampleReservationData.status,
       );
 
       const firestoreData = reservation.toFirestore();

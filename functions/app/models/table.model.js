@@ -67,7 +67,7 @@ class Table {
       data.y,
       data.rotation,
       data.type,
-      data.tableNum
+      data.tableNum,
     );
   }
 }

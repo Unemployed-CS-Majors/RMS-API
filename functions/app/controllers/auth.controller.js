@@ -56,7 +56,7 @@ class AuthController {
           uid: result.uid,
           idToken: result.idToken,
           refreshToken: result.refreshToken,
-        })
+        }),
       );
     } else {
       logger.error("Error logging in user", { error: result.error });
@@ -80,7 +80,7 @@ class AuthController {
         createResponse("success", "Token refreshed successfully", {
           idToken: result.idToken,
           refreshToken: result.refreshToken,
-        })
+        }),
       );
     } else {
       logger.error("Error refreshing token", { error: result.error });
@@ -174,7 +174,7 @@ class AuthController {
           uid: result.uid,
           idToken: result.idToken,
           refreshToken: result.refreshToken,
-        })
+        }),
       );
     } else {
       logger.error("Google sign-in failed", { error: result.error });

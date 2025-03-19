@@ -80,7 +80,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getRevenueAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -149,7 +149,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getMenuItemAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -226,7 +226,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getReservationAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -298,7 +298,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getOrderStatusAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -370,7 +370,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getCustomerAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -436,7 +436,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getOperationalAnalytics controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({
@@ -492,7 +492,7 @@ describe("Analytics Controller", () => {
       // Assertions
       expect(logger.error).toHaveBeenCalledWith(
         "Error in getDashboardSummary controller:",
-        expect.any(Error)
+        expect.any(Error),
       );
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({

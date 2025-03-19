@@ -445,7 +445,7 @@ router.get(
   "/employee/status/:status",
   verifyIdToken,
   isEmployee,
-  OrderController.getOrdersByStatus
+  OrderController.getOrdersByStatus,
 );
 
 module.exports = router;

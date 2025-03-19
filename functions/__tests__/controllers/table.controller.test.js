@@ -29,7 +29,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Table fetched successfully",
           data: mockTable,
-        })
+        }),
       );
     });
 
@@ -47,7 +47,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Table not found",
-        })
+        }),
       );
     });
 
@@ -66,7 +66,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -88,7 +88,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Tables fetched successfully",
           data: mockTables,
-        })
+        }),
       );
     });
 
@@ -107,7 +107,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -129,7 +129,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Table updated successfully",
           data: mockUpdatedTable,
-        })
+        }),
       );
     });
 
@@ -148,7 +148,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -167,7 +167,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Table deleted successfully",
           data: null,
-        })
+        }),
       );
     });
 
@@ -186,7 +186,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -208,7 +208,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Table deactivated successfully",
           data: mockUpdatedTable,
-        })
+        }),
       );
     });
 
@@ -227,7 +227,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });
@@ -249,7 +249,7 @@ describe("Table Controller", () => {
           status: "success",
           message: "Table activated successfully",
           data: mockUpdatedTable,
-        })
+        }),
       );
     });
 
@@ -268,7 +268,7 @@ describe("Table Controller", () => {
         expect.objectContaining({
           status: "error",
           message: "Database error",
-        })
+        }),
       );
     });
   });

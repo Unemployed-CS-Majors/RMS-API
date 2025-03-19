@@ -10,14 +10,14 @@ const MAILJET_PRIVATE_KEY = process.env.MAILJET_PRIVATE_KEY;
 
 if (!MAILJET_PUBLIC_KEY || !MAILJET_PRIVATE_KEY) {
   logger.error(
-    "Mailjet API keys are missing. Please set MAILJET_PUBLIC_KEY and MAILJET_PRIVATE_KEY environment variables."
+    "Mailjet API keys are missing. Please set MAILJET_PUBLIC_KEY and MAILJET_PRIVATE_KEY environment variables.",
   );
 }
 
 const mailjet =
-  MAILJET_PUBLIC_KEY && MAILJET_PRIVATE_KEY
-    ? require("node-mailjet").apiConnect(MAILJET_PUBLIC_KEY, MAILJET_PRIVATE_KEY)
-    : null;
+  MAILJET_PUBLIC_KEY && MAILJET_PRIVATE_KEY ?
+    require("node-mailjet").apiConnect(MAILJET_PUBLIC_KEY, MAILJET_PRIVATE_KEY) :
+    null;
 
 // Template IDs
 const TEMPLATES = {
@@ -279,7 +279,7 @@ class EmailService {
       user,
       TEMPLATES.PAYMENT_RECEIVED,
       "We have received your payment",
-      variables
+      variables,
     );
   }
 
@@ -302,7 +302,7 @@ class EmailService {
       user,
       TEMPLATES.ORDER_PREPARING,
       "Your order is being prepared",
-      variables
+      variables,
     );
   }
 
@@ -350,7 +350,7 @@ class EmailService {
       user,
       TEMPLATES.ORDER_PICKUP_READY,
       "Your order is ready for pickup",
-      variables
+      variables,
     );
   }
 

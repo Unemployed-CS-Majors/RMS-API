@@ -64,7 +64,7 @@ class Reservation {
       data.userId,
       data.tableId,
       data.people,
-      data.status
+      data.status,
     );
   }
 }

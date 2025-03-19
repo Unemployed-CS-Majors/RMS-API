@@ -70,7 +70,7 @@ class StripeService {
 
       logger.log(
         "info",
-        `Payment ${paymentIntentId} is not successful. Status: ${paymentIntent.status}`
+        `Payment ${paymentIntentId} is not successful. Status: ${paymentIntent.status}`,
       );
       return false;
     } catch (error) {
@@ -187,7 +187,7 @@ class StripeService {
       const event = stripe.webhooks.constructEvent(
         payload,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET
+        process.env.STRIPE_WEBHOOK_SECRET,
       );
 
       logger.log("info", `Received Stripe webhook event: ${event.type}`);
