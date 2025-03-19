@@ -346,8 +346,7 @@ describe("Analytics Controller", () => {
       await AnalyticsController.getCustomerAnalytics(req, res);
 
       // Assertions
-      expect(AnalyticsService.getCustomerAnalytics)
-        .toHaveBeenCalledWith(90);
+      expect(AnalyticsService.getCustomerAnalytics).toHaveBeenCalledWith(90);
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         status: "success",

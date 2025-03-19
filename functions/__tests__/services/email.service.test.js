@@ -9,7 +9,9 @@ jest.mock("node-mailjet");
 jest.mock("../../app/logger/FirebaseLogger");
 
 describe("Email Service", () => {
-  let mockUser; let mockReservation; let mockOrder;
+  let mockUser;
+  let mockReservation;
+  let mockOrder;
 
   beforeEach(() => {
     jest.clearAllMocks();

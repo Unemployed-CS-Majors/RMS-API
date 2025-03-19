@@ -209,7 +209,7 @@ class OrderService {
 
       console.log(
         `Order ${order.id} updated with payment intent ${session.payment_intent}` +
-        `and session ${session.id}`,
+          `and session ${session.id}`,
       );
 
       return {

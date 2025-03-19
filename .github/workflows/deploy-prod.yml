@@ -30,6 +30,10 @@ jobs:
         run: npm ci
         working-directory: ./functions
 
+      - name: Decode and create .env file
+        run: echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env
+        working-directory: ./functions
+
       - name: Validate code
         run: npm run validate
         working-directory: ./functions
@@ -75,6 +79,7 @@ jobs:
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           MAILJET_PUBLIC_KEY: ${{ secrets.MAILJET_PUBLIC_KEY }}
           MAILJET_PRIVATE_KEY: ${{ secrets.MAILJET_PRIVATE_KEY }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           firebase deploy --only functions:api
         working-directory: ./functions

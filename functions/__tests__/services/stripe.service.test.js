@@ -243,7 +243,11 @@ describe("Stripe Service", () => {
       const result = await StripeService.handleWebhookEvent(payload, signature);
 
       expect(result).toEqual(mockEvent);
-      expect(stripe.webhooks.constructEvent).toHaveBeenCalledWith(payload, signature, expect.any(String));
+      expect(stripe.webhooks.constructEvent).toHaveBeenCalledWith(
+        payload,
+        signature,
+        expect.any(String),
+      );
     });
 
     it("throws an error if webhook event handling fails", async () => {

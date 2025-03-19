@@ -199,7 +199,8 @@ const validateAllergens = (allergens) => {
   if (invalidAllergens.length > 0) {
     return {
       isValid: false,
-      error: `Invalid allergens: ${invalidAllergens.join(", ")}. Valid options are: ` +
+      error:
+        `Invalid allergens: ${invalidAllergens.join(", ")}. Valid options are: ` +
         `${Object.values(Allergen).join(", ")}`,
     };
   }

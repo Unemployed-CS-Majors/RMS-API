@@ -4,7 +4,6 @@ const WindowController = require("../controllers/window.controller");
 const { isOwner } = require("../middlewares/privilages.middleware");
 const { verifyIdToken } = require("../middlewares/auth.middleware");
 
-
 /**
  * @swagger
  * tags:
