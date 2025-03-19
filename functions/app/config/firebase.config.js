@@ -21,12 +21,7 @@ if (isEmulator) {
   if (nodeEnv === "development") {
     // For development, use a specific database name within the same project
     logger.info("Initializing Firestore with 'develop' database for development");
-    db = getFirestore(app);
-
-    // Set the database name for development environment
-    db.settings({
-      databaseId: "develop",
-    });
+    db = getFirestore("develop");
   } else {
     // For production, use the default database
     db = getFirestore(app);
